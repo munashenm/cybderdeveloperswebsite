@@ -823,3 +823,60 @@ a {
         padding: 2rem;
     }
 }
+
+/* Projects Page Specifics */
+.project-tag {
+    display: inline-block;
+    padding: 0.2rem 0.6rem;
+    background: rgba(99, 102, 241, 0.1);
+    color: var(--primary);
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+}
+
+.tech-tags {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin-top: 1rem;
+}
+
+.tech-tags li {
+    font-size: 0.75rem;
+    padding: 0.2rem 0.6rem;
+    background: var(--dark);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    color: var(--text-muted);
+}
+
+.projects-showcase {
+    padding: 4rem 0;
+}
+
+.projects-cta {
+    padding: 8rem 0;
+}
+
+.glass-cta {
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(59, 130, 246, 0.1));
+    backdrop-filter: blur(10px);
+    padding: 5rem;
+    border-radius: 40px;
+    border: 1px solid var(--glass-border);
+    text-align: center;
+}
+
+.glass-cta h2 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+.glass-cta p {
+    font-size: 1.2rem;
+    color: var(--text-muted);
+    margin-bottom: 2.5rem;
+}
