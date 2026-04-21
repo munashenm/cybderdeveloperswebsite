@@ -880,3 +880,106 @@ a {
     color: var(--text-muted);
     margin-bottom: 2.5rem;
 }
+
+/* Tech Stack */
+.tech-stack {
+    padding: 8rem 0;
+}
+
+.tech-icons {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 3rem;
+    margin-top: 3rem;
+}
+
+.tech-item {
+    text-align: center;
+    transition: var(--transition);
+}
+
+.tech-item:hover {
+    transform: translateY(-5px);
+    color: var(--primary);
+}
+
+.tech-item i {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    display: block;
+}
+
+.tech-item span {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text-muted);
+}
+
+/* Testimonials */
+.testimonials {
+    padding: 8rem 0;
+    background: #0a0f1d;
+}
+
+.testimonial-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+.testimonial-card {
+    background: var(--dark-surface);
+    padding: 3rem;
+    border-radius: 24px;
+    border: 1px solid var(--glass-border);
+}
+
+.stars {
+    color: var(--accent);
+    margin-bottom: 1.5rem;
+}
+
+.testimonial-card p {
+    font-style: italic;
+    color: var(--text-muted);
+    margin-bottom: 2rem;
+}
+
+.client-info strong {
+    display: block;
+    font-size: 1.1rem;
+}
+
+.client-info span {
+    color: var(--primary);
+    font-size: 0.9rem;
+}
+
+/* FAQ */
+.faq {
+    padding: 8rem 0;
+}
+
+.faq-accordion {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.faq-item {
+    background: var(--dark-surface);
+    padding: 2rem;
+    border-radius: 16px;
+    margin-bottom: 1.5rem;
+    border: 1px solid var(--glass-border);
+}
+
+.faq-item h4 {
+    font-size: 1.2rem;
+    margin-bottom: 0.8rem;
+    color: var(--primary);
+}
+
+.faq-item p {
+    color: var(--text-muted);
+}
