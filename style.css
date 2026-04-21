@@ -672,6 +672,108 @@ a {
 }
 
 /* More Responsive Fixes */
+/* About Page Specifics */
+.about-hero {
+    padding: 12rem 0 6rem;
+    background: linear-gradient(to bottom, #0f172a, var(--dark));
+    text-align: center;
+}
+
+.about-hero h1 {
+    font-size: 4rem;
+    margin-bottom: 2rem;
+}
+
+.about-content {
+    padding: 6rem 0;
+}
+
+.about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6rem;
+    align-items: center;
+}
+
+.about-text h2 {
+    font-size: 2.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.about-text p {
+    margin-bottom: 1.5rem;
+    color: var(--text-muted);
+}
+
+.about-values {
+    margin-top: 3rem;
+}
+
+.value-item {
+    display: flex;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.value-item i {
+    font-size: 2rem;
+    color: var(--primary);
+    margin-top: 0.5rem;
+}
+
+.value-item h4 {
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+}
+
+.about-image {
+    position: relative;
+    height: 500px;
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(59, 130, 246, 0.1));
+    border-radius: 40px;
+    border: 1px solid var(--glass-border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.image-glass-card {
+    background: var(--glass);
+    backdrop-filter: blur(15px);
+    padding: 3rem;
+    border-radius: 24px;
+    border: 1px solid var(--glass-border);
+    max-width: 80%;
+    text-align: center;
+    box-shadow: 0 40px 100px rgba(0,0,0,0.5);
+}
+
+.image-glass-card i {
+    font-size: 3rem;
+    color: var(--primary);
+    margin-bottom: 1.5rem;
+}
+
+.card-tag {
+    display: inline-block;
+    padding: 0.3rem 0.8rem;
+    background: var(--primary);
+    color: white;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    border-radius: 5px;
+    margin-bottom: 1rem;
+}
+
+.about-stats {
+    padding: 6rem 0;
+    background: rgba(255, 255, 255, 0.02);
+    border-radius: 50px;
+    margin: 4rem 0;
+}
+
 @media (max-width: 992px) {
     .nav-links {
         position: fixed;
@@ -686,7 +788,7 @@ a {
         gap: 2rem;
         transition: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
         z-index: 999;
-        display: flex !important; /* Force display for mobile-active to work */
+        display: flex !important;
     }
 
     .nav-links.mobile-active {
@@ -700,6 +802,14 @@ a {
     }
     .footer-grid {
         grid-template-columns: 1fr 1fr;
+    }
+
+    .about-grid {
+        grid-template-columns: 1fr;
+        gap: 4rem;
+    }
+    .about-image {
+        height: 400px;
     }
 }
 
