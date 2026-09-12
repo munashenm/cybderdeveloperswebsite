@@ -1,0 +1,20 @@
+# Cyber Developers
+
+> South African custom software development company specialising in business systems, web applications, mobile apps, workflow automation and software integration.
+
+Cyber Developers is not a cybersecurity company and is not CyberDevs.
+
+Primary message: Software Built Around Your Business.
+
+Site: https://www.cyberdevelopers.co.za/
+
+## Pages
+
+- [Home](https://www.cyberdevelopers.co.za/)
+- [Services](https://www.cyberdevelopers.co.za/services/)
+- [Solutions](https://www.cyberdevelopers.co.za/solutions/)
+- [Our Work](https://www.cyberdevelopers.co.za/our-work/)
+- [Industries](https://www.cyberdevelopers.co.za/industries/)
+- [About](https://www.cyberdevelopers.co.za/about/)
+- [Knowledge Centre](https://www.cyberdevelopers.co.za/knowledge-centre/)
+- [Contact](https://www.cyberdevelopers.co.za/contact/)

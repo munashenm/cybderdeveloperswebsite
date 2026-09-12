@@ -1,0 +1,27 @@
+RewriteEngine On
+ErrorDocument 404 /404.html
+
+# Canonical host
+RewriteCond %{HTTP_HOST} ^cyberdevelopers\.co\.za$ [NC]
+RewriteRule ^ https://www.cyberdevelopers.co.za%{REQUEST_URI} [L,R=301]
+
+# Legacy files
+Redirect 301 /projects.html /our-work/
+Redirect 301 /about.html /about/
+Redirect 301 /privacy.html /privacy/
+Redirect 301 /index.html /
+
+<IfModule mod_headers.c>
+  Header set X-Content-Type-Options "nosniff"
+  Header set Referrer-Policy "strict-origin-when-cross-origin"
+  Header set X-Frame-Options "SAMEORIGIN"
+  Header set Permissions-Policy "camera=(), microphone=(), geolocation=()"
+</IfModule>
+
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType text/css "access plus 7 days"
+  ExpiresByType application/javascript "access plus 7 days"
+  ExpiresByType image/webp "access plus 30 days"
+  ExpiresByType image/png "access plus 30 days"
+</IfModule>
