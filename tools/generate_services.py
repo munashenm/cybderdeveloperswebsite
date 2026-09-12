@@ -6,10 +6,10 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from site_lib import (
-    TECHS, icon, esc, crumbs_html, cta_band, enquiry_form, faq_html,
+    esc, crumbs_html, enquiry_form, faq_html,
     service_schema, faq_schema,
 )
-from generate_core import emit, checks, cards
+from generate_core import emit, bullets, cards
 
 
 def service_page(slug, nav_title, h1, title, description, intro, problems, capabilities, approach, techs, projects, faqs, extra_body=""):
@@ -21,7 +21,6 @@ def service_page(slug, nav_title, h1, title, description, intro, problems, capab
     body = f"""
 <section class="page-hero"><div class="container">
   {crumbs_html([("/", "Home"), ("/services/", "Services"), (canonical, nav_title)])}
-  <p class="eyebrow">Service</p>
   <h1>{esc(h1)}</h1>
   <p class="lead">{esc(intro)}</p>
   <div class="hero-actions">
@@ -29,34 +28,22 @@ def service_page(slug, nav_title, h1, title, description, intro, problems, capab
     <a class="btn btn-secondary" href="/our-work/">View Our Work</a>
   </div>
 </div></section>
-<section class="section"><div class="container split">
-  <div class="prose">
-    <h2>What this service is</h2>
-    <p>{esc(intro)}</p>
-    <h2>Business problems it solves</h2>
-    {checks(problems)}
-    <h2>Typical capabilities</h2>
-    {checks(capabilities)}
-    <h2>Our development approach</h2>
-    <p>{esc(approach)}</p>
-    {extra_body}
-  </div>
-  <aside>
-    <article class="card">
-      <h3>Relevant technologies</h3>
-      <div class="tech-pills" style="margin-top:0.8rem">{''.join(f'<li>{esc(t)}</li>' for t in techs)}</div>
-    </article>
-    <article class="card" style="margin-top:1rem">
-      <h3>Relevant work</h3>
-      <ul class="prose" style="margin-top:0.6rem">{proj}</ul>
-    </article>
-  </aside>
+<section class="section"><div class="container prose">
+  <h2>Where this usually comes from</h2>
+  {bullets(problems)}
+  <h2>What we typically deliver</h2>
+  {bullets(capabilities)}
+  <h2>How we work</h2>
+  <p>{esc(approach)}</p>
+  {extra_body}
+  <p class="tech-inline">Tools used on this kind of work: {" · ".join(esc(t) for t in techs)}</p>
+  <h2>Related systems</h2>
+  <ul>{proj}</ul>
 </div></section>
 <section class="section section-alt"><div class="container split">
-  <div><h2>Questions</h2></div>
+  <div><h2>Questions</h2><p class="muted">If yours is not here, put it on the enquiry form.</p></div>
   {faq_html(faqs)}
 </div></section>
-{cta_band()}
 """
     emit(
         f"services/{slug}/index.html",
@@ -81,22 +68,20 @@ def build_services():
         f"""
 <section class="page-hero"><div class="container">
   {crumbs_html([("/", "Home"), ("/services/", "Services")])}
-  <p class="eyebrow">Services</p>
-  <h1>Custom software services, not a marketing menu.</h1>
-  <p class="lead">Each service page describes a type of system we actually build. If you are unsure which label fits, start with custom software development or send the process you want to replace.</p>
+  <h1>Services</h1>
+  <p class="lead">Named pieces of work you can send to a colleague. They overlap on purpose: a school system is custom software, a web application, and often an integration job as well. If you are unsure which label fits, start with custom software or describe the process you want to replace.</p>
 </div></section>
-<section class="section"><div class="container">
+<section class="section"><div class="container" style="max-width:48rem">
   {cards([
-    dict(icon="code", title="Custom Software Development", text="Bespoke applications designed around your process, users and data.", href="/services/custom-software-development/"),
-    dict(icon="globe", title="Web Application Development", text="Portals and operational web apps for staff, customers and partners.", href="/services/web-application-development/"),
-    dict(icon="phone", title="Mobile App Development", text="Apps for field work, drivers, customers and on-the-go administration.", href="/services/mobile-app-development/"),
-    dict(icon="layers", title="Business Systems", text="Management systems for records, finance, people and operations.", href="/services/business-systems/"),
-    dict(icon="flow", title="Workflow Automation", text="Cases, approvals, handovers and audit trails instead of inbox chaos.", href="/services/workflow-automation/"),
-    dict(icon="spark", title="AI & Business Automation", text="Assistants, document processing, reporting and API-based automation.", href="/services/ai-business-automation/"),
-    dict(icon="plug", title="Systems Integration", text="Payments, SMS, identity, databases and third-party APIs connected cleanly.", href="/services/systems-integration/"),
+    dict(title="Custom Software Development", text="Applications modelled on your process, users and data.", href="/services/custom-software-development/"),
+    dict(title="Web Application Development", text="Portals and operational web apps for staff, customers and partners.", href="/services/web-application-development/"),
+    dict(title="Mobile App Development", text="Apps for field work, drivers, customers and on-the-go administration.", href="/services/mobile-app-development/"),
+    dict(title="Business Systems", text="Records, finance, people and day-to-day operations in one place.", href="/services/business-systems/"),
+    dict(title="Workflow Automation", text="Cases, approvals, handovers and an audit trail instead of inbox chaos.", href="/services/workflow-automation/"),
+    dict(title="AI & Business Automation", text="Assistants, document processing, reporting and API-based automation inside a real application.", href="/services/ai-business-automation/"),
+    dict(title="Systems Integration", text="Payments, SMS, identity, databases and third-party APIs connected cleanly.", href="/services/systems-integration/"),
   ])}
 </div></section>
-{cta_band()}
 """,
         current="/services/",
         priority="0.8",

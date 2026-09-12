@@ -6,7 +6,7 @@ from pathlib import Path
 from datetime import date
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from site_lib import crumbs_html, cta_band, article_schema, esc
+from site_lib import crumbs_html, article_schema, esc
 from generate_core import emit, TODAY
 
 ARTICLES = [
@@ -14,57 +14,57 @@ ARTICLES = [
         "slug": "how-much-does-custom-software-development-cost-in-south-africa",
         "title": "How Much Does Custom Software Development Cost in South Africa?",
         "description": "What actually drives the cost of custom software in South Africa, without invented averages. Scope, users, integrations and support.",
-        "image": "/assets/img/kc-software-cost.webp",
-        "alt": "Abstract architectural model representing software cost structure",
+        "image": "/assets/img/og-default.webp",
+        "alt": "Cyber Developers — custom software, South Africa",
     },
     {
         "slug": "custom-software-vs-off-the-shelf-software",
         "title": "Custom Software vs Off-the-Shelf Software: Which Is Better?",
         "description": "When to buy a packaged product and when to build software around the business process.",
-        "image": "/assets/img/kc-custom-vs-offshelf.webp",
-        "alt": "Two contrasting structures representing custom and packaged software",
+        "image": "/assets/img/og-default.webp",
+        "alt": "Cyber Developers — custom software, South Africa",
     },
     {
         "slug": "how-to-choose-a-software-development-company-in-south-africa",
         "title": "How to Choose a Software Development Company in South Africa",
         "description": "A practical checklist for South African organisations hiring a software partner, including how to avoid brochure claims.",
-        "image": "/assets/img/kc-choose-company.webp",
-        "alt": "Architectural workspace representing a careful software partner decision",
+        "image": "/assets/img/og-default.webp",
+        "alt": "Cyber Developers — custom software, South Africa",
     },
     {
         "slug": "what-is-a-business-management-system",
         "title": "What Is a Business Management System?",
         "description": "A clear definition of business management systems: records, roles, money and reporting in one operational application.",
-        "image": "/assets/img/kc-business-system.webp",
-        "alt": "Modular panels representing a business management system",
+        "image": "/assets/img/og-default.webp",
+        "alt": "Cyber Developers — custom software, South Africa",
     },
     {
         "slug": "how-workflow-automation-can-reduce-manual-admin",
         "title": "How Workflow Automation Can Reduce Manual Admin",
         "description": "How named stages, owners and finance locks reduce email-driven administration.",
-        "image": "/assets/img/kc-workflow.webp",
-        "alt": "Linear connected stations representing a workflow",
+        "image": "/assets/img/og-default.webp",
+        "alt": "Cyber Developers — custom software, South Africa",
     },
     {
         "slug": "school-management-software-features",
         "title": "School Management Software: What Features Should Schools Look For?",
         "description": "Features South African schools should look for in management software, based on a real school platform — not a generic LMS checklist.",
-        "image": "/assets/img/kc-school-software.webp",
-        "alt": "Quiet institutional architecture representing school administration",
+        "image": "/assets/img/og-default.webp",
+        "alt": "Cyber Developers — custom software, South Africa",
     },
     {
         "slug": "what-does-it-cost-to-build-a-mobile-app-in-south-africa",
         "title": "What Does It Cost to Build a Mobile App in South Africa?",
         "description": "Cost drivers for mobile apps in South Africa: platforms, backend, offline needs and store listing — without fake quotes.",
-        "image": "/assets/img/kc-mobile-cost.webp",
-        "alt": "Unbranded smartphone on a dark surface",
+        "image": "/assets/img/og-default.webp",
+        "alt": "Cyber Developers — custom software, South Africa",
     },
     {
         "slug": "custom-crm-vs-salesforce-microsoft-dynamics",
         "title": "Custom CRM vs Salesforce/Microsoft Dynamics: When Does Custom Make Sense?",
         "description": "When a custom CRM is justified, and when Salesforce or Dynamics is the more honest recommendation.",
-        "image": "/assets/img/kc-custom-crm.webp",
-        "alt": "Network of nodes versus a uniform grid",
+        "image": "/assets/img/og-default.webp",
+        "alt": "Cyber Developers — custom software, South Africa",
     },
 ]
 
@@ -75,13 +75,10 @@ def article_page(meta: dict, body_html: str) -> None:
     body = f"""
 <article class="page-hero"><div class="container prose">
   {crumbs_html([("/", "Home"), ("/knowledge-centre/", "Knowledge Centre"), (canonical, meta["title"])])}
-  <p class="eyebrow">Knowledge Centre</p>
   <h1>{esc(meta["title"])}</h1>
   <p class="article-meta">Cyber Developers · Updated {TODAY} · South Africa</p>
-  <img class="cover-img" src="{meta['image']}" alt="{esc(meta['alt'])}" width="1600" height="900">
   {body_html}
 </div></article>
-{cta_band()}
 """
     emit(
         f"knowledge-centre/{meta['slug']}/index.html",
@@ -102,9 +99,10 @@ def build_knowledge():
     cards = []
     for a in ARTICLES:
         cards.append(
-            f"""<a class="card article-card" href="/knowledge-centre/{a['slug']}/">
-              <img src="{a['image']}" alt="{esc(a['alt'])}" width="800" height="450" loading="lazy">
-              <div class="body"><span class="tag">Guide</span><h3>{esc(a['title'])}</h3><p>{esc(a['description'])}</p></div>
+            f"""<a href="/knowledge-centre/{a['slug']}/">
+              <h3>{esc(a['title'])}</h3>
+              <p>{esc(a['description'])}</p>
+              <span class="more">Read</span>
             </a>"""
         )
     emit(
@@ -116,12 +114,10 @@ def build_knowledge():
         f"""
 <section class="page-hero"><div class="container">
   {crumbs_html([("/", "Home"), ("/knowledge-centre/", "Knowledge Centre")])}
-  <p class="eyebrow">Knowledge Centre</p>
-  <h1>Practical writing for people buying software.</h1>
-  <p class="lead">These articles explain decisions. They do not invent industry statistics, “average ROI”, or unnamed case results.</p>
+  <h1>Knowledge Centre</h1>
+  <p class="lead">Practical writing for people buying software in South Africa. These articles explain decisions. They do not invent industry statistics, average ROI, or unnamed case results.</p>
 </div></section>
-<section class="section"><div class="container"><div class="grid-2">{''.join(cards)}</div></div></section>
-{cta_band()}
+<section class="section"><div class="container" style="max-width:48rem"><div class="row-list">{''.join(cards)}</div></div></section>
 """,
         current="/knowledge-centre/",
         priority="0.7",
@@ -159,9 +155,9 @@ def build_knowledge():
 """)
 
     article_page(ARTICLES[2], """
-<p>Choosing a software company in South Africa is harder than comparing homepage slogans. Several firms occupy similar names. Cyber Developers is not CyberDevs, and it is not a cybersecurity practice.</p>
+<p>Choosing a software company in South Africa is harder than comparing homepage slogans. Similar-sounding names and generic agency copy are common. Judge the firm by systems it can actually show you.</p>
 <h2>Ask to see a system, not a slide</h2>
-<p>Request a walkthrough of software that resembles yours. If the portfolio is only logos, stock photographs and “89+ global clients”, treat that as advertising. Our own previous site used unverifiable statistics and testimonials; we removed them. You should ask other vendors to do the same.</p>
+<p>Request a walkthrough of software that resembles yours. If the portfolio is only logos, stock photographs and “89+ global clients”, treat that as advertising. Ask for hosting arrangements, who writes the code, and what happens after go-live.</p>
 <h2>Questions that surface reality</h2>
 <ul>
 <li>Who will actually write the code, and where does hosting live?</li>
@@ -171,7 +167,7 @@ def build_knowledge():
 </ul>
 <h2>Local knowledge without theatrics</h2>
 <p>South African delivery usually involves POPIA, local payment methods, ID numbers, and users on mixed devices. A company that has already modelled those constraints will spend less of your budget discovering them.</p>
-<p>When you are ready, <a href="/contact/">discuss the project</a> with the process, not a slogan, in the first message.</p>
+<p>Cyber Developers is a South African custom software development company building business systems, web applications, mobile apps, workflow automation and integrations. When you are ready, <a href="/contact/">discuss the project</a> with the process, not a slogan, in the first message.</p>
 """)
 
     article_page(ARTICLES[3], """
@@ -185,7 +181,7 @@ def build_knowledge():
 </ul>
 <p>If those four sit in four tools, managers assemble the truth by hand. The system’s job is to make that assembly unnecessary.</p>
 <h2>What it is not</h2>
-<p>A business management system is not “digital transformation” as a poster. It is closer to a well-run filing office that several people can use at once without overwriting each other.</p>
+<p>A business management system is not a poster about changing how the company works. It is closer to a well-run filing office that several people can use at once without overwriting each other.</p>
 <p>See also <a href="/services/business-systems/">business systems</a> and <a href="/solutions/school-management-system/">school management</a> as a concrete example of the pattern.</p>
 """)
 

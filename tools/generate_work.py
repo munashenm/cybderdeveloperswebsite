@@ -6,11 +6,19 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from site_lib import crumbs_html, cta_band, esc
-from generate_core import emit, checks
+from generate_core import emit, bullets
 
 
-def case_study(slug, title, h1, description, tag, overview, problem, solution, features, tech, approach, status, extras=""):
+def case_study(slug, title, h1, description, tag, overview, problem, solution, features, tech, approach, status, extras="", live_url=None):
     canonical = f"/our-work/{slug}/"
+    live = ""
+    if live_url:
+        live = f'<p>Live product: <a href="{live_url}">{live_url.replace("https://", "").replace("www.", "")}</a></p>'
+    shots = (
+        f"{live}"
+        '<p class="shot-note">Interface screenshots for this page are still outstanding. '
+        "Request a walkthrough if you need to see the live screens.</p>"
+    )
     body = f"""
 <section class="page-hero"><div class="container">
   {crumbs_html([("/", "Home"), ("/our-work/", "Our Work"), (canonical, title)])}
@@ -18,37 +26,24 @@ def case_study(slug, title, h1, description, tag, overview, problem, solution, f
   <h1>{esc(h1)}</h1>
   <p class="lead">{esc(overview)}</p>
 </div></section>
-<section class="section"><div class="container split">
-  <div class="prose">
-    <h2>Project overview</h2>
-    <p>{esc(overview)}</p>
-    <h2>Business problem</h2>
-    <p>{esc(problem)}</p>
-    <h2>Solution</h2>
-    <p>{esc(solution)}</p>
-    <h2>Key features</h2>
-    {checks(features)}
-    <h2>Development approach</h2>
-    <p>{esc(approach)}</p>
-    <h2>Current status</h2>
-    <p>{esc(status)}</p>
-    {extras}
-    <h2>Need something similar?</h2>
-    <p>If this shape of system is close to yours, start a conversation. We will not invent outcome statistics for this case study.</p>
-    <p><a class="btn btn-primary" href="/contact/">Discuss Your Project</a></p>
-  </div>
-  <aside>
-    <article class="card">
-      <h3>Technology</h3>
-      <div class="tech-pills" style="margin-top:0.8rem">{''.join(f'<li>{esc(t)}</li>' for t in tech)}</div>
-    </article>
-    <article class="card" style="margin-top:1rem">
-      <h3>Screenshots</h3>
-      <p>Product screenshots are not bundled in this marketing repository. A live walkthrough is available on request so we do not publish mock dashboards as if they were the system.</p>
-    </article>
-  </aside>
+<section class="section"><div class="container prose">
+  <h2>What we built</h2>
+  <p>{esc(solution)}</p>
+  <h2>Why it was needed</h2>
+  <p>{esc(problem)}</p>
+  <h2>How it works</h2>
+  <p>{esc(approach)}</p>
+  <h2>Key functionality</h2>
+  {bullets(features)}
+  <h2>Technology</h2>
+  <p class="tech-inline">{" · ".join(esc(t) for t in tech)}</p>
+  <h2>Screenshots</h2>
+  {shots}
+  <h2>Current status</h2>
+  <p>{esc(status)}</p>
+  {extras}
+  <p style="margin-top:2rem"><a class="btn btn-primary" href="/contact/">Discuss a similar project</a></p>
 </div></section>
-{cta_band("Need something similar?", "Discuss the process you want software to carry.", ("Discuss Your Project", "/contact/"), ("View Our Work", "/our-work/"))}
 """
     emit(
         f"our-work/{slug}/index.html",
@@ -72,23 +67,22 @@ def build_work():
         f"""
 <section class="page-hero"><div class="container">
   {crumbs_html([("/", "Home"), ("/our-work/", "Our Work")])}
-  <p class="eyebrow">Our Work</p>
-  <h1>Systems you can inspect, not invented logos.</h1>
-  <p class="lead">These projects exist as software Cyber Developers has designed. We removed unverifiable portfolio names, testimonials and statistics from the previous site.</p>
+  <h1>Our work</h1>
+  <p class="lead">Systems Cyber Developers has designed and built. Each page describes what the software does, why it was needed, and how it works. We do not invent user counts, revenue figures or testimonials.</p>
 </div></section>
-<section class="section"><div class="container">
-  <div class="grid-3">
-    <a class="card project-card" href="/our-work/vayasa/"><div class="visual"><span>Transport marketplace</span></div><div class="body"><span class="tag">VayaSA</span><h3>VayaSA</h3><p>Ride sharing, bus tickets and taxi seats with South African payments and verification flows.</p></div></a>
-    <a class="card project-card" href="/our-work/fluxmove/"><div class="visual"><span>Delivery marketplace</span></div><div class="body"><span class="tag">Fluxmove</span><h3>Fluxmove</h3><p>Freight bookings, driver onboarding and vehicle types for deliveries across South Africa.</p></div></a>
-    <a class="card project-card" href="/our-work/tshira-workflow-system/"><div class="visual"><span>Case workflow</span></div><div class="body"><span class="tag">Tshira</span><h3>Tshira Workflow System</h3><p>Provincial case assignment, field collection, review, requisitions, expenses and invoicing.</p></div></a>
-    <a class="card project-card" href="/our-work/school-lms/"><div class="visual"><span>Education platform</span></div><div class="body"><span class="tag">SchoolHub SA</span><h3>School / College LMS</h3><p>Multi-portal school management: academics, fees, HR, cards, communication and backups.</p></div></a>
-    <a class="card project-card" href="/our-work/lawyer-management-system/"><div class="visual"><span>Legal practice</span></div><div class="body"><span class="tag">Legal</span><h3>Lawyer Management System</h3><p>Practice administration covering clients, cases, documents, tasks, billing and permissions.</p></div></a>
-    <a class="card project-card" href="/our-work/funeral-parlour-system/"><div class="visual"><span>Funeral operations</span></div><div class="body"><span class="tag">Funeral</span><h3>Funeral Parlour System</h3><p>Custom management software for funeral businesses. Feature detail is confirmed in demo, not invented here.</p></div></a>
-    <a class="card project-card" href="/our-work/municipality-platform/"><div class="visual"><span>Local government</span></div><div class="body"><span class="tag">Municipality</span><h3>Municipality Platform</h3><p>Citizen and admin software for billing, issues, queues, notices and resident services.</p></div></a>
-    <a class="card project-card" href="/solutions/school-management-system/"><div class="visual"><span>Also built</span></div><div class="body"><span class="tag">Related</span><h3>Student accommodation system</h3><p>A separate student accommodation management codebase exists. Ask if that operational area is relevant.</p></div></a>
+<section class="section"><div class="container" style="max-width:50rem">
+  <div class="row-list">
+    <a href="/our-work/vayasa/"><h3>VayaSA</h3><p>Ride sharing, bus tickets and taxi seats with South African payments and verification.</p><span class="more">Case study</span></a>
+    <a href="/our-work/fluxmove/"><h3>Fluxmove</h3><p>Freight bookings, driver onboarding and vehicle types for deliveries across South Africa.</p><span class="more">Case study</span></a>
+    <a href="/our-work/tshira-workflow-system/"><h3>Tshira Workflow System</h3><p>Provincial case assignment, field collection, review, requisitions, expenses and invoicing.</p><span class="more">Case study</span></a>
+    <a href="/our-work/school-lms/"><h3>School / College LMS</h3><p>Multi-portal school management: academics, fees, HR, communication and backups.</p><span class="more">Case study</span></a>
+    <a href="/our-work/lawyer-management-system/"><h3>Lawyer Management System</h3><p>Clients, cases, documents, tasks, billing and permissions, including RAF where it applies.</p><span class="more">Case study</span></a>
+    <a href="/our-work/funeral-parlour-system/"><h3>Funeral Parlour System</h3><p>Custom management software for funeral businesses. Feature detail is confirmed in a demo.</p><span class="more">Case study</span></a>
+    <a href="/our-work/municipality-platform/"><h3>Municipality Platform</h3><p>Citizen and admin software for billing, issues, queues, notices and resident services.</p><span class="more">Case study</span></a>
   </div>
+  <p class="muted" style="margin-top:2rem">A separate student accommodation management codebase also exists. Ask if that operational area is relevant.</p>
 </div></section>
-{cta_band()}
+{cta_band("Need something in this shape?", "Describe the process. We will tell you whether an existing system is close, or whether to design a new one.")}
 """,
         current="/our-work/",
         priority="0.9",
@@ -114,9 +108,9 @@ def build_work():
             "Email verification, SMS OTP and in-app notifications.",
         ],
         ["Next.js", "TypeScript", "PostgreSQL", "Prisma", "Railway", "Cloudflare"],
-        "App Router application with a PostgreSQL data model, server-side sessions and production health checks. Payments run in a documented demo mode when keys are absent so the product can be reviewed without inventing live transaction volumes.",
+        "Passengers search ride shares, bus tickets and taxi seats. Drivers and operators upload documents, then an admin console handles approvals and payouts. Payments include Paystack, Ozow, Capitec Pay and cash at rank where those options are configured.",
         "A production URL is published at vayasa.co.za. Treat live commercial metrics as unpublished unless separately verified.",
-        extras='<p>Public product URL: <a href="https://www.vayasa.co.za">www.vayasa.co.za</a></p>',
+        live_url="https://www.vayasa.co.za",
     )
 
     case_study(
@@ -137,9 +131,9 @@ def build_work():
             "Driver mobile app module for GPS, proof and OTP on the road.",
         ],
         ["Next.js", "TypeScript", "PostgreSQL", "Prisma", "Tailwind CSS"],
-        "Next.js App Router with Prisma/PostgreSQL, cookie sessions and bcrypt credentials. Maps and live tracking are documented as integrations to add rather than silently claimed as finished on the marketing site.",
+        "A customer books a pickup and drop-off. Verified drivers see open jobs and accept them. Administrators review driver applications. An optional driver app covers the on-the-road steps.",
         "A public site is published at fluxmove.co.za. No user or GMV figures are stated here.",
-        extras='<p>Public product URL: <a href="https://fluxmove.co.za">fluxmove.co.za</a></p>',
+        live_url="https://fluxmove.co.za",
     )
 
     case_study(
@@ -160,7 +154,7 @@ def build_work():
             "Coordinator, DCO and finance reports.",
         ],
         ["Next.js", "TypeScript", "PostgreSQL", "Prisma", "NextAuth"],
-        "The workflow was specified as an operations manual as much as a UI. Status transitions and finance locks are part of the product, not a later report.",
+        "A case is received, assigned by province, collected in the field, checked, reviewed and only then invoiced. Requisitions happen before spending; expenses are claimed afterwards, so the two are not mixed.",
         "Described here from the application source and user manual. No client performance claims are added.",
     )
 
@@ -184,7 +178,7 @@ def build_work():
             "Timetable online meeting URLs, backup/restore, SA-SAMS-oriented import.",
         ],
         ["Next.js", "React", "TypeScript", "PostgreSQL", "Prisma"],
-        "Built as a multi-tenant SaaS-ready application. Demo credentials exist for local evaluation; they are not published on this marketing site.",
+        "Each role uses a portal against the same student record. Finance sees invoices and debtors; teachers capture attendance and assessments; parents see children, fees and report cards; HR runs leave and payslips.",
         "Active codebase. Screenshots should be captured from a staging instance for later use on this page.",
     )
 
@@ -207,7 +201,7 @@ def build_work():
             "User permissions.",
         ],
         ["TypeScript", "Next.js", "PostgreSQL", "APIs"],
-        "Capabilities listed are those specified for this product line. The full private source is not in the public website repository, so this case study does not add unverified modules.",
+        "Work is organised around the matter file. Clients, documents, tasks and billing sit on that file, with permissions so candidate attorneys, secretaries and directors are not the same role.",
         "Available for demonstration. Additional screenshots and a public feature tour are outstanding.",
     )
 
@@ -226,7 +220,7 @@ def build_work():
             "Customisation rather than a copied competitor feature list.",
         ],
         ["Custom business system"],
-        "We would rather under-specify this page than republish unverifiable modules from the old marketing site.",
+        "A custom business system fitted to the parlour’s administration. Exact screens are confirmed in a demonstration because the product source is not in this public repository.",
         "Demo on request. Screenshots and a verified feature inventory should be added when the product owner supplies them.",
     )
 
@@ -250,7 +244,7 @@ def build_work():
             "Disputes, audit and reporting hubs.",
         ],
         ["React", "JavaScript", "Vite"],
-        "Implemented as a React SPA with a service layer for each municipal domain. A production integration to a specific municipality’s finance backend is a deployment concern, not assumed here.",
+        "Residents register, report faults, book queues and view bills. Staff use an administration console for the same tickets, meter readings, notices, disputes and reports.",
         "Codebase exists. A hosted demo should be linked once a non-admin staging URL is available.",
     )
 

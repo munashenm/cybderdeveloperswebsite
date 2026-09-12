@@ -100,11 +100,12 @@ def write_llms() -> None:
 
 > {ORG_DESC}
 
-Cyber Developers is not a cybersecurity company and is not CyberDevs.
-
 Primary message: Software Built Around Your Business.
 
 Site: {SITE}/
+
+Entity: Cyber Developers (Pty) Ltd, South Africa. Office: 357 Oak Ave, Ferndale, Randburg. Email: sales@cyberdevelopers.co.za. Phone: 087 550 1813.
+Not a cybersecurity company. Custom software, business systems, web applications, mobile apps, workflow automation and integrations.
 
 ## Pages
 
@@ -127,15 +128,10 @@ def write_htaccess() -> None:
         f"""RewriteEngine On
 ErrorDocument 404 /404.html
 
-# Canonical host
-RewriteCond %{{HTTP_HOST}} ^cyberdevelopers\\.co\\.za$ [NC]
-RewriteRule ^ https://www.cyberdevelopers.co.za%{{REQUEST_URI}} [L,R=301]
-
-# Legacy files
-Redirect 301 /projects.html /our-work/
-Redirect 301 /about.html /about/
-Redirect 301 /privacy.html /privacy/
-Redirect 301 /index.html /
+# Do not redirect /index.html to / — Apache DirectoryIndex plus that rule loops forever.
+RewriteRule ^projects\\.html$ /our-work/ [R=301,L]
+RewriteRule ^about\\.html$ /about/ [R=301,L]
+RewriteRule ^privacy\\.html$ /privacy/ [R=301,L]
 
 <IfModule mod_headers.c>
   Header set X-Content-Type-Options "nosniff"

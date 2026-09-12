@@ -11,8 +11,9 @@ ROOT = Path(__file__).resolve().parents[1]
 SITE = "https://www.cyberdevelopers.co.za"
 ORG_NAME = "Cyber Developers"
 ORG_DESC = (
-    "South African custom software development company specialising in business "
-    "systems, web applications, mobile apps, workflow automation and software integration."
+    "Cyber Developers is a South African custom software development company "
+    "building business systems, web applications, mobile apps, workflow automation "
+    "and integrations."
 )
 EMAIL = "sales@cyberdevelopers.co.za"
 PHONE_DISPLAY = "087 550 1813"
@@ -328,8 +329,8 @@ def crumbs_html(crumbs: list[tuple[str, str]]) -> str:
 
 
 def cta_band(
-    heading="Have a software idea?",
-    copy="Tell us what your business needs and we'll help you determine the right software solution.",
+    heading="Discuss a software project",
+    copy="Tell us what the software needs to do. We will say whether we should build it, adapt something we already have, or leave it.",
     primary=("Request a Consultation", "/contact/"),
     secondary=("View Our Work", "/our-work/"),
 ) -> str:

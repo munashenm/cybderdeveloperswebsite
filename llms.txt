@@ -1,12 +1,13 @@
 # Cyber Developers
 
-> South African custom software development company specialising in business systems, web applications, mobile apps, workflow automation and software integration.
-
-Cyber Developers is not a cybersecurity company and is not CyberDevs.
+> Cyber Developers is a South African custom software development company building business systems, web applications, mobile apps, workflow automation and integrations.
 
 Primary message: Software Built Around Your Business.
 
 Site: https://www.cyberdevelopers.co.za/
+
+Entity: Cyber Developers (Pty) Ltd, South Africa. Office: 357 Oak Ave, Ferndale, Randburg. Email: sales@cyberdevelopers.co.za. Phone: 087 550 1813.
+Not a cybersecurity company. Custom software, business systems, web applications, mobile apps, workflow automation and integrations.
 
 ## Pages
 

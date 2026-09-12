@@ -32,16 +32,24 @@ def checks(items: list[str]) -> str:
 
 
 def cards(items: list[dict], cls="grid-3") -> str:
+    """Editorial rows. Kept for older call sites; prefer row_list for new pages."""
     out = []
     for it in items:
-        ic = icon(it.get("icon", "code"))
-        more = f'<p class="more">{esc(it.get("more", "Learn more"))} →</p>' if it.get("href") else ""
-        inner = f'<div class="icon-box">{ic}</div><h3>{esc(it["title"])}</h3><p>{esc(it["text"])}</p>{more}'
+        more = f'<span class="more">{esc(it.get("more", "Details"))}</span>' if it.get("href") else ""
+        inner = f'<h3>{esc(it["title"])}</h3><p>{esc(it["text"])}</p>{more}'
         if it.get("href"):
-            out.append(f'<a class="card" href="{it["href"]}">{inner}</a>')
+            out.append(f'<a href="{it["href"]}">{inner}</a>')
         else:
-            out.append(f'<article class="card">{inner}</article>')
-    return f'<div class="{cls}">{"".join(out)}</div>'
+            out.append(f"<article>{inner}</article>")
+    return f'<div class="row-list">{"".join(out)}</div>'
+
+
+def bullets(items: list[str]) -> str:
+    return "<ul>" + "".join(f"<li>{esc(i)}</li>" for i in items) + "</ul>"
+
+
+def tech_line(techs: list[str]) -> str:
+    return '<p class="tech-inline">' + " · ".join(esc(t) for t in techs) + "</p>"
 
 
 def homepage() -> None:
@@ -51,147 +59,102 @@ def homepage() -> None:
             "No. Cyber Developers is a custom software development company. We design and build business systems, web applications, mobile apps, workflow automation and integrations for organisations in South Africa.",
         ),
         (
-            "Are you the same company as CyberDevs?",
-            "No. Cyber Developers is a separate company. We develop custom software and business systems, and we publish under the name Cyber Developers at cyberdevelopers.co.za.",
-        ),
-        (
             "Do you only build websites?",
-            "No. Websites can be part of a project, but the core work is custom software: operational systems, portals, mobile apps, automation and integrations that match how a business actually runs.",
+            "A website can be part of a project. The usual brief is software people work in every day: records, approvals, billing, mobile capture and the APIs those things need.",
         ),
         (
-            "Can you customise an existing system rather than starting from scratch?",
-            "Yes. Many engagements start with a system we have already built — school management, workflow, logistics, municipality or similar — and adapt it to the organisation’s process, roles and reporting.",
+            "Do you always start from scratch?",
+            "Not if we already have a close fit. School management, workflow, logistics and municipal systems can be adapted. If the process is genuinely different, we design a new model.",
+        ),
+        (
+            "What happens after the system is live?",
+            "Hosting, backups, user issues and change requests are part of the work. Hours and response times are written into the project, not advertised as 24/7 for every client.",
         ),
     ]
     body = f"""
 <section class="hero"><div class="container hero-grid">
   <div>
-    <p class="eyebrow">Cyber Developers — Custom Software &amp; Business Systems South Africa</p>
+    <p class="eyebrow">Cyber Developers · South Africa</p>
     <h1>Software Built Around Your Business.</h1>
-    <p class="lead">Custom software, business systems, web applications and mobile apps developed for organisations across South Africa.</p>
+    <p class="lead">We design and build software around the way your organisation actually works — custom systems, web applications and mobile apps for South African organisations.</p>
     <div class="hero-actions">
       <a class="btn btn-primary btn-lg" href="/contact/" data-track="consultation_requested" data-track-location="hero">Discuss Your Project</a>
       <a class="btn btn-secondary btn-lg" href="/our-work/">View Our Work</a>
     </div>
-    <p class="hero-note">We build operational software — not generic marketing sites. If the work already happens on paper, spreadsheets or disconnected tools, that is usually where a custom system belongs.</p>
+    <p class="hero-note">If the work still lives in spreadsheets, paper files or three disconnected tools, that is usually the brief.</p>
   </div>
-  <aside class="hero-visual panel" aria-hidden="true">
-    <div class="panel-head"><span>Business system</span><span>Roles · workflow · records</span></div>
-    <div class="ui-window">
-      <div class="ui-bar"><i></i><i></i><i></i></div>
-      <div class="ui-rows">
-        <div class="ui-row"><b></b><span></span><i class="ui-chip"></i></div>
-        <div class="ui-row"><b></b><span></span><i class="ui-chip"></i></div>
-        <div class="ui-row"><b></b><span></span><i class="ui-chip"></i></div>
-        <div class="ui-row"><b></b><span></span><i class="ui-chip"></i></div>
-      </div>
-    </div>
-    <div class="ui-kpis">
-      <div class="kpi"><strong>Systems</strong><span>Built to process</span></div>
-      <div class="kpi"><strong>Web &amp; mobile</strong><span>Used in the field</span></div>
-      <div class="kpi"><strong>Integration</strong><span>APIs &amp; data</span></div>
-    </div>
+  <aside class="hero-systems">
+    <h2>Systems we have built</h2>
+    <a href="/our-work/school-lms/">School / College LMS<span>Students, fees, attendance, parents and staff</span></a>
+    <a href="/our-work/vayasa/">VayaSA<span>Ride sharing, bus and taxi bookings</span></a>
+    <a href="/our-work/fluxmove/">Fluxmove<span>Delivery bookings and verified drivers</span></a>
+    <a href="/our-work/tshira-workflow-system/">Tshira Workflow<span>Cases, field collection, review and invoicing</span></a>
+    <a href="/our-work/municipality-platform/">Municipality platform<span>Billing, faults, queues and resident services</span></a>
+    <a href="/our-work/lawyer-management-system/">Lawyer management<span>Clients, matters, documents and billing</span></a>
+    <a href="/our-work/">All work</a>
   </aside>
 </div></section>
 
-<section class="section section-alt" id="services"><div class="container">
-  <div class="section-head">
-    <p class="eyebrow">What we build</p>
-    <h2>Software that runs the work, not just the website.</h2>
-    <p>Each engagement starts with the business process. The product is a system people can log into, capture work in, and report from.</p>
+<section class="section" id="services"><div class="container split">
+  <div>
+    <h2>What we build</h2>
+    <p class="lead">Manage customers, documents, approvals, payments and reporting from one system — or connect the systems you already have.</p>
   </div>
-  {cards([
-    dict(icon="code", title="Custom Software Development", text="Applications designed around your operations, roles, data and reporting — not a template forced onto the business.", href="/services/custom-software-development/"),
-    dict(icon="layers", title="Business Management Systems", text="Multi-user systems for records, finance, staff, customers and day-to-day administration.", href="/services/business-systems/"),
-    dict(icon="globe", title="Web Applications", text="Browser-based applications and portals for staff, customers, students, citizens or partners.", href="/services/web-application-development/"),
-    dict(icon="phone", title="Mobile App Development", text="Mobile applications for field teams, drivers, customers and other users who work away from a desk.", href="/services/mobile-app-development/"),
-    dict(icon="flow", title="Workflow Automation", text="Structured case, task and approval flows that replace email chains and manual handovers.", href="/services/workflow-automation/"),
-    dict(icon="spark", title="AI & Business Automation", text="Practical assistants, document processing, reporting and integrations — used inside real systems, not as a slogan.", href="/services/ai-business-automation/"),
-    dict(icon="plug", title="Systems Integration", text="Connecting software, payments, SMS, identity and existing databases so information does not live in silos.", href="/services/systems-integration/"),
-  ])}
+  <div class="row-list">
+    <a href="/services/custom-software-development/"><h3>Custom software</h3><p>Applications modelled on your roles, records and exceptions.</p><span class="more">Details</span></a>
+    <a href="/services/business-systems/"><h3>Business systems</h3><p>Day-to-day administration: people, money, cases and reports.</p><span class="more">Details</span></a>
+    <a href="/services/web-application-development/"><h3>Web applications</h3><p>Portals for staff, customers, parents, citizens or partners.</p><span class="more">Details</span></a>
+    <a href="/services/mobile-app-development/"><h3>Mobile apps</h3><p>Field work, drivers and anyone who is not at a desk.</p><span class="more">Details</span></a>
+    <a href="/services/workflow-automation/"><h3>Workflow</h3><p>Named stages, owners and finance rules instead of email chains.</p><span class="more">Details</span></a>
+    <a href="/services/ai-business-automation/"><h3>AI &amp; automation</h3><p>Assistants, documents and reporting inside a real application.</p><span class="more">Details</span></a>
+    <a href="/services/systems-integration/"><h3>Integration</h3><p>Payments, SMS, identity and existing databases, wired in properly.</p><span class="more">Details</span></a>
+  </div>
 </div></section>
 
-<section class="section" id="solutions"><div class="container">
-  <div class="section-head">
-    <p class="eyebrow">Featured software solutions</p>
-    <h2>Systems we can provide or customise.</h2>
-    <p>These are commercial starting points based on software Cyber Developers has already designed. Features are adapted to the organisation, not promised as a one-size product brochure.</p>
+<section class="section section-alt" id="solutions"><div class="container">
+  <h2>Systems we can provide or customise</h2>
+  <p class="lead" style="margin:1rem 0 1.6rem">We build systems for schools, law firms, logistics companies, municipalities and other organisations with specialised workflows. The pages below describe software we already have, then fit to the organisation.</p>
+  <div class="row-list">
+    <a href="/solutions/school-management-system/"><h3>School management</h3><p>Students, guardians, attendance, fees, HR, SMS/email and reporting.</p><span class="more">See the system</span></a>
+    <a href="/solutions/law-firm-management-software/"><h3>Law firm management</h3><p>Clients, matters, documents, tasks, billing and permissions.</p><span class="more">See the system</span></a>
+    <a href="/solutions/funeral-parlour-management-software/"><h3>Funeral parlour software</h3><p>Administration software scoped to how the parlour actually runs.</p><span class="more">See the system</span></a>
+    <a href="/solutions/workflow-management-system/"><h3>Workflow management</h3><p>Cases, field capture, review, requisitions and invoicing.</p><span class="more">See the system</span></a>
+    <a href="/solutions/municipality-management-software/"><h3>Municipality platform</h3><p>Residents, billing, fault reporting, queues and notices.</p><span class="more">See the system</span></a>
+    <a href="/solutions/logistics-delivery-software/"><h3>Logistics &amp; delivery</h3><p>Bookings, driver checks, vehicle types and job status.</p><span class="more">See the system</span></a>
+    <a href="/solutions/custom-crm-development/"><h3>Custom CRM</h3><p>When the object is not a “lead” — repairs, learners, tickets, matters.</p><span class="more">See the system</span></a>
   </div>
-  {cards([
-    dict(title="School Management System", text="Students, guardians, attendance, academics, fees, HR, communication and reporting for South African schools and colleges.", href="/solutions/school-management-system/"),
-    dict(title="Law Firm Management Software", text="Client and case records, documents, tasks, billing, permissions and specialised legal workflows.", href="/solutions/law-firm-management-software/"),
-    dict(title="Funeral Parlour Management Software", text="Custom management software for funeral businesses, scoped to the processes the parlour actually runs.", href="/solutions/funeral-parlour-management-software/"),
-    dict(title="Workflow Management System", text="Multi-role case workflows, documents, provincial or team assignment, billing and audit history.", href="/solutions/workflow-management-system/"),
-    dict(title="Municipality Management Platform", text="Citizen services, billing, fault reporting, queues, notices and municipal administration in one platform.", href="/solutions/municipality-management-software/"),
-    dict(title="Logistics & Delivery Software", text="Bookings, driver verification, vehicle types, tracking status and admin review for delivery operations.", href="/solutions/logistics-delivery-software/"),
-    dict(title="Custom CRM Development", text="Customer, quoting, invoicing and service records built around how your team sells and supports.", href="/solutions/custom-crm-development/"),
-  ], "grid-3")}
-  <p><a class="section-link" href="/solutions/">All solutions</a></p>
 </div></section>
 
-<section class="section section-alt"><div class="container">
-  <div class="section-head">
-    <p class="eyebrow">Featured projects</p>
-    <h2>Real systems, described without invented results.</h2>
-    <p>Project pages summarise what was built and which technologies were used. They do not invent user counts, revenue figures or testimonials.</p>
-  </div>
-  <div class="grid-3">
-    <a class="card project-card" href="/our-work/vayasa/"><div class="visual"><span>VayaSA</span></div><div class="body"><span class="tag">Transport</span><h3>VayaSA</h3><p>Ride sharing and passenger transport marketplace for South Africa, including bus and taxi bookings.</p></div></a>
-    <a class="card project-card" href="/our-work/fluxmove/"><div class="visual"><span>Fluxmove</span></div><div class="body"><span class="tag">Logistics</span><h3>Fluxmove</h3><p>Nationwide delivery marketplace connecting customers with verified drivers across vehicle types.</p></div></a>
-    <a class="card project-card" href="/our-work/tshira-workflow-system/"><div class="visual"><span>Tshira</span></div><div class="body"><span class="tag">Workflow</span><h3>Tshira Workflow System</h3><p>Multi-province case workflow with field data collection, review, requisitions, expenses and invoicing.</p></div></a>
-    <a class="card project-card" href="/our-work/school-lms/"><div class="visual"><span>SchoolHub SA</span></div><div class="body"><span class="tag">Education</span><h3>School / College LMS</h3><p>School management platform with portals for admin, finance, teachers, students, parents and HR.</p></div></a>
-    <a class="card project-card" href="/our-work/municipality-platform/"><div class="visual"><span>Municipality</span></div><div class="body"><span class="tag">Government</span><h3>Municipality Platform</h3><p>Citizen and admin application for billing, issue reporting, queues, notices and resident services.</p></div></a>
-    <a class="card project-card" href="/our-work/lawyer-management-system/"><div class="visual"><span>Legal</span></div><div class="body"><span class="tag">Legal</span><h3>Lawyer Management System</h3><p>Practice software covering clients, cases, documents, tasks, billing and user permissions.</p></div></a>
-  </div>
-  <p><a class="section-link" href="/our-work/">See all work</a></p>
-</div></section>
-
-<section class="section"><div class="container">
-  <div class="section-head">
-    <p class="eyebrow">Industries</p>
-    <h2>Organisations we can serve.</h2>
-  </div>
-  <div class="grid-3">
-    {''.join(f'<div class="industry-item">{icon("layers")}<span>{esc(n)}</span></div>' for n in [
-      "Education","Legal","Government & Municipalities","Logistics","Transport","Retail","Professional Services","SMEs","Enterprise"
-    ])}
-  </div>
-  <p><a class="section-link" href="/industries/">Industries we work with</a></p>
-</div></section>
-
-<section class="section section-alt"><div class="container">
-  <div class="section-head">
-    <p class="eyebrow">Development process</p>
-    <h2>A straightforward path from idea to live system.</h2>
+<section class="section"><div class="container split">
+  <div>
+    <h2>How a project usually runs</h2>
+    <p>We start with the process, not a template. The sequence below is ordinary engineering, written down so nobody is surprised at go-live.</p>
   </div>
   <ol class="process">
-    <li><h3>Discovery</h3></li>
-    <li><h3>Planning</h3></li>
-    <li><h3>UI/UX &amp; Architecture</h3></li>
-    <li><h3>Development</h3></li>
-    <li><h3>Testing</h3></li>
-    <li><h3>Deployment</h3></li>
-    <li><h3>Support &amp; Maintenance</h3></li>
+    <li><h3>Discovery</h3><p>Who the users are, which records matter, which approvals exist.</p></li>
+    <li><h3>Planning</h3><p>Scope, sequence and what will wait for a later release.</p></li>
+    <li><h3>Interface and architecture</h3><p>Screens that match the jobs, and a data model that can survive them.</p></li>
+    <li><h3>Development</h3><p>Build against the process, with operators looking at it before it is frozen.</p></li>
+    <li><h3>Testing</h3><p>Failed payments, missing documents and permission edges — not only the demo path.</p></li>
+    <li><h3>Deployment</h3><p>Hosting, backups and accounts that people can actually use.</p></li>
+    <li><h3>Support</h3><p>Fixes and change requests after the first week of real use.</p></li>
   </ol>
 </div></section>
 
-<section class="section"><div class="container">
-  <div class="section-head">
-    <p class="eyebrow">Technology</p>
-    <h2>Tools used on real Cyber Developers systems.</h2>
-    <p>This list is limited to technologies present in our public engineering work and stack. It is not a catalogue of every platform on the market.</p>
-  </div>
+<section class="section section-alt"><div class="container">
+  <h2>Tools used on these systems</h2>
+  <p class="lead" style="margin:0.8rem 0 1.2rem">Listed only where they appear in our engineering work.</p>
   <div class="tech-row">{''.join(f'<span>{esc(t)}</span>' for t in TECHS)}</div>
 </div></section>
 
-<section class="section section-alt"><div class="container split">
+<section class="section"><div class="container split">
   <div>
-    <p class="eyebrow">Questions</p>
-    <h2>Clear answers before you enquire.</h2>
+    <h2>Before you enquire</h2>
+    <p>Short answers. If yours is not here, write it on the form.</p>
   </div>
   {faq_html(faqs)}
 </div></section>
-{cta_band()}
+{cta_band("Need a system your current software cannot provide?", "Describe the process. We will tell you whether to build, adapt, or leave it.")}
 """
     emit(
         "index.html",
@@ -210,38 +173,26 @@ def about_page() -> None:
     body = f"""
 <section class="page-hero"><div class="container">
   {crumbs_html([("/", "Home"), ("/about/", "About")])}
-  <p class="eyebrow">About Cyber Developers</p>
-  <h1>A South African software company that builds systems around the business.</h1>
-  <p class="lead">Cyber Developers develops custom software. We are not a cybersecurity firm, and we are not CyberDevs. The work is business systems, web applications, mobile apps, workflow automation and integration.</p>
+  <h1>About Cyber Developers</h1>
+  <p class="lead">Cyber Developers is a South African custom software development company building business systems, web applications, mobile apps, workflow automation and integrations.</p>
 </div></section>
-<section class="section"><div class="container split">
-  <div class="prose">
-    <h2>Who we are</h2>
-    <p>Cyber Developers is a custom software development company serving organisations in South Africa. We design and implement software that matches an organisation’s actual process — students and fees, cases and documents, deliveries and drivers, municipal services, or internal workflow.</p>
-    <p>The public site previously used marketing language that sounded like a generic digital agency. That is not the positioning. If you need a brochure website only, there are many agencies for that. If you need software people will work in every day, that is the brief we take.</p>
-    <h2>What we build</h2>
-    <p>Typical work includes multi-user web applications, role-based portals, operational mobile apps, billing and records, reporting, and connections to payments, SMS, identity and other APIs. Existing products such as the school management platform, VayaSA, Fluxmove, the Tshira workflow system and the municipality platform are the proof of that range.</p>
-    <h2>Who we serve</h2>
-    <p>Schools and colleges, professional firms, municipalities, logistics and transport operators, retailers, SMEs and larger organisations that need software fitted to their process rather than the other way around.</p>
-    <h2>Our approach</h2>
-    <p>Discovery first: who the users are, which records matter, which approvals exist, and which systems already hold data. Then architecture and interface, then development, testing, deployment, and ongoing support. We would rather ship a system that matches the work than a visually impressive demo that cannot be operated.</p>
-    <h2>Support and maintenance</h2>
-    <p>Live systems need hosting, backups, user support and change requests. We treat that as part of software delivery, not an afterthought. Specific support hours and response times are agreed per project rather than advertised as a blanket 24/7 claim.</p>
-  </div>
-  <aside class="card">
-    <h3>Identity, plainly</h3>
-    <p>Company name: Cyber Developers</p>
-    <p style="margin-top:0.8rem">Positioning: Custom software and business systems, South Africa</p>
-    <p style="margin-top:0.8rem">Primary message: Software built around your business.</p>
-    <p style="margin-top:1.2rem"><a class="btn btn-primary" href="/contact/">Discuss Your Project</a></p>
-  </aside>
+<section class="section"><div class="container prose">
+  <p>Most organisations already run on a mix of spreadsheets, email, WhatsApp, a website and one or two packages that never quite matched the job. That holds until volumes grow, staff change, or two systems need to share the same data.</p>
+  <p>We take over at that point. We map the real process, design the data, build the application, connect payments or documents where they are needed, and stay available when the first version has to change.</p>
+  <p>A public website can sit inside a product we build. The product is the work. We do not sell SEO retainers or social-media packages.</p>
+  <h2>How a project usually runs</h2>
+  <p>It starts with a conversation about the process you need on a computer — not a pitch deck. We look at the tools you already use, write down roles, statuses, documents and reports in language your staff can check, then build a first usable slice. Later versions add the rest. When we hand over, you should have hosting, backups, notes for your team and a way to change the system without starting again.</p>
+  <p>Support hours and response times are written into the project. We do not advertise 24/7 cover for every client.</p>
+  <h2>What this site does not claim</h2>
+  <p>We list systems we have actually built — including the school platform, VayaSA, Fluxmove, Tshira and the municipality platform. We do not publish client counts, awards, partner badges or testimonials we cannot show you. Where a product is still being finished, the case study says so.</p>
+  <p>Office: {esc(ADDRESS_LINE)}. Email: {esc(EMAIL)}. Phone: {esc(PHONE_DISPLAY)}.</p>
 </div></section>
-{cta_band()}
+{cta_band("Talk to a developer", "If the process lives in your heads and in spreadsheets, we can help you put it into software.")}
 """
     emit(
         "about/index.html",
         "About Cyber Developers | Custom Software South Africa",
-        "Cyber Developers is a South African custom software company building business systems, web applications, mobile apps and integrations. Not a cybersecurity firm, and not CyberDevs.",
+        "Cyber Developers is a South African custom software development company building business systems, web applications, mobile apps, workflow automation and integrations.",
         "/about/",
         [("/", "Home"), ("/about/", "About")],
         body,
@@ -253,7 +204,6 @@ def contact_page() -> None:
     body = f"""
 <section class="page-hero"><div class="container">
   {crumbs_html([("/", "Home"), ("/contact/", "Contact")])}
-  <p class="eyebrow">Contact</p>
   <h1>Discuss your project.</h1>
   <p class="lead">Tell us what the software needs to do. We will help you decide whether a custom system, a customised existing product, or a smaller integration is the right next step.</p>
 </div></section>
@@ -316,21 +266,22 @@ def industries_page() -> None:
         ("SMEs", "Smaller organisations still need reliable records, invoices and staff access — usually with a narrower scope and a clearer process."),
         ("Enterprise", "Larger organisations typically need integration, permissions, audit trails and staged delivery onto existing systems."),
     ]
-    cards_html = []
+    rows = []
     for b in blocks:
-        link = f'<p class="more">Related solution →</p>' if len(b) > 2 else ""
         href = b[2] if len(b) > 2 else None
-        inner = f"<h3>{esc(b[0])}</h3><p>{esc(b[1])}</p>{link}"
-        cards_html.append(f'<a class="card" href="{href}">{inner}</a>' if href else f'<article class="card">{inner}</article>')
+        more = f'<span class="more">See the system</span>' if href else ""
+        inner = f"<h3>{esc(b[0])}</h3><p>{esc(b[1])}</p>{more}"
+        rows.append(f'<a href="{href}">{inner}</a>' if href else f"<article>{inner}</article>")
     body = f"""
 <section class="page-hero"><div class="container">
   {crumbs_html([("/", "Home"), ("/industries/", "Industries")])}
-  <p class="eyebrow">Industries</p>
-  <h1>Software for the way each sector actually works.</h1>
-  <p class="lead">We do not claim to be a specialist agency in every industry. We do build systems whose data models, roles and workflows match the sector.</p>
+  <h1>Software for the way each sector actually works</h1>
+  <p class="lead">The software is different in each of these places. That is why we list them — not to fill a grid of industries.</p>
 </div></section>
-<section class="section"><div class="container"><div class="grid-3">{''.join(cards_html)}</div></div></section>
-{cta_band()}
+<section class="section"><div class="container" style="max-width:48rem">
+  <div class="row-list">{''.join(rows)}</div>
+</div></section>
+{cta_band("Talk about your organisation", "If your sector is not listed, that can still be a fit. Specialised workflows are the work we take.")}
 """
     emit(
         "industries/index.html",

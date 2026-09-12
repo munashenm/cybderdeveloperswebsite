@@ -5,8 +5,8 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from site_lib import crumbs_html, cta_band, enquiry_form, faq_html, service_schema, faq_schema, esc
-from generate_core import emit, checks
+from site_lib import crumbs_html, enquiry_form, faq_html, service_schema, faq_schema, esc
+from generate_core import emit, bullets
 
 
 def solution_page(slug, name, h1, title, description, intro, capabilities, notes, faqs, related, cta="Request Demo"):
@@ -15,7 +15,6 @@ def solution_page(slug, name, h1, title, description, intro, capabilities, notes
     body = f"""
 <section class="page-hero"><div class="container">
   {crumbs_html([("/", "Home"), ("/solutions/", "Solutions"), (canonical, name)])}
-  <p class="eyebrow">Solution</p>
   <h1>{esc(h1)}</h1>
   <p class="lead">{esc(intro)}</p>
   <div class="hero-actions">
@@ -23,31 +22,18 @@ def solution_page(slug, name, h1, title, description, intro, capabilities, notes
     <a class="btn btn-secondary" href="/contact/">Discuss Your Project</a>
   </div>
 </div></section>
-<section class="section"><div class="container split">
-  <div class="prose">
-    <h2>What this software is for</h2>
-    <p>{esc(intro)}</p>
-    <h2>Capabilities</h2>
-    {checks(capabilities)}
-    {notes}
-  </div>
-  <aside>
-    <article class="card">
-      <h3>Request a demo</h3>
-      <p>Describe the organisation and we will show the relevant system, or confirm what still needs to be built.</p>
-      <p style="margin-top:1rem"><a class="btn btn-primary" href="/contact/?intent=demo" data-track="demo_requested">Request Demo</a></p>
-    </article>
-    <article class="card" style="margin-top:1rem">
-      <h3>Related work</h3>
-      <ul class="prose">{rel_work}</ul>
-    </article>
-  </aside>
+<section class="section"><div class="container prose">
+  <h2>Core modules</h2>
+  {bullets(capabilities)}
+  {notes}
+  <h2>Related</h2>
+  <ul>{rel_work}</ul>
 </div></section>
 <section class="section section-alt"><div class="container split"><div><h2>Questions</h2></div>{faq_html(faqs)}</div></section>
 <section class="section"><div class="container split">
   <div>
     <h2>Request a demo or a scoped build</h2>
-    <p class="muted">Use the form to tell us which processes matter. Budget is optional.</p>
+    <p class="muted">Describe the organisation and the processes that matter. Budget is optional. We will show the closest system, or confirm what still needs to be built.</p>
   </div>
   {enquiry_form("demo_request", "Demo request | Cyber Developers", cta)}
 </div></section>
@@ -75,22 +61,20 @@ def build_solutions():
         f"""
 <section class="page-hero"><div class="container">
   {crumbs_html([("/", "Home"), ("/solutions/", "Solutions")])}
-  <p class="eyebrow">Solutions</p>
-  <h1>Sector systems you can start from, then fit to the organisation.</h1>
-  <p class="lead">These pages describe software we can provide or customise. Where a live product exists, capabilities are taken from that system. Where a private system is not in this public repository, we say so and keep the feature list conservative.</p>
+  <h1>Solutions</h1>
+  <p class="lead">These are systems designed around a real operating model — not a list of industries. Open a page for the problem, the modules, and the case study where one exists. Where a private system is not in this public repository, the feature list stays conservative.</p>
 </div></section>
-<section class="section"><div class="container">
-  <div class="grid-3">
-    <a class="card" href="/solutions/school-management-system/"><h3>School Management System</h3><p>South African schools, colleges and TVETs.</p></a>
-    <a class="card" href="/solutions/law-firm-management-software/"><h3>Law Firm Management Software</h3><p>Clients, cases, documents, billing and permissions.</p></a>
-    <a class="card" href="/solutions/funeral-parlour-management-software/"><h3>Funeral Parlour Management</h3><p>Custom software for funeral businesses.</p></a>
-    <a class="card" href="/solutions/workflow-management-system/"><h3>Workflow Management System</h3><p>Cases, roles, documents and finance rules.</p></a>
-    <a class="card" href="/solutions/municipality-management-software/"><h3>Municipality Management Software</h3><p>Citizen services and municipal administration.</p></a>
-    <a class="card" href="/solutions/logistics-delivery-software/"><h3>Logistics &amp; Delivery Software</h3><p>Bookings, drivers and vehicle types.</p></a>
-    <a class="card" href="/solutions/custom-crm-development/"><h3>Custom CRM Development</h3><p>When Salesforce or Dynamics is the wrong shape.</p></a>
+<section class="section"><div class="container" style="max-width:48rem">
+  <div class="row-list">
+    <a href="/solutions/school-management-system/"><h3>School Management System</h3><p>Students, guardians, attendance, fees, HR, SMS/email and reporting for South African schools, colleges and TVETs.</p><span class="more">See the system</span></a>
+    <a href="/solutions/law-firm-management-software/"><h3>Law Firm Management Software</h3><p>Clients, cases, documents, tasks, billing, permissions and RAF workflow where it applies.</p><span class="more">See the system</span></a>
+    <a href="/solutions/funeral-parlour-management-software/"><h3>Funeral Parlour Management</h3><p>Administration software scoped to how the parlour actually runs.</p><span class="more">See the system</span></a>
+    <a href="/solutions/workflow-management-system/"><h3>Workflow Management System</h3><p>Cases, field capture, review, requisitions, expenses and invoicing.</p><span class="more">See the system</span></a>
+    <a href="/solutions/municipality-management-software/"><h3>Municipality Management Software</h3><p>Residents, billing, fault reporting, queues, notices and administration.</p><span class="more">See the system</span></a>
+    <a href="/solutions/logistics-delivery-software/"><h3>Logistics &amp; Delivery Software</h3><p>Bookings, driver checks, vehicle types and job status.</p><span class="more">See the system</span></a>
+    <a href="/solutions/custom-crm-development/"><h3>Custom CRM Development</h3><p>When the object is not a lead — repairs, learners, tickets, matters.</p><span class="more">See the system</span></a>
   </div>
 </div></section>
-{cta_band("Need a system in this list?", "Request a demo of the closest product, or a discovery conversation if your process is different.")}
 """,
         current="/solutions/",
         priority="0.8",
@@ -171,7 +155,7 @@ def build_solutions():
             ("Can you list every screen?", "Not from this public repository. A demonstration is the honest way to see the current build."),
             ("Will you copy a competitor’s feature page?", "No. Features are those the system actually has or that we agree to build."),
         ],
-        [("Our Work", "/our-work/"), ("Business systems", "/services/business-systems/")],
+        [("Funeral Parlour System", "/our-work/funeral-parlour-system/"), ("Business systems", "/services/business-systems/")],
     )
 
     solution_page(
