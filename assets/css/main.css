@@ -29,7 +29,7 @@
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-html { scroll-behavior: smooth; color-scheme: dark; }
+html { scroll-behavior: smooth; color-scheme: dark; scroll-padding-top: 5.5rem; }
 
 body {
   font-family: var(--font);
