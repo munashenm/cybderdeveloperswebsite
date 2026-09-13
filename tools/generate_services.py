@@ -10,6 +10,7 @@ from site_lib import (
     service_schema, faq_schema,
 )
 from generate_core import emit, bullets, cards
+from graphics import capabilities_editorial
 
 
 def service_page(slug, nav_title, h1, title, description, intro, problems, capabilities, approach, techs, projects, faqs, extra_body=""):
@@ -71,17 +72,7 @@ def build_services():
   <h1>Services</h1>
   <p class="lead">Named pieces of work you can send to a colleague. They overlap on purpose: a school system is custom software, a web application, and often an integration job as well. If you are unsure which label fits, start with custom software or describe the process you want to replace.</p>
 </div></section>
-<section class="section"><div class="container" style="max-width:48rem">
-  {cards([
-    dict(title="Custom Software Development", text="Applications modelled on your process, users and data.", href="/services/custom-software-development/"),
-    dict(title="Web Application Development", text="Portals and operational web apps for staff, customers and partners.", href="/services/web-application-development/"),
-    dict(title="Mobile App Development", text="Apps for field work, drivers, customers and on-the-go administration.", href="/services/mobile-app-development/"),
-    dict(title="Business Systems", text="Records, finance, people and day-to-day operations in one place.", href="/services/business-systems/"),
-    dict(title="Workflow Automation", text="Cases, approvals, handovers and an audit trail instead of inbox chaos.", href="/services/workflow-automation/"),
-    dict(title="AI & Business Automation", text="Assistants, document processing, reporting and API-based automation inside a real application.", href="/services/ai-business-automation/"),
-    dict(title="Systems Integration", text="Payments, SMS, identity, databases and third-party APIs connected cleanly.", href="/services/systems-integration/"),
-  ])}
-</div></section>
+{capabilities_editorial().replace('id="services"', 'id="service-list"')}
 """,
         current="/services/",
         priority="0.8",

@@ -7,6 +7,21 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from site_lib import crumbs_html, cta_band, esc
 from generate_core import emit, bullets
+from graphics import (
+    showcase, more_work,
+    vayasa_map, fluxmove_map, tshira_map, school_map,
+    lawyer_map, funeral_map, municipality_map,
+)
+
+CASE_VISUAL = {
+    "vayasa": vayasa_map,
+    "fluxmove": fluxmove_map,
+    "tshira-workflow-system": tshira_map,
+    "school-lms": school_map,
+    "lawyer-management-system": lawyer_map,
+    "funeral-parlour-system": funeral_map,
+    "municipality-platform": municipality_map,
+}
 
 
 def case_study(slug, title, h1, description, tag, overview, problem, solution, features, tech, approach, status, extras="", live_url=None):
@@ -19,6 +34,8 @@ def case_study(slug, title, h1, description, tag, overview, problem, solution, f
         '<p class="shot-note">Interface screenshots for this page are still outstanding. '
         "Request a walkthrough if you need to see the live screens.</p>"
     )
+    vis_fn = CASE_VISUAL.get(slug)
+    vis = f'<div class="case-visual">{vis_fn()}</div>' if vis_fn else ""
     body = f"""
 <section class="page-hero"><div class="container">
   {crumbs_html([("/", "Home"), ("/our-work/", "Our Work"), (canonical, title)])}
@@ -26,7 +43,8 @@ def case_study(slug, title, h1, description, tag, overview, problem, solution, f
   <h1>{esc(h1)}</h1>
   <p class="lead">{esc(overview)}</p>
 </div></section>
-<section class="section"><div class="container prose">
+<section class="section"><div class="container case-layout">
+  <div class="prose">
   <h2>What we built</h2>
   <p>{esc(solution)}</p>
   <h2>Why it was needed</h2>
@@ -43,6 +61,8 @@ def case_study(slug, title, h1, description, tag, overview, problem, solution, f
   <p>{esc(status)}</p>
   {extras}
   <p style="margin-top:2rem"><a class="btn btn-primary" href="/contact/">Discuss a similar project</a></p>
+  </div>
+  {vis}
 </div></section>
 """
     emit(
@@ -70,17 +90,23 @@ def build_work():
   <h1>Our work</h1>
   <p class="lead">Systems Cyber Developers has designed and built. Each page describes what the software does, why it was needed, and how it works. We do not invent user counts, revenue figures or testimonials.</p>
 </div></section>
-<section class="section"><div class="container" style="max-width:50rem">
-  <div class="row-list">
-    <a href="/our-work/vayasa/"><h3>VayaSA</h3><p>Ride sharing, bus tickets and taxi seats with South African payments and verification.</p><span class="more">Case study</span></a>
-    <a href="/our-work/fluxmove/"><h3>Fluxmove</h3><p>Freight bookings, driver onboarding and vehicle types for deliveries across South Africa.</p><span class="more">Case study</span></a>
-    <a href="/our-work/tshira-workflow-system/"><h3>Tshira Workflow System</h3><p>Provincial case assignment, field collection, review, requisitions, expenses and invoicing.</p><span class="more">Case study</span></a>
-    <a href="/our-work/school-lms/"><h3>School / College LMS</h3><p>Multi-portal school management: academics, fees, HR, communication and backups.</p><span class="more">Case study</span></a>
-    <a href="/our-work/lawyer-management-system/"><h3>Lawyer Management System</h3><p>Clients, cases, documents, tasks, billing and permissions, including RAF where it applies.</p><span class="more">Case study</span></a>
-    <a href="/our-work/funeral-parlour-system/"><h3>Funeral Parlour System</h3><p>Custom management software for funeral businesses. Feature detail is confirmed in a demo.</p><span class="more">Case study</span></a>
-    <a href="/our-work/municipality-platform/"><h3>Municipality Platform</h3><p>Citizen and admin software for billing, issues, queues, notices and resident services.</p><span class="more">Case study</span></a>
-  </div>
-  <p class="muted" style="margin-top:2rem">A separate student accommodation management codebase also exists. Ask if that operational area is relevant.</p>
+<section class="section"><div class="container">
+  {showcase("/our-work/vayasa/", "VayaSA", "Ride-hailing & transport platform",
+            "Ride sharing, bus tickets and taxi seats between cities, with South African payments and driver verification.",
+            ["Web App", "Mobile Experience", "Payments", "Driver Management", "Booking System"],
+            vayasa_map())}
+  {showcase("/our-work/fluxmove/", "Fluxmove", "Delivery marketplace",
+            "Customers book a move; verified drivers with bakkies, vans or trucks accept jobs.",
+            ["Web App", "Driver App", "Verification", "Vehicle Types"],
+            fluxmove_map(), reverse=True)}
+  {showcase("/our-work/tshira-workflow-system/", "Tshira Workflow System", "Case workflow",
+            "Provincial assignment, field collection, review, requisitions, expenses and invoicing.",
+            ["Workflow", "Roles", "Documents", "Invoicing"],
+            tshira_map())}
+</div></section>
+{more_work()}
+<section class="section"><div class="container">
+  <p class="muted">A separate student accommodation management codebase also exists. Ask if that operational area is relevant.</p>
 </div></section>
 {cta_band("Need something in this shape?", "Describe the process. We will tell you whether an existing system is close, or whether to design a new one.")}
 """,

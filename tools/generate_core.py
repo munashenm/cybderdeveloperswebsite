@@ -11,6 +11,10 @@ from site_lib import (
     icon, esc, render_page, write_page, redirect_page, crumbs_html, cta_band,
     enquiry_form, faq_html, service_schema, faq_schema, article_schema,
 )
+from graphics import (
+    hero_stage, tech_banner, selected_work, more_work, capabilities_editorial,
+    architecture, engineering_matrix, industries_band, process_flow,
+)
 
 TODAY = date.today().isoformat()
 SITEMAP_URLS: list[tuple[str, str]] = []
@@ -76,75 +80,23 @@ def homepage() -> None:
   <div>
     <p class="eyebrow">Cyber Developers · South Africa</p>
     <h1>Software Built Around Your Business.</h1>
-    <p class="lead">We design and build software around the way your organisation actually works — custom systems, web applications and mobile apps for South African organisations.</p>
+    <p class="lead">Custom software, business systems, web applications and mobile apps developed for organisations across South Africa.</p>
     <div class="hero-actions">
       <a class="btn btn-primary btn-lg" href="/contact/" data-track="consultation_requested" data-track-location="hero">Discuss Your Project</a>
       <a class="btn btn-secondary btn-lg" href="/our-work/">View Our Work</a>
     </div>
     <p class="hero-note">If the work still lives in spreadsheets, paper files or three disconnected tools, that is usually the brief.</p>
   </div>
-  <aside class="hero-systems">
-    <h2>Systems we have built</h2>
-    <a href="/our-work/school-lms/">School / College LMS<span>Students, fees, attendance, parents and staff</span></a>
-    <a href="/our-work/vayasa/">VayaSA<span>Ride sharing, bus and taxi bookings</span></a>
-    <a href="/our-work/fluxmove/">Fluxmove<span>Delivery bookings and verified drivers</span></a>
-    <a href="/our-work/tshira-workflow-system/">Tshira Workflow<span>Cases, field collection, review and invoicing</span></a>
-    <a href="/our-work/municipality-platform/">Municipality platform<span>Billing, faults, queues and resident services</span></a>
-    <a href="/our-work/lawyer-management-system/">Lawyer management<span>Clients, matters, documents and billing</span></a>
-    <a href="/our-work/">All work</a>
-  </aside>
+  <aside>{hero_stage()}</aside>
 </div></section>
-
-<section class="section" id="services"><div class="container">
-  <h2>What we build</h2>
-  <p class="lead" style="margin:1rem 0 1.6rem">Manage customers, documents, approvals, payments and reporting from one system — or connect the systems you already have.</p>
-  <div class="row-list">
-    <a href="/services/custom-software-development/"><h3>Custom software</h3><p>Applications modelled on your roles, records and exceptions.</p><span class="more">Details</span></a>
-    <a href="/services/business-systems/"><h3>Business systems</h3><p>Day-to-day administration: people, money, cases and reports.</p><span class="more">Details</span></a>
-    <a href="/services/web-application-development/"><h3>Web applications</h3><p>Portals for staff, customers, parents, citizens or partners.</p><span class="more">Details</span></a>
-    <a href="/services/mobile-app-development/"><h3>Mobile apps</h3><p>Field work, drivers and anyone who is not at a desk.</p><span class="more">Details</span></a>
-    <a href="/services/workflow-automation/"><h3>Workflow</h3><p>Named stages, owners and finance rules instead of email chains.</p><span class="more">Details</span></a>
-    <a href="/services/ai-business-automation/"><h3>AI &amp; automation</h3><p>Assistants, documents and reporting inside a real application.</p><span class="more">Details</span></a>
-    <a href="/services/systems-integration/"><h3>Integration</h3><p>Payments, SMS, identity and existing databases, wired in properly.</p><span class="more">Details</span></a>
-  </div>
-</div></section>
-
-<section class="section section-alt" id="solutions"><div class="container">
-  <h2>Systems we can provide or customise</h2>
-  <p class="lead" style="margin:1rem 0 1.6rem">We build systems for schools, law firms, logistics companies, municipalities and other organisations with specialised workflows. The pages below describe software we already have, then fit to the organisation.</p>
-  <div class="row-list">
-    <a href="/solutions/school-management-system/"><h3>School management</h3><p>Students, guardians, attendance, fees, HR, SMS/email and reporting.</p><span class="more">See the system</span></a>
-    <a href="/solutions/law-firm-management-software/"><h3>Law firm management</h3><p>Clients, matters, documents, tasks, billing and permissions.</p><span class="more">See the system</span></a>
-    <a href="/solutions/funeral-parlour-management-software/"><h3>Funeral parlour software</h3><p>Administration software scoped to how the parlour actually runs.</p><span class="more">See the system</span></a>
-    <a href="/solutions/workflow-management-system/"><h3>Workflow management</h3><p>Cases, field capture, review, requisitions and invoicing.</p><span class="more">See the system</span></a>
-    <a href="/solutions/municipality-management-software/"><h3>Municipality platform</h3><p>Residents, billing, fault reporting, queues and notices.</p><span class="more">See the system</span></a>
-    <a href="/solutions/logistics-delivery-software/"><h3>Logistics &amp; delivery</h3><p>Bookings, driver checks, vehicle types and job status.</p><span class="more">See the system</span></a>
-    <a href="/solutions/custom-crm-development/"><h3>Custom CRM</h3><p>When the object is not a “lead” — repairs, learners, tickets, matters.</p><span class="more">See the system</span></a>
-  </div>
-</div></section>
-
-<section class="section"><div class="container split">
-  <div>
-    <h2>How a project usually runs</h2>
-    <p>We start with the process, not a template. The sequence below is ordinary engineering, written down so nobody is surprised at go-live.</p>
-  </div>
-  <ol class="process">
-    <li><h3>Discovery</h3><p>Who the users are, which records matter, which approvals exist.</p></li>
-    <li><h3>Planning</h3><p>Scope, sequence and what will wait for a later release.</p></li>
-    <li><h3>Interface and architecture</h3><p>Screens that match the jobs, and a data model that can survive them.</p></li>
-    <li><h3>Development</h3><p>Build against the process, with operators looking at it before it is frozen.</p></li>
-    <li><h3>Testing</h3><p>Failed payments, missing documents and permission edges — not only the demo path.</p></li>
-    <li><h3>Deployment</h3><p>Hosting, backups and accounts that people can actually use.</p></li>
-    <li><h3>Support</h3><p>Fixes and change requests after the first week of real use.</p></li>
-  </ol>
-</div></section>
-
-<section class="section section-alt"><div class="container">
-  <h2>Tools used on these systems</h2>
-  <p class="lead" style="margin:0.8rem 0 1.2rem">Listed only where they appear in our engineering work.</p>
-  <div class="tech-row">{''.join(f'<span>{esc(t)}</span>' for t in TECHS)}</div>
-</div></section>
-
+{tech_banner()}
+{selected_work()}
+{capabilities_editorial()}
+{architecture()}
+{engineering_matrix()}
+{industries_band()}
+{process_flow()}
+{more_work()}
 <section class="section"><div class="container split">
   <div>
     <h2>Before you enquire</h2>
@@ -273,10 +225,21 @@ def industries_page() -> None:
     body = f"""
 <section class="page-hero"><div class="container">
   {crumbs_html([("/", "Home"), ("/industries/", "Industries")])}
-  <h1>Software for the way each sector actually works</h1>
+  <h1>Software for organisations with real operational complexity</h1>
   <p class="lead">The software is different in each of these places. That is why we list them — not to fill a grid of industries.</p>
 </div></section>
-<section class="section"><div class="container" style="max-width:48rem">
+<section class="section"><div class="container">
+  <nav class="industry-band" aria-label="Sectors">
+    <a href="/solutions/school-management-system/">Education</a>
+    <a href="/solutions/law-firm-management-software/">Legal</a>
+    <a href="/solutions/municipality-management-software/">Government</a>
+    <a href="/solutions/logistics-delivery-software/">Logistics</a>
+    <a href="/our-work/vayasa/">Transport</a>
+    <a href="/industries/">Retail</a>
+    <a href="/industries/">Professional services</a>
+  </nav>
+</div></section>
+<section class="section section-alt"><div class="container" style="max-width:48rem">
   <div class="row-list">{''.join(rows)}</div>
 </div></section>
 {cta_band("Talk about your organisation", "If your sector is not listed, that can still be a fit. Specialised workflows are the work we take.")}

@@ -60,6 +60,20 @@
       });
     });
 
+    var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (!reduce && "IntersectionObserver" in window) {
+      document.documentElement.classList.add("motion");
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-in");
+            io.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.12, rootMargin: "0px 0px -8% 0px" });
+      document.querySelectorAll(".reveal").forEach(function (el) { io.observe(el); });
+    }
+
     var params = new URLSearchParams(window.location.search);
     if (params.get("intent") === "demo") {
       document.querySelectorAll("form[data-enquiry]").forEach(function (form) {

@@ -236,6 +236,7 @@ def head(
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="{asset(prefix, 'css/main.css')}">
+  <link rel="stylesheet" href="{asset(prefix, 'css/premium.css')}">
   {schema_tags}
 </head>
 """
