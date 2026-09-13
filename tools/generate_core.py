@@ -14,6 +14,8 @@ from site_lib import (
 from graphics import (
     hero_stage, tech_banner, selected_work, more_work, capabilities_editorial,
     architecture, engineering_matrix, industries_band, process_flow,
+    school_map, lawyer_map, municipality_map, fluxmove_map, vayasa_map,
+    retail_map, professional_map, feature_block, ops_flow,
 )
 
 TODAY = date.today().isoformat()
@@ -205,44 +207,89 @@ def contact_page() -> None:
 
 
 def industries_page() -> None:
-    blocks = [
-        ("Education", "Schools, colleges, TVETs and training centres need student records, guardians, attendance, fees and staff administration in one place.", "/solutions/school-management-system/"),
-        ("Legal", "Practices need clients, cases, documents, tasks, billing and controlled access — including specialised workflows where they apply.", "/solutions/law-firm-management-software/"),
-        ("Government & Municipalities", "Citizen portals, billing, fault reporting, queues and notices require role-based systems, not a static municipal website.", "/solutions/municipality-management-software/"),
-        ("Logistics", "Delivery operations need bookings, driver onboarding, vehicle types, status tracking and admin review.", "/solutions/logistics-delivery-software/"),
-        ("Transport", "Ride sharing, bus and taxi booking, driver verification and payments are software problems as much as operations problems.", "/our-work/vayasa/"),
-        ("Retail", "Inventory, invoicing, customer records and store processes can be modelled as a custom system when off-the-shelf tools do not fit."),
-        ("Professional Services", "Consultancies and similar firms often need workflow, documents, billing and multi-role review rather than a generic CRM."),
-        ("SMEs", "Smaller organisations still need reliable records, invoices and staff access — usually with a narrower scope and a clearer process."),
-        ("Enterprise", "Larger organisations typically need integration, permissions, audit trails and staged delivery onto existing systems."),
-    ]
-    rows = []
-    for b in blocks:
-        href = b[2] if len(b) > 2 else None
-        more = f'<span class="more">See the system</span>' if href else ""
-        inner = f"<h3>{esc(b[0])}</h3><p>{esc(b[1])}</p>{more}"
-        rows.append(f'<a href="{href}">{inner}</a>' if href else f"<article>{inner}</article>")
     body = f"""
-<section class="page-hero"><div class="container">
-  {crumbs_html([("/", "Home"), ("/industries/", "Industries")])}
-  <h1>Software for organisations with real operational complexity</h1>
-  <p class="lead">The software is different in each of these places. That is why we list them — not to fill a grid of industries.</p>
+<section class="page-hero"><div class="container page-hero-grid">
+  <div>
+    {crumbs_html([("/", "Home"), ("/industries/", "Industries")])}
+    <h1>Software for organisations with real operational complexity</h1>
+    <p class="lead">Every industry manages different records, approvals, workflows and responsibilities. We build systems around those processes.</p>
+    <p class="hero-note">The software is different in each of these places. That is why we list them — not to fill a grid of industries.</p>
+    <div class="hero-actions">
+      <a class="btn btn-primary" href="/contact/">Discuss Your Project</a>
+      <a class="btn btn-secondary" href="/solutions/">View Solutions</a>
+    </div>
+  </div>
+  <aside class="page-hero-visual reveal">
+    <p class="eyebrow">From process to system</p>
+    {ops_flow(["Records", "Approvals", "Workflow", "Payments", "Reporting"])}
+  </aside>
 </div></section>
 <section class="section"><div class="container">
-  <nav class="industry-band" aria-label="Sectors">
-    <a href="/solutions/school-management-system/">Education</a>
-    <a href="/solutions/law-firm-management-software/">Legal</a>
-    <a href="/solutions/municipality-management-software/">Government</a>
-    <a href="/solutions/logistics-delivery-software/">Logistics</a>
-    <a href="/our-work/vayasa/">Transport</a>
-    <a href="/industries/">Retail</a>
-    <a href="/industries/">Professional services</a>
+  <nav class="industry-band reveal" aria-label="Sectors">
+    <a href="#education">Education</a>
+    <a href="#legal">Legal</a>
+    <a href="#government">Government</a>
+    <a href="#logistics">Logistics</a>
+    <a href="#transport">Transport</a>
+    <a href="#retail">Retail</a>
+    <a href="#professional">Professional services</a>
   </nav>
 </div></section>
-<section class="section section-alt"><div class="container" style="max-width:48rem">
-  <div class="row-list">{''.join(rows)}</div>
+<section class="section section-alt" id="education"><div class="container">
+  {feature_block("/solutions/school-management-system/", "Education", "Schools, colleges and TVETs",
+                 "Schools, colleges and training institutions need one place for students, attendance, guardians, fees and staff administration. Independent schools, colleges and training centres that split academics, fees and parent communication across different tools cannot answer a simple question from one record.",
+                 ["Students", "Attendance", "Fees", "Guardians", "HR"],
+                 school_map(), "View Education Solutions")}
 </div></section>
-{cta_band("Talk about your organisation", "If your sector is not listed, that can still be a fit. Specialised workflows are the work we take.")}
+<section class="section" id="legal"><div class="container">
+  {feature_block("/solutions/law-firm-management-software/", "Legal", "Law firms and practices",
+                 "Law firms need structured client, matter, document and billing workflows. Practices fail operationally when files, deadlines and billing live in different places, and when every user has the same access.",
+                 ["Clients", "Matters", "Documents", "Billing", "Permissions"],
+                 lawyer_map(), "View Legal Software", reverse=True)}
+</div></section>
+<section class="section section-alt" id="government"><div class="container">
+  {feature_block("/solutions/municipality-management-software/", "Government & Municipalities", "Local government",
+                 "Citizen portals, billing, fault reporting, queues and notices require role-based systems, not a static municipal website. Residents still queue, phone or arrive in person for issues that a verified account could track.",
+                 ["Residents", "Billing", "Faults", "Queues", "Notices"],
+                 municipality_map(), "View Municipality Software")}
+</div></section>
+<section class="section" id="logistics"><div class="container">
+  {feature_block("/solutions/logistics-delivery-software/", "Logistics", "Delivery operations",
+                 "Delivery operations need bookings, driver onboarding, vehicle types, status tracking and admin review. Moving goods across South Africa is a matching problem as much as a transport problem.",
+                 ["Bookings", "Drivers", "Vehicles", "Status"],
+                 fluxmove_map(), "View Logistics Software", reverse=True)}
+</div></section>
+<section class="section section-alt" id="transport"><div class="container">
+  {feature_block("/our-work/vayasa/", "Transport", "Ride-hailing and passenger movement",
+                 "Ride sharing, bus and taxi booking, driver verification and payments are software problems as much as operations problems. Intercity passenger movement mixes informal ranks, operators and private cars.",
+                 ["Passenger", "Driver", "Operators", "Payments"],
+                  vayasa_map(), "View VayaSA")}
+</div></section>
+<section class="section" id="retail"><div class="container">
+  {feature_block("/solutions/custom-crm-development/", "Retail", "Stores and inventory",
+                 "Inventory, invoicing, customer records and store processes can be modelled as a custom system when off-the-shelf tools do not fit.",
+                 ["Stock", "Sales", "Customers", "Invoices"],
+                 retail_map(), "View Custom CRM", reverse=True,
+                 extra_links=[("Business systems", "/services/business-systems/")])}
+</div></section>
+<section class="section section-alt" id="professional"><div class="container">
+  {feature_block("/solutions/workflow-management-system/", "Professional services", "Consultancies and similar firms",
+                 "Consultancies and similar firms often need workflow, documents, billing and multi-role review rather than a generic CRM.",
+                 ["Workflow", "Documents", "Billing", "Review"],
+                 professional_map(), "View Workflow Management",
+                 extra_links=[("Custom CRM", "/solutions/custom-crm-development/")])}
+</div></section>
+<section class="section"><div class="container split">
+  <article class="reveal">
+    <h2>SMEs</h2>
+    <p>Smaller organisations still need reliable records, invoices and staff access — usually with a narrower scope and a clearer process.</p>
+  </article>
+  <article class="reveal">
+    <h2>Enterprise</h2>
+    <p>Larger organisations typically need integration, permissions, audit trails and staged delivery onto existing systems.</p>
+  </article>
+</div></section>
+{cta_band("Talk about your organisation", "If your sector is not listed, that can still be a fit. Specialised workflows are the work we take.", primary=("Discuss Your Project", "/contact/"))}
 """
     emit(
         "industries/index.html",

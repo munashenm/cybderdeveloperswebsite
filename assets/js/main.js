@@ -74,6 +74,21 @@
       document.querySelectorAll(".reveal").forEach(function (el) { io.observe(el); });
     }
 
+    var filterBar = document.querySelector("[data-kc-filters]");
+    if (filterBar) {
+      filterBar.addEventListener("click", function (e) {
+        var btn = e.target.closest("[data-filter]");
+        if (!btn) return;
+        var cat = btn.getAttribute("data-filter");
+        filterBar.querySelectorAll("[data-filter]").forEach(function (b) {
+          b.setAttribute("aria-pressed", b === btn ? "true" : "false");
+        });
+        document.querySelectorAll("[data-cat]").forEach(function (el) {
+          el.hidden = cat !== "all" && el.getAttribute("data-cat") !== cat;
+        });
+      });
+    }
+
     var params = new URLSearchParams(window.location.search);
     if (params.get("intent") === "demo") {
       document.querySelectorAll("form[data-enquiry]").forEach(function (form) {

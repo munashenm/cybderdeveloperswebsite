@@ -282,6 +282,7 @@ def showcase(
     tag_list: list[str],
     visual: str,
     reverse: bool = False,
+    cta: str = "View Case Study",
 ) -> str:
     cls = _cls("showcase", "reverse" if reverse else "", "reveal")
     return f"""<a class="{cls}" href="{href}">
@@ -291,7 +292,7 @@ def showcase(
     <h3>{esc(name)}</h3>
     <p>{esc(copy)}</p>
     {tags(tag_list)}
-    <span class="more">View Case Study</span>
+    <span class="more">{esc(cta)}</span>
   </div>
 </a>"""
 
@@ -543,3 +544,101 @@ def process_flow() -> str:
     <ol class="lifecycle reveal">{lis}</ol>
   </div>
 </section>"""
+
+
+def ops_flow(steps: list[str] | None = None) -> str:
+    items = steps or ["Users", "Operations", "Workflow", "Payments", "Reporting", "Integrations"]
+    lis = "".join(f"<li>{esc(s)}</li>" for s in items)
+    return f'<ol class="ops-flow" aria-label="How a business system typically connects">{lis}</ol>'
+
+
+def crm_map() -> str:
+    return app_shell(
+        "Custom CRM",
+        ["Records", "Pipeline", "Jobs", "Billing"],
+        ["Customers", "Stages", "History", "Reports"],
+        ["Enquire", "Work", "Invoice", "Close"],
+    )
+
+
+def retail_map() -> str:
+    return frame(
+        "Retail operations",
+        pipeline(["Stock", "Sale", "Customer", "Invoice", "Reorder"]),
+    )
+
+
+def professional_map() -> str:
+    return app_shell(
+        "Professional services",
+        ["Clients", "Engagements", "Documents", "Billing"],
+        ["Work", "Reviews", "Invoices", "Reports"],
+        ["Brief", "Deliver", "Review", "Bill"],
+    )
+
+
+def feature_block(
+    href: str,
+    name: str,
+    kicker: str,
+    copy: str,
+    modules: list[str],
+    visual: str,
+    cta: str,
+    reverse: bool = False,
+    extra_links: list[tuple[str, str]] | None = None,
+) -> str:
+    cls = _cls("cap-row", "reverse" if reverse else "", "reveal")
+    more = "".join(
+        f'<a class="more" href="{u}">{esc(n)}</a>' for n, u in (extra_links or [])
+    )
+    return f"""<article class="{cls}">
+  <div class="cap-copy">
+    <p class="eyebrow">{esc(kicker)}</p>
+    <h2>{esc(name)}</h2>
+    <p>{esc(copy)}</p>
+    {tags(modules)}
+    <p class="hero-actions" style="margin-top:1.1rem;margin-bottom:0">
+      <a class="more" href="{href}">{esc(cta)}</a>
+      {more}
+    </p>
+  </div>
+  <div class="cap-visual">{visual}</div>
+</article>"""
+
+
+def article_cover(kind: str) -> str:
+    """Editorial 16:9 diagrams for Knowledge Centre — not stock photos or fake UIs."""
+    if kind == "cost":
+        inner = pipeline(["Discovery", "Design", "Development", "Testing", "Deployment", "Support"])
+    elif kind == "compare":
+        inner = """<div class="cover-split">
+          <div><strong>Custom</strong><span>Your process</span></div>
+          <p>vs</p>
+          <div><strong>Off-the-shelf</strong><span>A common process</span></div>
+        </div>"""
+    elif kind == "choose":
+        inner = pipeline(["See a system", "Ask who builds", "Ask after go-live"])
+    elif kind == "bms":
+        inner = hub_diagram("Operations", ["People", "Work", "Money", "Control"])
+    elif kind == "workflow":
+        inner = """<div class="cover-compare">
+          <p class="cover-kicker">Manual</p>
+          <ol class="pipeline"><li>Email</li><li>Spreadsheet</li><li>Approval</li><li>Invoice</li></ol>
+          <p class="cover-kicker">In software</p>
+          <ol class="pipeline"><li>System</li><li>Workflow</li><li>Approval</li><li>Reporting</li></ol>
+        </div>"""
+    elif kind == "school":
+        inner = hub_diagram("School record", ["Students", "Attendance", "Fees", "Guardians", "HR", "Reports"])
+    elif kind == "mobile":
+        inner = (
+            '<ul class="phone-mods" style="max-width:11rem;margin:0.8rem auto">'
+            "<li>Accounts</li><li>Jobs</li><li>Sync</li></ul>"
+        )
+    else:
+        inner = """<div class="cover-split">
+          <div><strong>Custom CRM</strong><span>Your objects</span></div>
+          <p>vs</p>
+          <div><strong>Platform CRM</strong><span>Leads &amp; accounts</span></div>
+        </div>"""
+    return f'<div class="cover" data-cover="{esc(kind)}" aria-hidden="true">{inner}</div>'

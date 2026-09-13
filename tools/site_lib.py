@@ -260,7 +260,6 @@ def header(prefix: str, current: str) -> str:
     <button class="menu-toggle" type="button" aria-expanded="false" aria-label="Open menu"><span></span></button>
     <nav class="nav-links" aria-label="Primary">
       {''.join(items)}
-      <a class="btn btn-primary nav-cta" href="/contact/" data-track="consultation_requested" data-track-location="nav">Discuss Your Project</a>
     </nav>
   </div>
 </header>

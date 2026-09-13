@@ -5,22 +5,42 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from site_lib import crumbs_html, enquiry_form, faq_html, service_schema, faq_schema, esc
+from site_lib import crumbs_html, enquiry_form, faq_html, service_schema, faq_schema, esc, cta_band
 from generate_core import emit, bullets
+from graphics import (
+    school_map, lawyer_map, funeral_map, tshira_map, municipality_map,
+    fluxmove_map, crm_map, ops_flow, feature_block,
+)
+
+
+SOL_VISUAL = {
+    "school-management-system": school_map,
+    "law-firm-management-software": lawyer_map,
+    "funeral-parlour-management-software": funeral_map,
+    "workflow-management-system": tshira_map,
+    "municipality-management-software": municipality_map,
+    "logistics-delivery-software": fluxmove_map,
+    "custom-crm-development": crm_map,
+}
 
 
 def solution_page(slug, name, h1, title, description, intro, capabilities, notes, faqs, related, cta="Request Demo"):
     canonical = f"/solutions/{slug}/"
     rel_work = "".join(f'<li><a href="{u}">{esc(n)}</a></li>' for n, u in related)
+    vis_fn = SOL_VISUAL.get(slug)
+    vis = f'<aside class="page-hero-visual reveal">{vis_fn()}</aside>' if vis_fn else ""
     body = f"""
-<section class="page-hero"><div class="container">
-  {crumbs_html([("/", "Home"), ("/solutions/", "Solutions"), (canonical, name)])}
-  <h1>{esc(h1)}</h1>
-  <p class="lead">{esc(intro)}</p>
-  <div class="hero-actions">
-    <a class="btn btn-primary" href="/contact/?intent=demo" data-track="demo_requested">{esc(cta)}</a>
-    <a class="btn btn-secondary" href="/contact/">Discuss Your Project</a>
+<section class="page-hero"><div class="container page-hero-grid">
+  <div>
+    {crumbs_html([("/", "Home"), ("/solutions/", "Solutions"), (canonical, name)])}
+    <h1>{esc(h1)}</h1>
+    <p class="lead">{esc(intro)}</p>
+    <div class="hero-actions">
+      <a class="btn btn-primary" href="/contact/?intent=demo" data-track="demo_requested">{esc(cta)}</a>
+      <a class="btn btn-secondary" href="/contact/">Discuss Your Project</a>
+    </div>
   </div>
+  {vis}
 </div></section>
 <section class="section"><div class="container prose">
   <h2>Core modules</h2>
@@ -59,22 +79,53 @@ def build_solutions():
         "/solutions/",
         [("/", "Home"), ("/solutions/", "Solutions")],
         f"""
-<section class="page-hero"><div class="container">
-  {crumbs_html([("/", "Home"), ("/solutions/", "Solutions")])}
-  <h1>Solutions</h1>
-  <p class="lead">These are systems designed around a real operating model — not a list of industries. Open a page for the problem, the modules, and the case study where one exists. Where a private system is not in this public repository, the feature list stays conservative.</p>
-</div></section>
-<section class="section"><div class="container" style="max-width:48rem">
-  <div class="row-list">
-    <a href="/solutions/school-management-system/"><h3>School Management System</h3><p>Students, guardians, attendance, fees, HR, SMS/email and reporting for South African schools, colleges and TVETs.</p><span class="more">See the system</span></a>
-    <a href="/solutions/law-firm-management-software/"><h3>Law Firm Management Software</h3><p>Clients, cases, documents, tasks, billing, permissions and RAF workflow where it applies.</p><span class="more">See the system</span></a>
-    <a href="/solutions/funeral-parlour-management-software/"><h3>Funeral Parlour Management</h3><p>Administration software scoped to how the parlour actually runs.</p><span class="more">See the system</span></a>
-    <a href="/solutions/workflow-management-system/"><h3>Workflow Management System</h3><p>Cases, field capture, review, requisitions, expenses and invoicing.</p><span class="more">See the system</span></a>
-    <a href="/solutions/municipality-management-software/"><h3>Municipality Management Software</h3><p>Residents, billing, fault reporting, queues, notices and administration.</p><span class="more">See the system</span></a>
-    <a href="/solutions/logistics-delivery-software/"><h3>Logistics &amp; Delivery Software</h3><p>Bookings, driver checks, vehicle types and job status.</p><span class="more">See the system</span></a>
-    <a href="/solutions/custom-crm-development/"><h3>Custom CRM Development</h3><p>When the object is not a lead — repairs, learners, tickets, matters.</p><span class="more">See the system</span></a>
+<section class="page-hero"><div class="container page-hero-grid">
+  <div>
+    {crumbs_html([("/", "Home"), ("/solutions/", "Solutions")])}
+    <h1>Software Built Around Real Operations</h1>
+    <p class="lead">We design business systems around the actual work your organisation needs to manage — records, approvals, payments, documents, communication and reporting.</p>
+    <p class="hero-note">These are systems designed around a real operating model. Open a page for the problem, the modules, and the case study where one exists. Where a private system is not in this public repository, the feature list stays conservative.</p>
+    <div class="hero-actions">
+      <a class="btn btn-primary" href="/contact/">Discuss Your Project</a>
+      <a class="btn btn-secondary" href="/our-work/">View Our Work</a>
+    </div>
   </div>
+  <aside class="page-hero-visual reveal">
+    <p class="eyebrow">How the pieces connect</p>
+    {ops_flow()}
+  </aside>
 </div></section>
+<section class="section"><div class="container">
+  {feature_block("/solutions/school-management-system/", "School Management System", "Education",
+                 "Students, guardians, attendance, fees, HR, SMS/email and reporting for South African schools, colleges and TVETs.",
+                 ["Students", "Attendance", "Fees", "Guardians", "HR", "Communication", "Reporting"],
+                 school_map(), "Explore School Management System")}
+  {feature_block("/solutions/law-firm-management-software/", "Law Firm Management Software", "Legal",
+                 "Clients, cases, documents, tasks, billing, permissions and RAF workflow where it applies.",
+                 ["Clients", "Cases", "Documents", "Tasks", "Billing", "Permissions", "RAF"],
+                 lawyer_map(), "Explore Law Firm Software", reverse=True)}
+  {feature_block("/solutions/funeral-parlour-management-software/", "Funeral Parlour Management", "Operations",
+                 "Administration software scoped to how the parlour actually runs.",
+                 ["Records", "Access", "Process fit"],
+                 funeral_map(), "Explore Funeral Parlour Software")}
+  {feature_block("/solutions/workflow-management-system/", "Workflow Management System", "Case work",
+                 "Cases, field capture, review, requisitions, expenses and invoicing.",
+                 ["Cases", "Roles", "Field capture", "Review", "Invoicing"],
+                 tshira_map(), "Explore Workflow Management", reverse=True)}
+  {feature_block("/solutions/municipality-management-software/", "Municipality Management Software", "Government",
+                 "Residents, billing, fault reporting, queues, notices and administration.",
+                 ["Residents", "Billing", "Faults", "Queues", "Notices", "Admin"],
+                 municipality_map(), "Explore Municipality Software")}
+  {feature_block("/solutions/logistics-delivery-software/", "Logistics & Delivery Software", "Logistics",
+                 "Bookings, driver checks, vehicle types and job status.",
+                 ["Bookings", "Drivers", "Vehicles", "Job status"],
+                 fluxmove_map(), "Explore Logistics Software", reverse=True)}
+  {feature_block("/solutions/custom-crm-development/", "Custom CRM Development", "Sales & service",
+                 "When the object is not a lead — repairs, learners, tickets, matters.",
+                 ["Records", "Pipeline", "History", "Permissions"],
+                 crm_map(), "Explore Custom CRM")}
+</div></section>
+{cta_band("Need a system in this shape?", "Describe the process. We will show the closest system, or confirm what still needs to be built.", primary=("Discuss Your Project", "/contact/"))}
 """,
         current="/solutions/",
         priority="0.8",

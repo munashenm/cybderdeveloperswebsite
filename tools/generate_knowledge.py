@@ -8,12 +8,17 @@ from datetime import date
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from site_lib import crumbs_html, article_schema, esc
 from generate_core import emit, TODAY
+from graphics import article_cover, ops_flow
 
 ARTICLES = [
     {
         "slug": "how-much-does-custom-software-development-cost-in-south-africa",
         "title": "How Much Does Custom Software Development Cost in South Africa?",
         "description": "What actually drives the cost of custom software in South Africa, without invented averages. Scope, users, integrations and support.",
+        "excerpt": "Cost follows the system you need — discovery, data, roles, integrations, testing and support — not a national average.",
+        "category": "Software Development",
+        "cover": "cost",
+        "minutes": 6,
         "image": "/assets/img/og-default.webp",
         "alt": "Cyber Developers — custom software, South Africa",
     },
@@ -21,6 +26,10 @@ ARTICLES = [
         "slug": "custom-software-vs-off-the-shelf-software",
         "title": "Custom Software vs Off-the-Shelf Software: Which Is Better?",
         "description": "When to buy a packaged product and when to build software around the business process.",
+        "excerpt": "Buy when the process is common. Build when the objects are specific — matters, learners, tickets, bookings.",
+        "category": "Software Development",
+        "cover": "compare",
+        "minutes": 5,
         "image": "/assets/img/og-default.webp",
         "alt": "Cyber Developers — custom software, South Africa",
     },
@@ -28,6 +37,10 @@ ARTICLES = [
         "slug": "how-to-choose-a-software-development-company-in-south-africa",
         "title": "How to Choose a Software Development Company in South Africa",
         "description": "A practical checklist for South African organisations hiring a software partner, including how to avoid brochure claims.",
+        "excerpt": "Judge a firm by systems it can walk you through, not by slogans or unnamed client counts.",
+        "category": "Software Buying Guides",
+        "cover": "choose",
+        "minutes": 5,
         "image": "/assets/img/og-default.webp",
         "alt": "Cyber Developers — custom software, South Africa",
     },
@@ -35,6 +48,10 @@ ARTICLES = [
         "slug": "what-is-a-business-management-system",
         "title": "What Is a Business Management System?",
         "description": "A clear definition of business management systems: records, roles, money and reporting in one operational application.",
+        "excerpt": "People, work, money and control in one application — not a website and not automatically an ERP suite.",
+        "category": "Business Systems",
+        "cover": "bms",
+        "minutes": 4,
         "image": "/assets/img/og-default.webp",
         "alt": "Cyber Developers — custom software, South Africa",
     },
@@ -42,6 +59,10 @@ ARTICLES = [
         "slug": "how-workflow-automation-can-reduce-manual-admin",
         "title": "How Workflow Automation Can Reduce Manual Admin",
         "description": "How named stages, owners and finance locks reduce email-driven administration.",
+        "excerpt": "Named stages, a named owner, and a rule for when the record may move — instead of chasing status in email.",
+        "category": "Automation",
+        "cover": "workflow",
+        "minutes": 4,
         "image": "/assets/img/og-default.webp",
         "alt": "Cyber Developers — custom software, South Africa",
     },
@@ -49,6 +70,10 @@ ARTICLES = [
         "slug": "school-management-software-features",
         "title": "School Management Software: What Features Should Schools Look For?",
         "description": "Features South African schools should look for in management software, based on a real school platform — not a generic LMS checklist.",
+        "excerpt": "Guardians, fees, attendance, staff leave and letters — not only video courses and quizzes.",
+        "category": "Education Technology",
+        "cover": "school",
+        "minutes": 5,
         "image": "/assets/img/og-default.webp",
         "alt": "Cyber Developers — custom software, South Africa",
     },
@@ -56,6 +81,10 @@ ARTICLES = [
         "slug": "what-does-it-cost-to-build-a-mobile-app-in-south-africa",
         "title": "What Does It Cost to Build a Mobile App in South Africa?",
         "description": "Cost drivers for mobile apps in South Africa: platforms, backend, offline needs and store listing — without fake quotes.",
+        "excerpt": "Most of the cost sits in accounts, data, notifications and the console staff will actually use.",
+        "category": "Mobile Apps",
+        "cover": "mobile",
+        "minutes": 4,
         "image": "/assets/img/og-default.webp",
         "alt": "Cyber Developers — custom software, South Africa",
     },
@@ -63,10 +92,31 @@ ARTICLES = [
         "slug": "custom-crm-vs-salesforce-microsoft-dynamics",
         "title": "Custom CRM vs Salesforce/Microsoft Dynamics: When Does Custom Make Sense?",
         "description": "When a custom CRM is justified, and when Salesforce or Dynamics is the more honest recommendation.",
+        "excerpt": "Stay on a major CRM when the objects are leads and accounts. Build when the noun is a matter, a learner or a ticket.",
+        "category": "Software Buying Guides",
+        "cover": "crm",
+        "minutes": 5,
         "image": "/assets/img/og-default.webp",
         "alt": "Cyber Developers — custom software, South Africa",
     },
 ]
+
+
+def article_card(a: dict, featured: bool = False) -> str:
+    href = f"/knowledge-centre/{a['slug']}/"
+    cls = "kc-feature reveal" if featured else "kc-card reveal"
+    heading = f"<h2>{esc(a['title'])}</h2>" if featured else f"<h3>{esc(a['title'])}</h3>"
+    cta = '<span class="btn btn-primary">Read Article</span>' if featured else '<span class="more">Read Article</span>'
+    return f"""<a class="{cls}" href="{href}" data-cat="{esc(a['category'])}">
+  <div class="kc-visual">{article_cover(a['cover'])}</div>
+  <div class="kc-copy">
+    <p class="eyebrow">{esc(a['category'])}</p>
+    {heading}
+    <p>{esc(a['excerpt'])}</p>
+    <p class="article-meta">{a['minutes']} min read · Updated {TODAY}</p>
+    {cta}
+  </div>
+</a>"""
 
 
 def article_page(meta: dict, body_html: str) -> None:
@@ -75,8 +125,10 @@ def article_page(meta: dict, body_html: str) -> None:
     body = f"""
 <article class="page-hero"><div class="container prose">
   {crumbs_html([("/", "Home"), ("/knowledge-centre/", "Knowledge Centre"), (canonical, meta["title"])])}
+  <p class="eyebrow">{esc(meta['category'])}</p>
   <h1>{esc(meta["title"])}</h1>
-  <p class="article-meta">Cyber Developers · Updated {TODAY} · South Africa</p>
+  <p class="article-meta">Cyber Developers · {meta['minutes']} min read · Updated {TODAY} · South Africa</p>
+  <div class="article-cover reveal">{article_cover(meta['cover'])}</div>
   {body_html}
 </div></article>
 """
@@ -96,15 +148,19 @@ def article_page(meta: dict, body_html: str) -> None:
 
 
 def build_knowledge():
-    cards = []
+    featured = ARTICLES[0]
+    mix = [article_card(a) for a in ARTICLES[1:4]]
+    rest = [article_card(a) for a in ARTICLES[4:]]
+    cats = []
+    seen = []
     for a in ARTICLES:
-        cards.append(
-            f"""<a href="/knowledge-centre/{a['slug']}/">
-              <h3>{esc(a['title'])}</h3>
-              <p>{esc(a['description'])}</p>
-              <span class="more">Read</span>
-            </a>"""
-        )
+        if a["category"] not in seen:
+            seen.append(a["category"])
+            cats.append(a["category"])
+    filters = ['<button type="button" data-filter="all" aria-pressed="true">All</button>']
+    filters.extend(
+        f'<button type="button" data-filter="{esc(c)}">{esc(c)}</button>' for c in cats
+    )
     emit(
         "knowledge-centre/index.html",
         "Knowledge Centre | Cyber Developers",
@@ -112,12 +168,23 @@ def build_knowledge():
         "/knowledge-centre/",
         [("/", "Home"), ("/knowledge-centre/", "Knowledge Centre")],
         f"""
-<section class="page-hero"><div class="container">
-  {crumbs_html([("/", "Home"), ("/knowledge-centre/", "Knowledge Centre")])}
-  <h1>Knowledge Centre</h1>
-  <p class="lead">Practical writing for people buying software in South Africa. These articles explain decisions. They do not invent industry statistics, average ROI, or unnamed case results.</p>
+<section class="page-hero"><div class="container page-hero-grid">
+  <div>
+    {crumbs_html([("/", "Home"), ("/knowledge-centre/", "Knowledge Centre")])}
+    <h1>Knowledge Centre</h1>
+    <p class="lead">Practical guidance for organisations planning software, business systems, automation and digital products.</p>
+  </div>
+  <aside class="page-hero-visual reveal">
+    <p class="eyebrow">Inside the articles</p>
+    {ops_flow(["Cost", "Build vs buy", "Workflow", "School systems", "Mobile"])}
+  </aside>
 </div></section>
-<section class="section"><div class="container" style="max-width:48rem"><div class="row-list">{''.join(cards)}</div></div></section>
+<section class="section"><div class="container">
+  <nav class="kc-filters" data-kc-filters aria-label="Article categories">{''.join(filters)}</nav>
+  {article_card(featured, featured=True)}
+  <div class="kc-mix">{''.join(mix)}</div>
+  <div class="kc-rest">{''.join(rest)}</div>
+</div></section>
 """,
         current="/knowledge-centre/",
         priority="0.7",
