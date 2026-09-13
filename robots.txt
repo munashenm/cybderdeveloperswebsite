@@ -1,11 +1,14 @@
 User-agent: *
 Allow: /
+Disallow: /contact/thank-you/
 
 User-agent: Googlebot
 Allow: /
+Disallow: /contact/thank-you/
 
 User-agent: Bingbot
 Allow: /
+Disallow: /contact/thank-you/
 
 User-agent: GPTBot
 Allow: /
@@ -28,6 +31,5 @@ Allow: /
 User-agent: Applebot
 Allow: /
 
-Disallow: /contact/thank-you/
-
+# This is a static marketing site. There are no admin, API or staging routes to crawl.
 Sitemap: https://www.cyberdevelopers.co.za/sitemap.xml

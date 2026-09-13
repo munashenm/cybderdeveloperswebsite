@@ -18,7 +18,11 @@ ORG_DESC = (
 EMAIL = "sales@cyberdevelopers.co.za"
 PHONE_DISPLAY = "087 550 1813"
 PHONE_E164 = "+27875501813"
-ADDRESS_LINE = "357 Oak Ave, Ferndale, Randburg"
+ADDRESS_LINE = "357 Oak Ave, Ferndale, Randburg, South Africa"
+ADDRESS_STREET = "357 Oak Ave, Ferndale"
+ADDRESS_LOCALITY = "Randburg"
+ADDRESS_REGION = "Gauteng"
+ADDRESS_COUNTRY = "ZA"
 FORM_ACTION = "https://formsubmit.co/" + EMAIL
 
 NAV = [
@@ -73,25 +77,30 @@ def ld_json(data: dict) -> str:
     return json.dumps(data, ensure_ascii=True)
 
 
+def postal_address() -> dict:
+    return {
+        "@type": "PostalAddress",
+        "streetAddress": ADDRESS_STREET,
+        "addressLocality": ADDRESS_LOCALITY,
+        "addressRegion": ADDRESS_REGION,
+        "addressCountry": ADDRESS_COUNTRY,
+    }
+
+
 def org_schema() -> dict:
     return {
         "@context": "https://schema.org",
-        "@type": "Organization",
+        "@type": ["Organization", "ProfessionalService"],
         "@id": SITE + "/#organization",
         "name": ORG_NAME,
         "legalName": "Cyber Developers (Pty) Ltd",
         "url": SITE + "/",
         "logo": SITE + "/favicon.png",
+        "image": SITE + "/favicon.png",
         "email": EMAIL,
         "telephone": PHONE_E164,
         "description": ORG_DESC,
-        "address": {
-            "@type": "PostalAddress",
-            "streetAddress": "357 Oak Ave, Ferndale",
-            "addressLocality": "Randburg",
-            "addressRegion": "Gauteng",
-            "addressCountry": "ZA",
-        },
+        "address": postal_address(),
         "areaServed": {"@type": "Country", "name": "South Africa"},
         "sameAs": [
             "https://www.facebook.com/cyberdevelop",
@@ -166,14 +175,21 @@ def faq_schema(items: list[tuple[str, str]]) -> dict:
     }
 
 
-def article_schema(title: str, desc: str, url: str, image: str, modified: str) -> dict:
+def article_schema(
+    title: str,
+    desc: str,
+    url: str,
+    image: str,
+    modified: str,
+    published: str | None = None,
+) -> dict:
     return {
         "@context": "https://schema.org",
         "@type": "Article",
         "headline": title,
         "description": desc,
         "image": SITE + image,
-        "datePublished": modified,
+        "datePublished": published or modified,
         "dateModified": modified,
         "author": {"@type": "Organization", "name": ORG_NAME, "url": SITE + "/"},
         "publisher": {"@id": SITE + "/#organization"},
@@ -195,6 +211,7 @@ def head(
     extra_schema: list[dict] | None = None,
     og_type: str = "website",
     image: str = "/assets/img/og-default.webp",
+    robots: str = "index,follow,max-image-preview:large",
 ) -> str:
     schemas = [org_schema(), website_schema(), breadcrumb_schema(crumbs)]
     if extra_schema:
@@ -211,7 +228,7 @@ def head(
   <meta name="description" content="{esc(description)}">
   <link rel="canonical" href="{SITE}{canonical}">
   <link rel="icon" type="image/png" href="{prefix}favicon.png">
-  <meta name="robots" content="index,follow,max-image-preview:large">
+  <meta name="robots" content="{esc(robots)}">
   <meta name="theme-color" content="#0b1220">
   <meta property="og:type" content="{og_type}">
   <meta property="og:site_name" content="{ORG_NAME}">
@@ -281,10 +298,10 @@ def footer(prefix: str) -> str:
       <h4>Services</h4>
       <ul>
         <li><a href="/services/custom-software-development/">Custom Software</a></li>
+        <li><a href="/services/business-systems/">Business Systems</a></li>
         <li><a href="/services/web-application-development/">Web Applications</a></li>
         <li><a href="/services/mobile-app-development/">Mobile Apps</a></li>
-        <li><a href="/services/business-systems/">Business Systems</a></li>
-        <li><a href="/services/ai-business-automation/">AI &amp; Automation</a></li>
+        <li><a href="/services/workflow-automation/">Workflow Automation</a></li>
       </ul>
     </div>
     <div>
@@ -408,6 +425,15 @@ def faq_html(items: list[tuple[str, str]]) -> str:
     return f'<div class="faq">{"".join(blocks)}</div>'
 
 
+def related_links(items: list[tuple[str, str]]) -> str:
+    return "<ul>" + "".join(f'<li><a href="{u}">{esc(n)}</a></li>' for n, u in items) + "</ul>"
+
+
+def steps_ol(items: list[tuple[str, str]], cls: str = "lifecycle") -> str:
+    lis = "".join(f"<li><h3>{esc(t)}</h3><p>{esc(d)}</p></li>" for t, d in items)
+    return f'<ol class="{cls}">{lis}</ol>'
+
+
 def render_page(
     rel_path: str,
     title: str,
@@ -419,11 +445,12 @@ def render_page(
     og_type: str = "website",
     image: str = "/assets/img/og-default.webp",
     current: str | None = None,
+    robots: str = "index,follow,max-image-preview:large",
 ) -> str:
     prefix = "" if rel_path == "index.html" else "../" * len(Path(rel_path).parent.parts)
     nav_current = current if current is not None else canonical
     return (
-        head(prefix, title, description, canonical, crumbs, extra_schema, og_type, image)
+        head(prefix, title, description, canonical, crumbs, extra_schema, og_type, image, robots)
         + header(prefix, nav_current)
         + f'<main id="main">{body}</main>'
         + footer(prefix)
@@ -443,6 +470,7 @@ def redirect_page(target: str, title: str = "Redirecting") -> str:
 <head>
   <meta charset="UTF-8">
   <title>{esc(title)}</title>
+  <meta name="robots" content="noindex,follow">
   <link rel="canonical" href="{SITE}{target}">
   <meta http-equiv="refresh" content="0; url={target}">
   <script>location.replace({json.dumps(target)});</script>

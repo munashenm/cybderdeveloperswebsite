@@ -32,12 +32,15 @@ def write_robots() -> None:
     (ROOT / "robots.txt").write_text(
         f"""User-agent: *
 Allow: /
+Disallow: /contact/thank-you/
 
 User-agent: Googlebot
 Allow: /
+Disallow: /contact/thank-you/
 
 User-agent: Bingbot
 Allow: /
+Disallow: /contact/thank-you/
 
 User-agent: GPTBot
 Allow: /
@@ -60,8 +63,7 @@ Allow: /
 User-agent: Applebot
 Allow: /
 
-Disallow: /contact/thank-you/
-
+# This is a static marketing site. There are no admin, API or staging routes to crawl.
 Sitemap: {SITE}/sitemap.xml
 """,
         encoding="utf-8",
@@ -72,14 +74,17 @@ Sitemap: {SITE}/sitemap.xml
 def write_sitemap() -> None:
     urls = []
     seen = set()
-    for loc, prio in SITEMAP_URLS:
+    for item in SITEMAP_URLS:
+        loc = item[0]
+        prio = item[1]
+        lastmod = item[2] if len(item) > 2 else TODAY
         if loc in seen or loc in ("/404.html", "/contact/thank-you/"):
             continue
         seen.add(loc)
         urls.append(
             f"""  <url>
     <loc>{SITE}{loc}</loc>
-    <lastmod>{TODAY}</lastmod>
+    <lastmod>{lastmod}</lastmod>
     <changefreq>weekly</changefreq>
     <priority>{prio}</priority>
   </url>"""
@@ -125,17 +130,45 @@ Not a cybersecurity company. Custom software, business systems, web applications
 
 def write_htaccess() -> None:
     (ROOT / ".htaccess").write_text(
-        f"""RewriteEngine On
+        r"""RewriteEngine On
 ErrorDocument 404 /404.html
 
-# Do not redirect /index.html to / — Apache DirectoryIndex plus that rule loops forever.
-RewriteRule ^projects\\.html$ /our-work/ [R=301,L]
-RewriteRule ^about\\.html$ /about/ [R=301,L]
-RewriteRule ^privacy\\.html$ /privacy/ [R=301,L]
-RewriteRule ^discuss-your-project/?$ /contact/ [R=301,L]
-RewriteRule ^discuss-your-project/index\\.html$ /contact/ [R=301,L]
+# Canonical host: HTTPS + www in one hop.
+# SERVER_PORT 80 is used because this host currently serves HTTP as 200.
+RewriteCond %{SERVER_PORT} 80 [OR]
+RewriteCond %{HTTP_HOST} !^www\.cyberdevelopers\.co\.za$ [NC]
+RewriteRule ^ https://www.cyberdevelopers.co.za%{REQUEST_URI} [R=301,L]
 
+# Do not redirect /index.html to / — Apache DirectoryIndex plus that rule loops forever.
+RewriteRule ^projects\.html$ /our-work/ [R=301,L]
+RewriteRule ^about\.html$ /about/ [R=301,L]
+RewriteRule ^privacy\.html$ /privacy/ [R=301,L]
+RewriteRule ^discuss-your-project/?$ /contact/ [R=301,L]
+RewriteRule ^discuss-your-project/index\.html$ /contact/ [R=301,L]
+RewriteRule ^solutions/school-management-software/?$ /solutions/school-management-system/ [R=301,L]
+RewriteRule ^solutions/school-management-software/index\.html$ /solutions/school-management-system/ [R=301,L]
+
+# Legacy screenshot filenames (renamed for image SEO).
+RewriteRule ^assets/img/projects/tshira-workflow/dashboard(-sm)?\.webp$ /assets/img/projects/tshira-workflow/tshira-workflow-management-dashboard$1.webp [R=301,L]
+RewriteRule ^assets/img/projects/tshira-workflow/reports(-sm)?\.webp$ /assets/img/projects/tshira-workflow/tshira-workflow-sla-reporting$1.webp [R=301,L]
+RewriteRule ^assets/img/projects/smartcity/home(-sm)?\.webp$ /assets/img/projects/smartcity/smartcity-municipal-services-platform$1.webp [R=301,L]
+RewriteRule ^assets/img/projects/smartcity/services(-sm)?\.webp$ /assets/img/projects/smartcity/smartcity-municipal-services-directory$1.webp [R=301,L]
+RewriteRule ^assets/img/projects/smartcity/report-issue(-sm)?\.webp$ /assets/img/projects/smartcity/smartcity-municipal-fault-reporting$1.webp [R=301,L]
+RewriteRule ^assets/img/projects/smartcity/emergency(-sm)?\.webp$ /assets/img/projects/smartcity/smartcity-emergency-information$1.webp [R=301,L]
+RewriteRule ^assets/img/projects/lawtech/dashboard(-sm)?\.webp$ /assets/img/projects/lawtech/lawtech-legal-practice-management-dashboard$1.webp [R=301,L]
+RewriteRule ^assets/img/projects/legacy-care/dashboard(-sm)?\.webp$ /assets/img/projects/legacy-care/legacy-care-funeral-management-software$1.webp [R=301,L]
+RewriteRule ^assets/img/projects/legacy-care/collections(-sm)?\.webp$ /assets/img/projects/legacy-care/legacy-care-premium-collections$1.webp [R=301,L]
+RewriteRule ^assets/img/projects/vayasa/home(-sm)?\.webp$ /assets/img/projects/vayasa/vayasa-transport-marketplace$1.webp [R=301,L]
+RewriteRule ^assets/img/projects/vayasa/search(-sm)?\.webp$ /assets/img/projects/vayasa/vayasa-ride-sharing-search$1.webp [R=301,L]
+RewriteRule ^assets/img/projects/vayasa/routes(-sm)?\.webp$ /assets/img/projects/vayasa/vayasa-intercity-routes$1.webp [R=301,L]
+RewriteRule ^assets/img/projects/fluxmove/hero(-sm)?\.webp$ /assets/img/projects/fluxmove/fluxmove-logistics-platform$1.webp [R=301,L]
+RewriteRule ^assets/img/projects/fluxmove/quote(-sm)?\.webp$ /assets/img/projects/fluxmove/fluxmove-instant-quotation$1.webp [R=301,L]
+RewriteRule ^assets/img/projects/fluxmove/vehicles(-sm)?\.webp$ /assets/img/projects/fluxmove/fluxmove-vehicle-selection$1.webp [R=301,L]
+RewriteRule ^assets/img/projects/school-management/portal(-sm)?\.webp$ /assets/img/projects/school-management/school-management-system-portal$1.webp [R=301,L]
+
+RewriteRule ^contact/thank-you - [E=NOINDEX:1]
 <IfModule mod_headers.c>
+  Header set X-Robots-Tag "noindex, follow" env=NOINDEX
   Header set X-Content-Type-Options "nosniff"
   Header set Referrer-Policy "strict-origin-when-cross-origin"
   Header set X-Frame-Options "SAMEORIGIN"
@@ -149,7 +182,7 @@ RewriteRule ^discuss-your-project/index\\.html$ /contact/ [R=301,L]
   ExpiresByType image/webp "access plus 30 days"
   ExpiresByType image/avif "access plus 30 days"
   ExpiresByType image/png "access plus 30 days"
-  ExpiresByType image/svg+xml "access plus 30 days"
+  ExpiresByType image/svg+xml "access plus 7 days"
 </IfModule>
 """,
         encoding="utf-8",
@@ -168,6 +201,10 @@ def write_redirects() -> None:
     write_page("about.html", redirect_page("/about/", "About moved"))
     write_page("privacy.html", redirect_page("/privacy/", "Privacy moved"))
     write_page("discuss-your-project/index.html", redirect_page("/contact/", "Discuss your project"))
+    write_page(
+        "solutions/school-management-software/index.html",
+        redirect_page("/solutions/school-management-system/", "School management software"),
+    )
 
 
 def main() -> None:

@@ -40,43 +40,43 @@
     <loc>https://www.cyberdevelopers.co.za/services/custom-software-development/</loc>
     <lastmod>2026-09-13</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.cyberdevelopers.co.za/services/web-application-development/</loc>
-    <lastmod>2026-09-13</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.cyberdevelopers.co.za/services/mobile-app-development/</loc>
-    <lastmod>2026-09-13</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.85</priority>
   </url>
   <url>
     <loc>https://www.cyberdevelopers.co.za/services/business-systems/</loc>
     <lastmod>2026-09-13</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://www.cyberdevelopers.co.za/services/web-application-development/</loc>
+    <lastmod>2026-09-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://www.cyberdevelopers.co.za/services/mobile-app-development/</loc>
+    <lastmod>2026-09-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
   </url>
   <url>
     <loc>https://www.cyberdevelopers.co.za/services/workflow-automation/</loc>
     <lastmod>2026-09-13</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.85</priority>
   </url>
   <url>
     <loc>https://www.cyberdevelopers.co.za/services/ai-business-automation/</loc>
     <lastmod>2026-09-13</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.85</priority>
   </url>
   <url>
     <loc>https://www.cyberdevelopers.co.za/services/systems-integration/</loc>
     <lastmod>2026-09-13</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.85</priority>
   </url>
   <url>
     <loc>https://www.cyberdevelopers.co.za/solutions/</loc>

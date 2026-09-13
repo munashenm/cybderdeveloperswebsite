@@ -18,17 +18,38 @@ from graphics import (
 )
 
 TODAY = date.today().isoformat()
-SITEMAP_URLS: list[tuple[str, str]] = []
+SITEMAP_URLS: list[tuple[str, str, str]] = []
+SKIP_SITEMAP = {"/404.html", "/contact/thank-you/"}
 
 
-def add_url(canonical: str, priority: str = "0.7") -> None:
-    SITEMAP_URLS.append((canonical, priority))
+def add_url(canonical: str, priority: str = "0.7", lastmod: str | None = None) -> None:
+    if canonical in SKIP_SITEMAP:
+        return
+    SITEMAP_URLS.append((canonical, priority, lastmod or TODAY))
 
 
-def emit(rel, title, description, canonical, crumbs, body, extra=None, current=None, image="/assets/img/og-default.webp", og_type="website", priority="0.7"):
-    html = render_page(rel, title, description, canonical, crumbs, body, extra, og_type, image, current)
+def emit(
+    rel,
+    title,
+    description,
+    canonical,
+    crumbs,
+    body,
+    extra=None,
+    current=None,
+    image="/assets/img/og-default.webp",
+    og_type="website",
+    priority="0.7",
+    indexable=True,
+    lastmod=None,
+):
+    robots = "index,follow,max-image-preview:large" if indexable else "noindex,follow"
+    html = render_page(
+        rel, title, description, canonical, crumbs, body, extra, og_type, image, current, robots
+    )
     write_page(rel, html)
-    add_url(canonical, priority)
+    if indexable:
+        add_url(canonical, priority, lastmod)
 
 
 def checks(items: list[str]) -> str:
@@ -81,7 +102,7 @@ def homepage() -> None:
   <div>
     <p class="eyebrow">Cyber Developers · South Africa</p>
     <h1>Software Built Around Your Business.</h1>
-    <p class="lead">Custom software, business systems, web applications and mobile apps developed for organisations across South Africa.</p>
+    <p class="lead">Cyber Developers is a custom software development company in South Africa. We design and build business systems, web applications and mobile apps around how organisations actually work — not around a generic product.</p>
     <div class="hero-actions">
       <a class="btn btn-primary btn-lg" href="/contact/" data-track="consultation_requested" data-track-location="hero">Discuss Your Project</a>
       <a class="btn btn-secondary btn-lg" href="/our-work/">View Our Work</a>
@@ -108,8 +129,8 @@ def homepage() -> None:
 """
     emit(
         "index.html",
-        "Cyber Developers — Custom Software & Business Systems South Africa",
-        "Software built around your business. Custom software, business systems, web applications and mobile apps for organisations across South Africa.",
+        "Custom Software Development Company South Africa | Cyber Developers",
+        "Cyber Developers builds custom software, business systems, web applications and mobile apps for organisations across South Africa. Discuss your project.",
         "/",
         [("/", "Home")],
         body,
@@ -141,7 +162,7 @@ def about_page() -> None:
 """
     emit(
         "about/index.html",
-        "About Cyber Developers | Custom Software South Africa",
+        "About Cyber Developers | Custom Software Company South Africa",
         "Cyber Developers is a South African custom software development company building business systems, web applications, mobile apps, workflow automation and integrations.",
         "/about/",
         [("/", "Home"), ("/about/", "About")],
@@ -162,7 +183,7 @@ def contact_page() -> None:
     <div class="contact-details">
       <p><span>Email</span><a href="mailto:{EMAIL}" data-track="email_clicked">{EMAIL}</a></p>
       <p><span>Phone</span><a href="tel:{PHONE_E164}" data-track="phone_clicked">{PHONE_DISPLAY}</a></p>
-      <p><span>Address</span>{esc(ADDRESS_LINE)}</p>
+      <p><span>Address</span>357 Oak Ave<br>Ferndale<br>Randburg<br>South Africa</p>
     </div>
   </div>
   {enquiry_form("project_enquiry", "New project enquiry | Cyber Developers", "Discuss Your Project")}
@@ -171,7 +192,7 @@ def contact_page() -> None:
     emit(
         "contact/index.html",
         "Contact Cyber Developers | Discuss Your Project",
-        "Request a consultation with Cyber Developers. Enquire about custom software, business systems, web apps, mobile apps or a product demo.",
+        "Request a consultation with Cyber Developers in Randburg, South Africa. Enquire about custom software, business systems, web apps or mobile apps.",
         "/contact/",
         [("/", "Home"), ("/contact/", "Contact")],
         body,
@@ -198,7 +219,7 @@ def contact_page() -> None:
         [("/", "Home"), ("/contact/", "Contact"), ("/contact/thank-you/", "Thank you")],
         thanks,
         current="/contact/",
-        priority="0.1",
+        indexable=False,
     )
 
 
@@ -277,7 +298,7 @@ def industries_page() -> None:
 """
     emit(
         "industries/index.html",
-        "Industries | Cyber Developers Custom Software South Africa",
+        "Industries | Custom Software for South African Organisations",
         "Cyber Developers builds software for government, education, legal, funeral, transport, logistics and enterprise operations in South Africa.",
         "/industries/",
         [("/", "Home"), ("/industries/", "Industries")],
@@ -340,7 +361,7 @@ def not_found() -> None:
         [("/", "Home"), ("/404.html", "Not found")],
         body,
         current="/",
-        priority="0.1",
+        indexable=False,
     )
 
 

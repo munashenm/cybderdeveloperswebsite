@@ -14,24 +14,35 @@ ARTICLES = [
     {
         "slug": "how-much-does-custom-software-development-cost-in-south-africa",
         "title": "How Much Does Custom Software Development Cost in South Africa?",
-        "description": "What actually drives the cost of custom software in South Africa, without invented averages. Scope, users, integrations and support.",
+        "description": "What actually drives custom software cost in South Africa: scope, users, integrations, mobile and support — without invented averages.",
         "excerpt": "Cost follows the system you need — discovery, data, roles, integrations, testing and support — not a national average.",
         "category": "Software Development",
         "cover": "cost",
         "minutes": 6,
+        "published": "2026-09-12",
         "image": "/assets/img/og-default.webp",
-        "alt": "Cyber Developers — custom software, South Africa",
+        "alt": "Diagram of discovery, design, development, testing, deployment and support",
+        "related": [
+            ("Custom software development", "/services/custom-software-development/"),
+            ("Contact", "/contact/"),
+            ("Custom vs off-the-shelf", "/knowledge-centre/custom-software-vs-off-the-shelf-software/"),
+        ],
     },
     {
         "slug": "custom-software-vs-off-the-shelf-software",
         "title": "Custom Software vs Off-the-Shelf Software: Which Is Better?",
-        "description": "When to buy a packaged product and when to build software around the business process.",
+        "description": "When to buy a packaged product and when to build custom software around the business process, with a practical decision test.",
         "excerpt": "Buy when the process is common. Build when the objects are specific — matters, learners, tickets, bookings.",
         "category": "Software Development",
         "cover": "compare",
         "minutes": 5,
+        "published": "2026-09-12",
         "image": "/assets/img/og-default.webp",
-        "alt": "Cyber Developers — custom software, South Africa",
+        "alt": "Comparison of custom software versus off-the-shelf software",
+        "related": [
+            ("Custom software development", "/services/custom-software-development/"),
+            ("Software cost in South Africa", "/knowledge-centre/how-much-does-custom-software-development-cost-in-south-africa/"),
+        ],
     },
     {
         "slug": "how-to-choose-a-software-development-company-in-south-africa",
@@ -41,8 +52,14 @@ ARTICLES = [
         "category": "Software Buying Guides",
         "cover": "choose",
         "minutes": 5,
+        "published": "2026-09-12",
         "image": "/assets/img/og-default.webp",
-        "alt": "Cyber Developers — custom software, South Africa",
+        "alt": "Checklist for choosing a software development company: see a system, ask who builds, ask after go-live",
+        "related": [
+            ("Our Work", "/our-work/"),
+            ("About Cyber Developers", "/about/"),
+            ("Contact", "/contact/"),
+        ],
     },
     {
         "slug": "what-is-a-business-management-system",
@@ -52,30 +69,47 @@ ARTICLES = [
         "category": "Business Systems",
         "cover": "bms",
         "minutes": 4,
+        "published": "2026-09-12",
         "image": "/assets/img/og-default.webp",
-        "alt": "Cyber Developers — custom software, South Africa",
+        "alt": "Business management system connecting people, work, money and control",
+        "related": [
+            ("Business systems", "/services/business-systems/"),
+            ("School management software", "/solutions/school-management-system/"),
+        ],
     },
     {
         "slug": "how-workflow-automation-can-reduce-manual-admin",
         "title": "How Workflow Automation Can Reduce Manual Admin",
-        "description": "How named stages, owners and finance locks reduce email-driven administration.",
+        "description": "How named stages, owners, SLA monitoring and finance locks reduce email-driven administration, with Tshira as an example.",
         "excerpt": "Named stages, a named owner, and a rule for when the record may move — instead of chasing status in email.",
         "category": "Automation",
         "cover": "workflow",
         "minutes": 4,
-        "image": "/assets/img/og-default.webp",
-        "alt": "Cyber Developers — custom software, South Africa",
+        "published": "2026-09-12",
+        "image": "/assets/img/projects/tshira-workflow/tshira-workflow-management-dashboard.webp",
+        "alt": "Tshira workflow dashboard used as an example of named stages and owners",
+        "related": [
+            ("Workflow automation service", "/services/workflow-automation/"),
+            ("Tshira case study", "/our-work/tshira-workflow-system/"),
+            ("Workflow management system", "/solutions/workflow-management-system/"),
+        ],
     },
     {
         "slug": "school-management-software-features",
         "title": "School Management Software: What Features Should Schools Look For?",
-        "description": "Features South African schools should look for in management software, based on a real school platform — not a generic LMS checklist.",
+        "description": "Features South African schools should look for in school management software, based on SchoolHub SA — not a generic LMS checklist.",
         "excerpt": "Guardians, fees, attendance, staff leave and letters — not only video courses and quizzes.",
         "category": "Education Technology",
         "cover": "school",
         "minutes": 5,
-        "image": "/assets/img/og-default.webp",
-        "alt": "Cyber Developers — custom software, South Africa",
+        "published": "2026-09-12",
+        "image": "/assets/img/projects/school-management/school-management-system-portal.webp",
+        "alt": "Smart School and College portal for administrators, teachers and learners",
+        "related": [
+            ("School management software", "/solutions/school-management-system/"),
+            ("School case study", "/our-work/school-lms/"),
+            ("Education industry", "/industries/#education"),
+        ],
     },
     {
         "slug": "what-does-it-cost-to-build-a-mobile-app-in-south-africa",
@@ -85,8 +119,14 @@ ARTICLES = [
         "category": "Mobile Apps",
         "cover": "mobile",
         "minutes": 4,
+        "published": "2026-09-12",
         "image": "/assets/img/og-default.webp",
-        "alt": "Cyber Developers — custom software, South Africa",
+        "alt": "Mobile app cost drivers: accounts, jobs and sync with a backend",
+        "related": [
+            ("Mobile app development", "/services/mobile-app-development/"),
+            ("FluxMove case study", "/our-work/fluxmove/"),
+            ("Contact", "/contact/"),
+        ],
     },
     {
         "slug": "custom-crm-vs-salesforce-microsoft-dynamics",
@@ -96,8 +136,14 @@ ARTICLES = [
         "category": "Software Buying Guides",
         "cover": "crm",
         "minutes": 5,
+        "published": "2026-09-12",
         "image": "/assets/img/og-default.webp",
-        "alt": "Cyber Developers — custom software, South Africa",
+        "alt": "Custom CRM versus platform CRM comparison",
+        "related": [
+            ("Custom CRM development", "/solutions/custom-crm-development/"),
+            ("Business systems", "/services/business-systems/"),
+            ("Contact", "/contact/"),
+        ],
     },
 ]
 
@@ -121,15 +167,28 @@ def article_card(a: dict, featured: bool = False) -> str:
 
 def article_page(meta: dict, body_html: str) -> None:
     canonical = f"/knowledge-centre/{meta['slug']}/"
-    schema = article_schema(meta["title"], meta["description"], canonical, meta["image"], TODAY)
+    published = meta.get("published", TODAY)
+    schema = article_schema(
+        meta["title"], meta["description"], canonical, meta["image"], TODAY, published
+    )
+    related = meta.get("related") or []
+    related_html = ""
+    if related:
+        links = "".join(f'<li><a href="{u}">{esc(n)}</a></li>' for n, u in related)
+        related_html = f"<h2>Related</h2><ul>{links}</ul>"
     body = f"""
 <article class="page-hero"><div class="container prose">
   {crumbs_html([("/", "Home"), ("/knowledge-centre/", "Knowledge Centre"), (canonical, meta["title"])])}
   <p class="eyebrow">{esc(meta['category'])}</p>
   <h1>{esc(meta["title"])}</h1>
-  <p class="article-meta">Cyber Developers · {meta['minutes']} min read · Updated {TODAY} · South Africa</p>
+  <p class="article-meta">By Cyber Developers · {meta['minutes']} min read · Published {published} · Updated {TODAY}</p>
   <div class="article-cover reveal">{article_cover(meta['cover'])}</div>
   {body_html}
+  {related_html}
+  <p class="hero-actions" style="margin-top:2rem">
+    <a class="btn btn-primary" href="/contact/">Discuss Your Project</a>
+    <a class="btn btn-secondary" href="/knowledge-centre/">More articles</a>
+  </p>
 </div></article>
 """
     emit(
@@ -144,6 +203,7 @@ def article_page(meta: dict, body_html: str) -> None:
         image=meta["image"],
         og_type="article",
         priority="0.65",
+        lastmod=TODAY,
     )
 
 
@@ -204,7 +264,7 @@ def build_knowledge():
 <p>On our enquiry form we use ranges — under R25,000, R25,000–R50,000, R50,000–R100,000, R100,000–R250,000, R250,000+ — so a first conversation can be honest. Those bands are not a price list. A small workflow tool and a school platform are not the same project.</p>
 <h2>What we will not do</h2>
 <p>We will not publish a fake “average project value” or a percentage saving attributed to unnamed clients. If you want a number, describe the process. The quote is the artefact of that description.</p>
-<p><a href="/contact/">Discuss Your Project</a> or read <a href="/knowledge-centre/custom-software-vs-off-the-shelf-software/">custom versus off-the-shelf</a>.</p>
+<p>Next: <a href="/services/custom-software-development/">custom software development</a>, or <a href="/contact/">discuss the project</a> with scope written down. Also read <a href="/knowledge-centre/custom-software-vs-off-the-shelf-software/">custom versus off-the-shelf</a>.</p>
 """)
 
     article_page(ARTICLES[1], """
@@ -261,7 +321,7 @@ def build_knowledge():
 </figure>
 <h2>What it should not mean</h2>
 <p>A chatbot that apologises while the queue stays invisible. A notification storm. RPA clicking through a website you do not control.</p>
-<p>If your team’s week is mostly chasing status, start with <a href="/services/workflow-automation/">workflow automation</a> before you buy a more fashionable label.</p>
+<p>If your team’s week is mostly chasing status, start with <a href="/services/workflow-automation/">workflow automation</a> and the <a href="/our-work/tshira-workflow-system/">Tshira case study</a> before you buy a more fashionable label.</p>
 """)
 
     article_page(ARTICLES[5], f"""

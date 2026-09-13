@@ -25,7 +25,7 @@
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../../assets/css/main.css">
   <link rel="stylesheet" href="../../assets/css/premium.css">
-  <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Organization", "@id": "https://www.cyberdevelopers.co.za/#organization", "name": "Cyber Developers", "legalName": "Cyber Developers (Pty) Ltd", "url": "https://www.cyberdevelopers.co.za/", "logo": "https://www.cyberdevelopers.co.za/favicon.png", "email": "sales@cyberdevelopers.co.za", "telephone": "+27875501813", "description": "Cyber Developers is a South African custom software development company building business systems, web applications, mobile apps, workflow automation and integrations.", "address": {"@type": "PostalAddress", "streetAddress": "357 Oak Ave, Ferndale", "addressLocality": "Randburg", "addressRegion": "Gauteng", "addressCountry": "ZA"}, "areaServed": {"@type": "Country", "name": "South Africa"}, "sameAs": ["https://www.facebook.com/cyberdevelop", "https://www.instagram.com/cyber.developers/", "https://x.com/cyberdeveloper3"], "knowsAbout": ["Custom software development", "Business systems", "Web applications", "Mobile applications", "Workflow automation", "Systems integration"]}</script>
+  <script type="application/ld+json">{"@context": "https://schema.org", "@type": ["Organization", "ProfessionalService"], "@id": "https://www.cyberdevelopers.co.za/#organization", "name": "Cyber Developers", "legalName": "Cyber Developers (Pty) Ltd", "url": "https://www.cyberdevelopers.co.za/", "logo": "https://www.cyberdevelopers.co.za/favicon.png", "image": "https://www.cyberdevelopers.co.za/favicon.png", "email": "sales@cyberdevelopers.co.za", "telephone": "+27875501813", "description": "Cyber Developers is a South African custom software development company building business systems, web applications, mobile apps, workflow automation and integrations.", "address": {"@type": "PostalAddress", "streetAddress": "357 Oak Ave, Ferndale", "addressLocality": "Randburg", "addressRegion": "Gauteng", "addressCountry": "ZA"}, "areaServed": {"@type": "Country", "name": "South Africa"}, "sameAs": ["https://www.facebook.com/cyberdevelop", "https://www.instagram.com/cyber.developers/", "https://x.com/cyberdeveloper3"], "knowsAbout": ["Custom software development", "Business systems", "Web applications", "Mobile applications", "Workflow automation", "Systems integration"]}</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebSite", "@id": "https://www.cyberdevelopers.co.za/#website", "url": "https://www.cyberdevelopers.co.za/", "name": "Cyber Developers", "description": "Cyber Developers is a South African custom software development company building business systems, web applications, mobile apps, workflow automation and integrations.", "publisher": {"@id": "https://www.cyberdevelopers.co.za/#organization"}, "inLanguage": "en-ZA"}</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.cyberdevelopers.co.za/"}, {"@type": "ListItem", "position": 2, "name": "Services", "item": "https://www.cyberdevelopers.co.za/services/"}, {"@type": "ListItem", "position": 3, "name": "AI & Business Automation", "item": "https://www.cyberdevelopers.co.za/services/ai-business-automation/"}]}</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Service", "name": "AI & Business Automation", "description": "Practical AI and business automation inside custom software: assistants, document processing, workflow, reporting and API integrations.", "url": "https://www.cyberdevelopers.co.za/services/ai-business-automation/", "provider": {"@id": "https://www.cyberdevelopers.co.za/#organization"}, "areaServed": {"@type": "Country", "name": "South Africa"}, "serviceType": "AI & Business Automation"}</script>
@@ -57,22 +57,29 @@
     <a class="btn btn-secondary" href="/our-work/">View Our Work</a>
   </div>
 </div></section>
+
 <section class="section"><div class="container prose">
-  <h2>Where this usually comes from</h2>
-  <ul><li>Staff spend hours searching policies, past cases or internal documents.</li><li>Incoming PDFs and forms are retyped into the system.</li><li>The same customer questions repeat, but answers must stay inside approved information.</li><li>Managers want regular reports that still require a manual export.</li></ul>
-  <h2>What we typically deliver</h2>
-  <ul><li>Internal knowledge assistants constrained to your content.</li><li>Document processing: classification, extraction, routing.</li><li>Customer-service automation with a human handover.</li><li>Workflow automation and API integrations.</li><li>Scheduled or on-demand reporting from system data.</li><li>AI features embedded in a custom application, not a disconnected chatbot.</li></ul>
-  <h2>How we work</h2>
-  <p>We treat models and APIs as components. The product remains your application: users, roles, logs and source data. If a task does not need a model, we use ordinary automation. If it does, we bound it — which collection it may read, what it may write, and who approves the result.</p>
   <h2>Where this belongs</h2>
-        <p>Start with the system of record. Add automation where a person currently copies, searches or restates the same information. Keep a named owner for anything that affects a customer, a student, a citizen or a payment.</p>
-  <p class="tech-inline">Tools used on this kind of work: Python · TypeScript · Node.js · APIs · PostgreSQL · Azure</p>
-  <h2>Related systems</h2>
-  <ul><li><a href="/our-work/tshira-workflow-system/">Tshira Workflow System</a> — structured workflow that automation can sit on</li><li><a href="/services/custom-software-development/">Custom software</a> — the system AI should live inside</li></ul>
+  <p>Start with the system of record. Add automation where a person currently copies, searches or restates the same information. Keep a named owner for anything that affects a customer, a student, a citizen or a payment. <a href="/services/workflow-automation/">Workflow automation</a> is usually the substrate; a model is a component.</p>
+  <ul><li>Internal knowledge assistants constrained to your content.</li><li>Document processing: classification, extraction, routing.</li><li>Customer-service automation with a human handover.</li><li>Workflow automation and API integrations.</li><li>Scheduled or on-demand reporting from system data.</li><li>AI features embedded in a custom application, not a disconnected chatbot.</li></ul>
+  <p>Related: <a href="/our-work/tshira-workflow-system/">Tshira</a> as a structured workflow automation can sit on, and <a href="/services/custom-software-development/">custom software development</a> as the system it should live inside.</p>
 </div></section>
+
 <section class="section section-alt"><div class="container split">
   <div><h2>Questions</h2><p class="muted">If yours is not here, put it on the enquiry form.</p></div>
   <div class="faq"><details><summary>Will you label everything as AI-powered?</summary><p>No. If a filter or a template solves it, we say so.</p></details><details><summary>Do you train a private model on our data by default?</summary><p>Not by default. Many useful assistants retrieve from your documents at query time. Training or fine-tuning is a separate, explicit decision.</p></details><details><summary>Is AI the company’s identity?</summary><p>No. Cyber Developers is a software company. AI is one capability among systems, apps and integrations.</p></details></div>
+</div></section>
+<section class="section"><div class="container">
+  <div class="cta-band">
+    <div>
+      <h2>Talk to Our Developers</h2>
+      <p>Describe the process you want on a computer. We will say whether to build, adapt something we already have, or leave it.</p>
+    </div>
+    <div class="actions">
+      <a class="btn btn-primary btn-lg" href="/contact/" data-track="consultation_requested" data-track-location="cta">Discuss Your Project</a>
+      <a class="btn btn-secondary" href="/contact/">Request a Consultation</a>
+    </div>
+  </div>
 </div></section>
 </main><footer class="site-footer">
   <div class="container footer-grid">
@@ -95,10 +102,10 @@
       <h4>Services</h4>
       <ul>
         <li><a href="/services/custom-software-development/">Custom Software</a></li>
+        <li><a href="/services/business-systems/">Business Systems</a></li>
         <li><a href="/services/web-application-development/">Web Applications</a></li>
         <li><a href="/services/mobile-app-development/">Mobile Apps</a></li>
-        <li><a href="/services/business-systems/">Business Systems</a></li>
-        <li><a href="/services/ai-business-automation/">AI &amp; Automation</a></li>
+        <li><a href="/services/workflow-automation/">Workflow Automation</a></li>
       </ul>
     </div>
     <div>
@@ -106,7 +113,7 @@
       <ul>
         <li><a href="mailto:sales@cyberdevelopers.co.za" data-track="email_clicked">sales@cyberdevelopers.co.za</a></li>
         <li><a href="tel:+27875501813" data-track="phone_clicked">087 550 1813</a></li>
-        <li>357 Oak Ave, Ferndale, Randburg</li>
+        <li>357 Oak Ave, Ferndale, Randburg, South Africa</li>
       </ul>
     </div>
   </div>

@@ -9,8 +9,12 @@ from site_lib import crumbs_html, enquiry_form, faq_html, service_schema, faq_sc
 from generate_core import emit, bullets
 from graphics import (
     school_map, lawyer_map, funeral_map, tshira_map, municipality_map,
-    fluxmove_map, crm_map, ops_flow, feature_block, shot, shot_stack,
+    fluxmove_map, crm_map, feature_block, shot, shot_stack, shot_gallery, SHOTS,
 )
+
+
+def og_for(key: str) -> str:
+    return f"/assets/img/projects/{SHOTS[key]['file']}"
 
 
 SOL_VISUAL = {
@@ -24,11 +28,36 @@ SOL_VISUAL = {
 }
 
 
-def solution_page(slug, name, h1, title, description, intro, capabilities, notes, faqs, related, cta="Request Demo"):
+def solution_page(
+    slug,
+    name,
+    h1,
+    title,
+    description,
+    intro,
+    capabilities,
+    notes,
+    faqs,
+    related,
+    cta="Request a Consultation",
+    gallery=None,
+    og=None,
+):
     canonical = f"/solutions/{slug}/"
     rel_work = "".join(f'<li><a href="{u}">{esc(n)}</a></li>' for n, u in related)
     vis_fn = SOL_VISUAL.get(slug)
     vis = f'<aside class="page-hero-visual reveal">{vis_fn()}</aside>' if vis_fn else ""
+    shots = ""
+    if gallery:
+        shots = (
+            "<section class='section section-alt'><div class='container'>"
+            "<h2>Interface</h2>"
+            + shot_gallery(gallery)
+            + "</div></section>"
+        )
+    schema = [service_schema(h1, description, canonical)]
+    if faqs:
+        schema.append(faq_schema(faqs))
     body = f"""
 <section class="page-hero"><div class="container page-hero-grid">
   <div>
@@ -43,12 +72,13 @@ def solution_page(slug, name, h1, title, description, intro, capabilities, notes
   {vis}
 </div></section>
 <section class="section"><div class="container prose">
-  <h2>Core modules</h2>
+  <h2>Capabilities</h2>
   {bullets(capabilities)}
   {notes}
-  <h2>Related</h2>
+  <h2>Related work and reading</h2>
   <ul>{rel_work}</ul>
 </div></section>
+{shots}
 <section class="section section-alt"><div class="container split"><div><h2>Questions</h2></div>{faq_html(faqs)}</div></section>
 <section class="section"><div class="container split">
   <div>
@@ -65,9 +95,10 @@ def solution_page(slug, name, h1, title, description, intro, capabilities, notes
         canonical,
         [("/", "Home"), ("/solutions/", "Solutions"), (canonical, name)],
         body,
-        extra=[service_schema(h1, description, canonical), faq_schema(faqs)],
+        extra=schema,
         current="/solutions/",
         priority="0.85",
+        image=og or "/assets/img/og-default.webp",
     )
 
 
@@ -137,7 +168,7 @@ def build_solutions():
     solution_page(
         "school-management-system",
         "School Management System",
-        "School Management System South Africa",
+        "School Management Software",
         "School Management Software South Africa | Cyber Developers",
         "School management software for South African schools, colleges and TVETs: students, guardians, attendance, fees, HR, communication and reporting.",
         "SchoolHub SA is Cyber Developers’ school management platform for South African schools, colleges, TVETs and training centres. It is a multi-tenant web system with separate portals rather than a single shared desktop.",
@@ -157,23 +188,36 @@ def build_solutions():
             "POPIA-oriented consent fields on student records.",
         ],
         """<h2>Who it is for</h2>
-        <p>Independent schools, colleges and training centres that need one system for academics, fees and staff. Government SA-SAMS remains a reference for imports; this product is not claimed as an official SA-SAMS replacement.</p>
-        <h2>About biometrics</h2>
-        <p>Biometric hardware is not a built-in module in the public school platform. If a school already uses biometric attendance devices, integration can be scoped as a project rather than assumed.</p>""",
+        <p>Independent schools, colleges, TVETs and training centres that need one student administration system for academics, fees and staff — not only an LMS for video courses. Government SA-SAMS remains a reference for imports; this product is not claimed as an official SA-SAMS replacement.</p>
+        <h2>The problem it is built to solve</h2>
+        <p>A school cannot answer a simple question when academics, fees, attendance and parent communication live in different tools. Staff invent spreadsheets to close the gaps. SchoolHub SA keeps those records on one student file, with portals for administrators, teachers, learners and parents.</p>
+        <h2>How work typically moves</h2>
+        <p>Admissions capture an application. The learner is enrolled into a class and academic session. Teachers take attendance and assessments. Finance issues invoices and records payments (including local processors where the school enables them). Parents see children, fees, attendance and report cards. HR runs leave and payslips for staff. Letters, certificates and student cards come from the same record.</p>
+        <h2>Implementation and customisation</h2>
+        <p>The architecture is multi-school. Licensing, hosting, payment methods and communication providers are agreed per deployment. Biometric hardware is not a built-in module; if a school already uses biometric attendance devices, integration can be scoped rather than assumed. We do not show admin screens that display revoked or restricted licence warnings.</p>
+        <p>Read the <a href="/knowledge-centre/school-management-software-features/">school software features guide</a> or the <a href="/industries/#education">education industry</a> page.</p>""",
         [
             ("Is this only an LMS for video courses?", "No. It is a school administration and learning platform: people, money, attendance, assessments and communication, with student and parent access."),
             ("Can more than one school run on it?", "The architecture is multi-school. Licensing and hosting are agreed per deployment."),
             ("Do you host it?", "Deployments have used PostgreSQL-backed Next.js hosting. Hosting is part of the implementation conversation."),
+            ("Is this official SA-SAMS software?", "No. SA-SAMS-oriented import exists as a module where it is used. It is not an official department product."),
         ],
-        [("School / College LMS case study", "/our-work/school-lms/"), ("Education industry", "/industries/")],
+        [
+            ("School / College LMS case study", "/our-work/school-lms/"),
+            ("Education industry", "/industries/#education"),
+            ("Custom software development", "/services/custom-software-development/"),
+            ("School software features article", "/knowledge-centre/school-management-software-features/"),
+        ],
+        gallery=["school-portal"],
+        og=og_for("school-portal"),
     )
 
     solution_page(
         "law-firm-management-software",
         "Law Firm Management Software",
-        "Law Firm Management Software South Africa",
+        "Law Firm Management Software",
         "Law Firm Management Software South Africa | Cyber Developers",
-        "Law firm management software for South African practices: clients, cases, documents, tasks, billing, permissions and RAF workflow where it applies.",
+        "Law firm and legal practice management software for South African firms: clients, matters, invoices, fee book, trust accounts and debt collection.",
         "Cyber Developers builds practice software for law firms that need a shared file for clients and matters, not a collection of folders and spreadsheets. LawTech SA is a practice system organised around the matter file.",
         [
             "Client management and reception workflow.",
@@ -181,24 +225,37 @@ def build_solutions():
             "Fee book.",
             "Invoicing against the matter.",
             "Trust accounting.",
-            "Debt recovery.",
+            "Debt recovery / debt collection.",
             "Document and workflow management on the file.",
             "User permissions so candidate attorneys, secretaries and directors are not the same role.",
         ],
-        """<p>If your practice needs a demonstration, request a demo and specify litigation, RAF, conveyancing or general practice. We will not invent extra modules on this page.</p>""",
+        """<h2>Who it is for</h2>
+        <p>South African law firms and practices that need operational software around the matter — not a public marketing website. Specify litigation, RAF, conveyancing or general practice when you request a demo so we can walk the relevant file, not a generic pitch.</p>
+        <h2>The problem</h2>
+        <p>Practice work fails operationally when clients, matters, invoices and trust money sit in different places, and when every user has the same access. LawTech SA puts clients, billing and trust balances on the same dashboard operators actually use.</p>
+        <h2>Implementation</h2>
+        <p>Hosting and permissions are part of the implementation discussion. We do not make unsupported regulatory or compliance claims on this page. Trust accounting in the product is a module for recording trust money against the matter; it is not a substitute for the firm’s professional obligations.</p>
+        <p>See the <a href="/our-work/lawyer-management-system/">LawTech SA case study</a> and the <a href="/industries/#legal">legal industry</a> page.</p>""",
         [
-            ("Is this the same as the Chiedza immigration website?", "No. A public marketing site for an immigration practice is a different kind of project from a matter-management system."),
+            ("Is this the same as a marketing website for a practice?", "No. A public site is a different kind of project from a matter-management system."),
             ("Can it stay on our own server?", "Hosting is part of the implementation discussion. The application is designed as a business system, not a consumer SaaS login page only."),
+            ("Do you certify this for Law Society compliance?", "No. We describe the modules in the software. Professional and regulatory duties stay with the firm."),
         ],
-        [("Lawyer Management System", "/our-work/lawyer-management-system/"), ("Legal industry", "/industries/")],
+        [
+            ("LawTech SA case study", "/our-work/lawyer-management-system/"),
+            ("Legal industry", "/industries/#legal"),
+            ("Business systems", "/services/business-systems/"),
+        ],
+        gallery=["lawtech-dashboard"],
+        og=og_for("lawtech-dashboard"),
     )
 
     solution_page(
         "funeral-parlour-management-software",
         "Funeral Parlour Management",
-        "Funeral Parlour Software South Africa",
-        "Funeral Parlour Software South Africa | Cyber Developers",
-        "Custom funeral parlour management software for South African funeral businesses: members, policies, collections, claims and operations.",
+        "Funeral Parlour Management Software",
+        "Funeral Parlour Management Software South Africa | Cyber Developers",
+        "Funeral parlour and funeral policy management software for South African funeral businesses: members, premiums, claims, mortuary, fleet and finance.",
         "Legacy Care is Cyber Developers’ funeral business platform. The management dashboard covers members, policies, premium collections, arrears, claims, funeral operations, mortuary, inventory, fleet and finance.",
         [
             "Member management.",
@@ -212,20 +269,31 @@ def build_solutions():
             "Fleet and vehicles.",
             "Finance and reporting.",
         ],
-        """<p>Request a demo if you need to walk through the live system with your own process in mind.</p>""",
+        """<h2>Who it is for</h2>
+        <p>Funeral parlours and related societies that combine member policies, premium collection, claims and the operational work of a funeral — mortuary, inventory and vehicles — in one file.</p>
+        <h2>The problem</h2>
+        <p>Off-the-shelf tools rarely match that file. Collections, arrears and claims drift into spreadsheets while operations run somewhere else. Legacy Care treats them as modules of the same application.</p>
+        <h2>Implementation</h2>
+        <p>Naming and extra steps are scoped during implementation. The screens on this site are from the live interface. A demonstration is the honest way to see the rest of the workflow.</p>""",
         [
             ("Can this match our parlour’s file?", "The modules above are in the product. Naming and extra steps are scoped during implementation."),
             ("Do you publish a full screen inventory?", "The screens on this site are from the live interface. A demonstration is the honest way to see the rest."),
         ],
-        [("Funeral Parlour System", "/our-work/funeral-parlour-system/"), ("Business systems", "/services/business-systems/")],
+        [
+            ("Legacy Care case study", "/our-work/funeral-parlour-system/"),
+            ("Funeral industry", "/industries/#funeral"),
+            ("Business systems", "/services/business-systems/"),
+        ],
+        gallery=["legacy-dashboard", "legacy-collections"],
+        og=og_for("legacy-dashboard"),
     )
 
     solution_page(
         "workflow-management-system",
         "Workflow Management System",
-        "Workflow Management Software South Africa",
-        "Workflow Management Software South Africa | Cyber Developers",
-        "Workflow management software for South African organisations: cases, roles, field capture, review, requisitions, expenses and invoicing.",
+        "Workflow Management System",
+        "Workflow Management System South Africa | Cyber Developers",
+        "Workflow management software for South African organisations: cases, assignment, approval, SLA monitoring, reporting and an audit trail.",
         "The Tshira Workflow Management System is a production-style case workflow: work is received, assigned, collected in the field, reviewed, invoiced and closed, with money movement tied to status.",
         [
             "Roles including admin, provincial coordinators, field officers, consultants, reviewers and finance.",
@@ -236,21 +304,33 @@ def build_solutions():
             "Notifications and reporting for coordinators, field officers and finance.",
             "Organisation profile, banking details and invoice settings.",
         ],
-        """<p>The same pattern — statuses, owners, documents, finance locks — can be adapted to other organisations that run case-based work, not only the original Tshira deployment.</p>""",
+        """<h2>Who it is for</h2>
+        <p>Organisations that run case-based work across head office, branches and field staff — professional services, multi-province operations, and teams whose status currently lives in email.</p>
+        <h2>The problem</h2>
+        <p>Handovers disappear. Finance invoices unfinished work because there is no hard rule in the system. Tshira makes assignment, approval, SLA monitoring, reporting and the audit trail part of the same case.</p>
+        <h2>Implementation</h2>
+        <p>The same pattern can be adapted to other organisations: rename the stages, keep statuses, owners, documents and finance locks. It is not a blank BPM canvas.</p>
+        <p><a href="/services/workflow-automation/">Workflow automation service</a> · <a href="/knowledge-centre/how-workflow-automation-can-reduce-manual-admin/">How workflow automation reduces manual admin</a></p>""",
         [
             ("Is this generic BPM software?", "It is a concrete application with named roles and statuses. We can rename the stages to match another organisation; we do not drop a blank canvas on you and call it done."),
             ("Can provinces or branches be separated?", "Yes. Assignment by province is part of the original design."),
         ],
-        [("Tshira case study", "/our-work/tshira-workflow-system/"), ("Workflow automation service", "/services/workflow-automation/")],
+        [
+            ("Tshira case study", "/our-work/tshira-workflow-system/"),
+            ("Workflow automation service", "/services/workflow-automation/"),
+            ("Enterprise industry", "/industries/#enterprise"),
+        ],
+        gallery=["tshira-dashboard", "tshira-reports"],
+        og=og_for("tshira-dashboard"),
     )
 
     solution_page(
         "municipality-management-software",
         "Municipality Management Software",
         "Municipality Management Software",
-        "Municipality Management Software | Cyber Developers South Africa",
-        "Municipality management software for South African local government: residents, billing, fault reporting, queues, notices and citizen services.",
-        "Cyber Developers built SmartCity Muni, a municipality platform with a citizen application and an administration console. It is software for service delivery and records, not a municipal brochure website.",
+        "Municipality Management Software South Africa | Cyber Developers",
+        "Municipality management software and citizen service portals: issue reporting, alerts, queue booking, notices, jobs, tenders and a business directory.",
+        "Cyber Developers built SmartCity Muni, a municipality platform with a citizen application and an administration console. It is software for service delivery and records, not a municipal brochure website. This page describes the product. It does not claim that a named municipality has deployed it.",
         [
             "Resident registration with OTP verification.",
             "Citizen dashboard, fault/issue reporting and ticket tracking.",
@@ -263,38 +343,62 @@ def build_solutions():
             "Job listings with apply and track flows.",
             "Disputes, audit log and operational reports.",
         ],
-        """<p>Deployments are scoped to the municipality’s by-laws, billing rules and integrations. We do not claim a national government contract on this page.</p>""",
+        """<h2>Who it is for</h2>
+        <p>Local government and related service-delivery organisations that need a citizen channel and an operations desk on the same ticket — faults, queues, notices and emergency information — rather than a brochure site.</p>
+        <h2>The problem</h2>
+        <p>Residents still phone, queue or arrive in person for issues that a verified account could track. Staff then reconstruct the same request in a back office. SmartCity Muni is built so the public channel and the operations desk can share one record.</p>
+        <h2>Implementation</h2>
+        <p>Deployments would be scoped to by-laws, billing rules and integrations. We do not claim a national government contract, and we do not imply a live municipal rollout unless you are shown that deployment in a demo.</p>""",
         [
             ("Does this replace the financial system?", "Not automatically. Billing modules can be used as built or integrated with an existing finance system after discovery."),
             ("Is there a public demo URL?", "Request a demo. We do not publish admin credentials on the marketing site."),
+            ("Is SmartCity live at a named municipality?", "This site documents the software we built. It does not list municipal clients or usage statistics."),
         ],
-        [("Municipality Platform case study", "/our-work/municipality-platform/")],
+        [
+            ("SmartCity Muni case study", "/our-work/municipality-platform/"),
+            ("Government industry", "/industries/#government"),
+            ("Web application development", "/services/web-application-development/"),
+        ],
+        gallery=["smartcity-home", "smartcity-services", "smartcity-report", "smartcity-emergency"],
+        og=og_for("smartcity-home"),
     )
 
     solution_page(
         "logistics-delivery-software",
         "Logistics & Delivery Software",
         "Logistics & Delivery Software",
-        "Logistics & Delivery Software | Cyber Developers South Africa",
-        "Logistics and delivery software for South Africa: customer bookings, driver verification, vehicle types, job status and admin review.",
-        "Fluxmove is Cyber Developers’ nationwide delivery marketplace model: customers book a move, verified drivers accept work, and administrators review driver applications. A ride-hailing / passenger product is covered separately as VayaSA.",
+        "Logistics Software South Africa | Cyber Developers",
+        "Logistics and delivery management software for South Africa: instant quotations, vehicle selection, booking, drivers, providers and business accounts.",
+        "FluxMove is Cyber Developers’ nationwide delivery marketplace model: customers book a move, verified drivers accept work, and administrators review driver applications. A ride-hailing / passenger product is covered separately as VayaSA.",
         [
-            "Customer registration, pickup/drop-off booking and ZAR fare estimates.",
-            "Booking status tracking.",
-            "Driver registration, ID/licence/vehicle verification and availability.",
+            "Instant quotations with distance, vehicle type and urgency.",
+            "Vehicle selection from smaller vehicles through trucks.",
+            "Customer booking with pickup/drop-off and ZAR estimates.",
+            "Delivery scheduling and booking status tracking.",
+            "Driver and provider onboarding, including document verification.",
             "Open job browse and accept flow for drivers.",
-            "Vehicle types from smaller vehicles through trucks, including empty-return preference.",
-            "Admin approval and rejection of driver applications.",
-            "Optional driver mobile app for on-the-road workflow.",
+            "Admin approval and rejection of provider applications.",
+            "Optional Expo driver mobile app for on-the-road workflow.",
             "Business accounts, ratings, disputes and support tickets in the data model.",
         ],
-        """<h2>Ride-hailing</h2>
-        <p>If the requirement is passenger transport rather than freight, see <a href="/our-work/vayasa/">VayaSA</a> — ride shares, bus tickets and taxi seats, with South African payment options used on that product.</p>""",
+        """<h2>Who it is for</h2>
+        <p>Logistics, household-move and freight operators that need quotation, vehicle matching and booking in software — as a marketplace or as a closed driver pool.</p>
+        <h2>The problem</h2>
+        <p>Moving goods usually means phoning around for a vehicle. Price, distance, vehicle type and who is allowed to take the job stay in someone’s head. FluxMove puts quotation, selection, booking and provider review in one platform.</p>
+        <h2>Passenger transport</h2>
+        <p>If the requirement is passengers rather than freight, see <a href="/our-work/vayasa/">VayaSA</a> — ride shares, bus tickets and taxi seats, with South African payment options used on that product.</p>""",
         [
-            ("Is Fluxmove live?", "A public site exists at fluxmove.co.za. Treat production status as something to confirm on a demo; marketing pages should not invent traffic figures."),
+            ("Is FluxMove live?", "A public site exists at fluxmove.co.za. Treat production status as something to confirm on a demo; marketing pages should not invent traffic figures."),
             ("Can this run as a private fleet system?", "Yes. The marketplace model can be narrowed to a closed driver pool."),
         ],
-        [("Fluxmove case study", "/our-work/fluxmove/"), ("VayaSA", "/our-work/vayasa/")],
+        [
+            ("FluxMove case study", "/our-work/fluxmove/"),
+            ("VayaSA", "/our-work/vayasa/"),
+            ("Logistics industry", "/industries/#logistics"),
+            ("Mobile app development", "/services/mobile-app-development/"),
+        ],
+        gallery=["fluxmove-quote", "fluxmove-hero", "fluxmove-vehicles"],
+        og=og_for("fluxmove-quote"),
     )
 
     solution_page(

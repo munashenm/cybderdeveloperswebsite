@@ -36,6 +36,7 @@ def case_study(
     extras="",
     live_url=None,
     og=None,
+    meta_title=None,
 ):
     canonical = f"/our-work/{slug}/"
     live = ""
@@ -92,7 +93,7 @@ def case_study(
 """
     emit(
         f"our-work/{slug}/index.html",
-        f"{title} | Cyber Developers Work",
+        meta_title or f"{title} | Cyber Developers",
         description,
         canonical,
         [("/", "Home"), ("/our-work/", "Our Work"), (canonical, title)],
@@ -106,7 +107,7 @@ def case_study(
 def build_work():
     emit(
         "our-work/index.html",
-        "Our Work | Cyber Developers Software Projects",
+        "Our Work | Custom Software Projects South Africa | Cyber Developers",
         "Software Cyber Developers has actually built: Tshira, SmartCity Muni, VayaSA, FluxMove, LawTech SA, Legacy Care and Smart School/College.",
         "/our-work/",
         [("/", "Home"), ("/our-work/", "Our Work")],
@@ -181,6 +182,7 @@ def build_work():
         "A production URL is published at vayasa.co.za. Treat live commercial metrics as unpublished.",
         ["vayasa-home", "vayasa-search", "vayasa-routes"],
         live_url="https://www.vayasa.co.za",
+        meta_title="VayaSA Transport Marketplace | Cyber Developers",
     )
 
     case_study(
@@ -207,6 +209,7 @@ def build_work():
         "A public site is published at fluxmove.co.za. No user or GMV figures are stated here.",
         ["fluxmove-quote", "fluxmove-hero", "fluxmove-vehicles"],
         live_url="https://fluxmove.co.za",
+        meta_title="FluxMove Logistics Platform | Cyber Developers",
     )
 
     case_study(
@@ -232,6 +235,7 @@ def build_work():
         "A case is received, assigned by province, collected in the field, checked, reviewed and only then invoiced. Requisitions happen before spending; expenses are claimed afterwards.",
         "Described here from the application source and user manual. No client performance claims are added.",
         ["tshira-dashboard", "tshira-reports"],
+        meta_title="Tshira Workflow System | Custom Workflow Software | Cyber Developers",
     )
 
     case_study(
@@ -258,6 +262,7 @@ def build_work():
         "Each role uses a portal against the same student record. Finance sees invoices and debtors; teachers capture attendance and assessments; parents see children, fees and report cards; HR runs leave and payslips.",
         "Active codebase. The portal image on this page is the public sign-in. Additional operational screens are shown in a demo.",
         ["school-portal"],
+        meta_title="School Management System | Cyber Developers",
     )
 
     case_study(
@@ -283,6 +288,7 @@ def build_work():
         "Work is organised around the matter file. Clients, billing and trust money sit on that file, with permissions so candidate attorneys, secretaries and directors are not the same role.",
         "Available for demonstration. The screenshot is the firm dashboard, not a login screen.",
         ["lawtech-dashboard"],
+        meta_title="LawTech SA Legal Management System | Cyber Developers",
     )
 
     case_study(
@@ -308,6 +314,7 @@ def build_work():
         "Operators work from a shared dashboard. Collections, arrears, claims and operations are modules of the same application rather than separate spreadsheets.",
         "Demo on request. Screens on this page are from the live interface.",
         ["legacy-dashboard", "legacy-collections"],
+        meta_title="Legacy Care Funeral Management Platform | Cyber Developers",
     )
 
     case_study(
@@ -333,6 +340,7 @@ def build_work():
         "Residents report faults, book queues and view services. Staff use an administration console for the same tickets, meter readings, notices, disputes and reports.",
         "Codebase exists. The screens on this page are from the citizen application.",
         ["smartcity-home", "smartcity-services", "smartcity-report", "smartcity-emergency"],
+        meta_title="SmartCity Municipal Services Platform | Cyber Developers",
     )
 
 
