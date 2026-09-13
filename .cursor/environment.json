@@ -1,0 +1,15 @@
+{
+  "name": "Cyber Developers static site",
+  "install": "python3 tools/generate_site.py",
+  "terminals": [
+    {
+      "name": "dev-server",
+      "command": "python3 -m http.server 8000"
+    }
+  ],
+  "ports": [
+    {
+      "port": 8000
+    }
+  ]
+}
