@@ -9,7 +9,7 @@ from site_lib import (
     esc, crumbs_html, enquiry_form, faq_html,
     service_schema, faq_schema,
 )
-from generate_core import emit, bullets, cards
+from generate_core import emit, bullets
 from graphics import capabilities_editorial
 
 
@@ -72,7 +72,7 @@ def build_services():
   <h1>Services</h1>
   <p class="lead">Named pieces of work you can send to a colleague. They overlap on purpose: a school system is custom software, a web application, and often an integration job as well. If you are unsure which label fits, start with custom software or describe the process you want to replace.</p>
 </div></section>
-{capabilities_editorial().replace('id="services"', 'id="service-list"')}
+{capabilities_editorial(heading=None, section_id="service-list")}
 """,
         current="/services/",
         priority="0.8",

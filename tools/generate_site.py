@@ -145,7 +145,9 @@ RewriteRule ^privacy\\.html$ /privacy/ [R=301,L]
   ExpiresByType text/css "access plus 7 days"
   ExpiresByType application/javascript "access plus 7 days"
   ExpiresByType image/webp "access plus 30 days"
+  ExpiresByType image/avif "access plus 30 days"
   ExpiresByType image/png "access plus 30 days"
+  ExpiresByType image/svg+xml "access plus 30 days"
 </IfModule>
 """,
         encoding="utf-8",
