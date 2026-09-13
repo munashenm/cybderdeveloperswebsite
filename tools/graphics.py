@@ -194,9 +194,8 @@ def municipality_map() -> str:
 def hero_stage() -> str:
     school = app_shell(
         "School / College LMS",
-        ["Admin", "Finance", "Teachers", "Students", "Parents", "HR"],
+        ["Admin", "Finance", "Teachers", "Parents"],
         ["Students", "Fees", "Attendance", "Reports"],
-        ["Enrol", "Attend", "Assess", "Report"],
         cls="frame-lg",
     )
     tshira = app_shell(
