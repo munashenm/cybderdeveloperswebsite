@@ -8,7 +8,7 @@ from datetime import date
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from site_lib import crumbs_html, article_schema, esc
 from generate_core import emit, TODAY
-from graphics import article_cover, ops_flow
+from graphics import article_cover, shot
 
 ARTICLES = [
     {
@@ -168,21 +168,19 @@ def build_knowledge():
         "/knowledge-centre/",
         [("/", "Home"), ("/knowledge-centre/", "Knowledge Centre")],
         f"""
-<section class="page-hero"><div class="container page-hero-grid">
-  <div>
-    {crumbs_html([("/", "Home"), ("/knowledge-centre/", "Knowledge Centre")])}
-    <h1>Knowledge Centre</h1>
-    <p class="lead">Practical guidance for organisations planning software, business systems, automation and digital products.</p>
-  </div>
-  <aside class="page-hero-visual reveal">
-    <p class="eyebrow">Inside the articles</p>
-    {ops_flow(["Cost", "Build vs buy", "Workflow", "School systems", "Mobile"])}
-  </aside>
+<section class="page-hero"><div class="container">
+  {crumbs_html([("/", "Home"), ("/knowledge-centre/", "Knowledge Centre")])}
+  <h1>Knowledge Centre</h1>
+  <p class="lead">Practical guidance for organisations planning software, business systems, automation and digital products.</p>
 </div></section>
 <section class="section"><div class="container">
-  <nav class="kc-filters" data-kc-filters aria-label="Article categories">{''.join(filters)}</nav>
+  <p class="eyebrow">Featured Article</p>
   {article_card(featured, featured=True)}
+  <h2 class="kc-heading">Latest Insights</h2>
   <div class="kc-mix">{''.join(mix)}</div>
+  <h2 class="kc-heading">Topics</h2>
+  <nav class="kc-filters" data-kc-filters aria-label="Article categories">{''.join(filters)}</nav>
+  <h2 class="kc-heading">All articles</h2>
   <div class="kc-rest">{''.join(rest)}</div>
 </div></section>
 """,
@@ -252,17 +250,21 @@ def build_knowledge():
 <p>See also <a href="/services/business-systems/">business systems</a> and <a href="/solutions/school-management-system/">school management</a> as a concrete example of the pattern.</p>
 """)
 
-    article_page(ARTICLES[4], """
+    article_page(ARTICLES[4], f"""
 <p>Manual admin is usually a workflow problem wearing an email costume. Work arrives, someone forwards it, someone else asks for a document, finance invoices too early or too late, and nobody can point to a status.</p>
 <h2>What automation should mean</h2>
 <p>Named stages. A named owner. A rule for when the record may move. Documents attached to the record, not to a side chat. Finance blocked until the work is actually complete.</p>
 <p>The Tshira workflow system uses that pattern: intake, provincial assignment, field collection, quality check, consultancy, review, invoicing, payment, closure — with requisitions before spending and expenses after, so the two are not confused.</p>
+<figure class="article-shot">
+{shot("tshira-dashboard")}
+<figcaption>Tshira — named stages, owners and finance rules in an operational application.</figcaption>
+</figure>
 <h2>What it should not mean</h2>
 <p>A chatbot that apologises while the queue stays invisible. A notification storm. RPA clicking through a website you do not control.</p>
 <p>If your team’s week is mostly chasing status, start with <a href="/services/workflow-automation/">workflow automation</a> before you buy a more fashionable label.</p>
 """)
 
-    article_page(ARTICLES[5], """
+    article_page(ARTICLES[5], f"""
 <p>School software is often sold as an LMS: video, quizzes, certificates. South African schools also need guardians, fees, attendance, staff leave and letters. If the product cannot produce a statement and a report card, it is only part of the job.</p>
 <h2>Features that matter in practice</h2>
 <ul>
@@ -276,7 +278,12 @@ def build_knowledge():
 <li>Timetable links for online classes where the school actually runs them.</li>
 </ul>
 <p>Biometrics are optional hardware, not a magic checkbox. SA-SAMS imports can help a school that already lives there; they do not make a product an official department system.</p>
-<p>Cyber Developers’ SchoolHub SA platform is built around that list. <a href="/solutions/school-management-system/">Read the solution page</a> or <a href="/contact/?intent=demo">request a demo</a>.</p>
+<p>Cyber Developers’ SchoolHub SA platform is built around that list. The public portal below is the sign-in for administrators, teachers and learners.</p>
+<figure class="article-shot">
+{shot("school-portal")}
+<figcaption>Smart School/College — role-based access to the same student record.</figcaption>
+</figure>
+<p><a href="/solutions/school-management-system/">Read the solution page</a> or <a href="/contact/?intent=demo">request a demo</a>.</p>
 """)
 
     article_page(ARTICLES[6], """

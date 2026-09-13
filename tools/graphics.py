@@ -24,6 +24,91 @@ BANNER_TECH = [
 
 SHOT_DIR = ROOT / "assets" / "img" / "work"
 SHOT_EXTS = (".webp", ".avif", ".png", ".jpg", ".jpeg")
+PROJECT_IMG = "/assets/img/projects"
+
+# Real product screenshots. Dimensions match the WebP files on disk.
+SHOTS: dict[str, dict] = {
+    "smartcity-home": {
+        "file": "smartcity/home.webp", "w": 1600, "h": 757,
+        "alt": "SmartCity municipal citizen services platform",
+        "title": "SmartCity Muni",
+    },
+    "smartcity-services": {
+        "file": "smartcity/services.webp", "w": 1600, "h": 746,
+        "alt": "SmartCity municipal services grid including reporting, alerts and bookings",
+        "title": "SmartCity Muni",
+    },
+    "smartcity-report": {
+        "file": "smartcity/report-issue.webp", "w": 1600, "h": 741,
+        "alt": "SmartCity municipal fault reporting form for water leaks and service issues",
+        "title": "SmartCity Muni",
+    },
+    "smartcity-emergency": {
+        "file": "smartcity/emergency.webp", "w": 1600, "h": 746,
+        "alt": "SmartCity emergency contacts for SAPS, ambulance, fire and disaster management",
+        "title": "SmartCity Muni",
+    },
+    "tshira-dashboard": {
+        "file": "tshira-workflow/dashboard.webp", "w": 1600, "h": 731,
+        "alt": "Cyber Developers Tshira workflow management dashboard",
+        "title": "Tshira",
+    },
+    "tshira-reports": {
+        "file": "tshira-workflow/reports.webp", "w": 1600, "h": 728,
+        "alt": "Tshira management reports with SLA, cases and finance metrics",
+        "title": "Tshira",
+    },
+    "legacy-dashboard": {
+        "file": "legacy-care/dashboard.webp", "w": 1600, "h": 739,
+        "alt": "Legacy Care funeral management software dashboard",
+        "title": "Legacy Care",
+    },
+    "legacy-collections": {
+        "file": "legacy-care/collections.webp", "w": 1600, "h": 737,
+        "alt": "Legacy Care premium collection trends and recent collections",
+        "title": "Legacy Care",
+    },
+    "lawtech-dashboard": {
+        "file": "lawtech/dashboard.webp", "w": 1600, "h": 723,
+        "alt": "LawTech SA legal practice management dashboard",
+        "title": "LawTech SA",
+    },
+    "vayasa-home": {
+        "file": "vayasa/home.webp", "w": 1600, "h": 738,
+        "alt": "VayaSA South African passenger transport marketplace",
+        "title": "VayaSA",
+    },
+    "vayasa-search": {
+        "file": "vayasa/search.webp", "w": 1466, "h": 878,
+        "alt": "VayaSA ride sharing search results between South African cities",
+        "title": "VayaSA",
+    },
+    "vayasa-routes": {
+        "file": "vayasa/routes.webp", "w": 1496, "h": 824,
+        "alt": "VayaSA operator onboarding and popular intercity routes",
+        "title": "VayaSA",
+    },
+    "fluxmove-hero": {
+        "file": "fluxmove/hero.webp", "w": 1600, "h": 727,
+        "alt": "FluxMove logistics marketplace homepage",
+        "title": "FluxMove",
+    },
+    "fluxmove-quote": {
+        "file": "fluxmove/quote.webp", "w": 1270, "h": 877,
+        "alt": "FluxMove logistics instant quotation platform",
+        "title": "FluxMove",
+    },
+    "fluxmove-vehicles": {
+        "file": "fluxmove/vehicles.webp", "w": 1600, "h": 731,
+        "alt": "FluxMove vehicle types from motorcycle to heavy equipment transport",
+        "title": "FluxMove",
+    },
+    "school-portal": {
+        "file": "school-management/portal.webp", "w": 1600, "h": 728,
+        "alt": "Smart School College management platform",
+        "title": "Smart School/College",
+    },
+}
 
 
 def _cls(*parts: str) -> str:
@@ -79,8 +164,44 @@ def app_shell(
     return frame(title, inner, cls)
 
 
+def shot(key: str, *, eager: bool = False, title: str | None = None) -> str:
+    """Browser-framed product screenshot. Never stretched; height follows the image."""
+    meta = SHOTS[key]
+    src = f"{PROJECT_IMG}/{meta['file']}"
+    sm = src.replace(".webp", "-sm.webp")
+    w, h = meta["w"], meta["h"]
+    alt = meta["alt"]
+    chrome = title if title is not None else meta["title"]
+    loading = "eager" if eager else "lazy"
+    fetch = ' fetchpriority="high"' if eager else ""
+    sizes = "(max-width: 760px) 100vw, (max-width: 1240px) 56vw, 760px"
+    return f"""<div class="frame shot-frame">
+  <div class="frame-chrome"><i></i><i></i><i></i><span>{esc(chrome)}</span></div>
+  <div class="frame-shot">
+    <img src="{src}" srcset="{sm} 900w, {src} {w}w" sizes="{sizes}"
+         alt="{esc(alt)}" width="{w}" height="{h}"
+         loading="{loading}" decoding="async"{fetch}>
+  </div>
+</div>"""
+
+
+def shot_stack(*keys: str, eager_first: bool = False) -> str:
+    parts = [
+        shot(k, eager=(eager_first and i == 0))
+        for i, k in enumerate(keys)
+    ]
+    return f'<div class="shot-stack">{"".join(parts)}</div>'
+
+
+def shot_gallery(keys: list[str], eager_first: bool = False) -> str:
+    items = []
+    for i, k in enumerate(keys):
+        items.append(f'<figure class="shot-item">{shot(k, eager=(eager_first and i == 0))}</figure>')
+    return f'<div class="shot-gallery">{"".join(items)}</div>'
+
+
 def work_visual(slug: str, alt: str, fallback: str) -> str:
-    """Use a genuine screenshot when present; otherwise the schematic."""
+    """Legacy hook for drop-in files under assets/img/work/{slug}."""
     if SHOT_DIR.is_dir():
         for ext in SHOT_EXTS:
             if (SHOT_DIR / f"{slug}{ext}").is_file():
@@ -97,130 +218,38 @@ def work_visual(slug: str, alt: str, fallback: str) -> str:
 
 
 def vayasa_map() -> str:
-    return work_visual(
-        "vayasa",
-        "VayaSA",
-        app_shell(
-            "VayaSA",
-            ["Passenger", "Driver", "Bus operator", "Taxi operator", "Admin"],
-            ["Search", "Bookings", "Payouts", "Verification"],
-            ["Search", "Book", "Pay", "Ticket"],
-        ),
-    )
+    return shot("vayasa-home")
 
 
 def fluxmove_map() -> str:
-    return work_visual(
-        "fluxmove",
-        "Fluxmove",
-        app_shell(
-            "Fluxmove",
-            ["Customer", "Driver", "Admin", "Support"],
-            ["Booking", "Vehicle types", "Verification", "Open jobs"],
-            ["Book move", "Match", "Accept", "Deliver"],
-        ),
-    )
+    return shot("fluxmove-quote")
 
 
 def tshira_map() -> str:
-    return work_visual(
-        "tshira-workflow-system",
-        "Tshira",
-        app_shell(
-            "Tshira",
-            ["Intake", "Province", "Field", "Review", "Finance"],
-            ["Cases", "Documents", "Requisitions", "Invoices"],
-            ["Intake", "Assign", "Collect", "Review", "Invoice", "Close"],
-            active=2,
-        ),
-    )
+    return shot("tshira-dashboard")
 
 
 def school_map() -> str:
-    return work_visual(
-        "school-lms",
-        "SchoolHub SA",
-        app_shell(
-            "SchoolHub SA",
-            ["Admin", "Finance", "Teachers", "Students", "Parents", "HR"],
-            ["Students", "Fees", "Attendance", "Reports"],
-            ["Enrol", "Attend", "Assess", "Report"],
-        ),
-    )
+    return shot("school-portal")
 
 
 def lawyer_map() -> str:
-    return work_visual(
-        "lawyer-management-system",
-        "Practice system",
-        app_shell(
-            "Practice system",
-            ["Clients", "Matters", "Documents", "RAF", "Billing"],
-            ["Matters", "Documents", "Tasks", "Billing"],
-            ["Open", "Work", "Bill", "Close"],
-        ),
-    )
+    return shot("lawtech-dashboard")
 
 
 def funeral_map() -> str:
-    return work_visual(
-        "funeral-parlour-system",
-        "Funeral parlour",
-        frame(
-            "Funeral parlour",
-            '<p class="frame-caption">Administration software scoped to the parlour. Exact screens confirmed in a demo.</p>'
-            '<div class="shell-panels compact">'
-            '<div class="shell-panel"><strong>Records</strong><span></span></div>'
-            '<div class="shell-panel"><strong>Access</strong><span></span></div>'
-            '<div class="shell-panel"><strong>Process fit</strong><span></span></div>'
-            "</div>",
-        ),
-    )
+    return shot("legacy-dashboard")
 
 
 def municipality_map() -> str:
-    return work_visual(
-        "municipality-platform",
-        "Municipality",
-        app_shell(
-            "Municipality",
-            ["Residents", "Billing", "Faults", "Queues", "Admin"],
-            ["Faults", "Bills", "Queues", "Notices"],
-            ["Report", "Queue", "Resolve", "Notify"],
-        ),
-    )
+    return shot("smartcity-home")
 
 
 def hero_stage() -> str:
-    school = app_shell(
-        "School / College LMS",
-        ["Admin", "Finance", "Teachers", "Parents"],
-        ["Students", "Fees", "Attendance", "Reports"],
-        cls="frame-lg",
-    )
-    tshira = app_shell(
-        "Tshira Workflow",
-        ["Intake", "Field", "Review", "Finance"],
-        ["Cases", "Documents"],
-        ["Intake", "Assign", "Collect", "Review", "Invoice"],
-        active=1,
-        cls="frame-md",
-    )
-    mobile = phone_frame(
-        "VayaSA",
-        '<ul class="phone-mods">'
-        "<li>Bookings</li><li>Drivers</li><li>Payments</li><li>Tickets</li>"
-        "</ul>"
-        '<p class="frame-caption">Passenger, driver and operator roles.</p>',
-    )
-    return f"""<div class="hero-stage" aria-hidden="true">
-  <div class="hero-grid-bg"></div>
-  <div class="hero-glow"></div>
-  {school}
-  {tshira}
-  {mobile}
+    return f"""<div class="hero-stage hero-shot">
+  {shot("vayasa-home", eager=True, title="VayaSA")}
 </div>
-<p class="hero-visual-note">Layered system maps of products we have built. Live interface screenshots will replace these maps when supplied.</p>"""
+<p class="hero-visual-note">VayaSA — a passenger transport marketplace we designed and built. Operational systems such as Tshira are in Selected Work.</p>"""
 
 
 def _tech_svg(name: str) -> str:
@@ -301,21 +330,29 @@ def selected_work() -> str:
     return f"""<section class="section" id="work">
   <div class="container">
     <div class="section-intro reveal">
-      <h2>Selected Work</h2>
-      <p class="lead">Systems designed around a real operating model. These are maps of modules we have actually built — not invented dashboards.</p>
+      <p class="eyebrow">Selected Work</p>
+      <h2>Software built for real-world operations.</h2>
+      <p class="lead">These are systems we designed and developed. They are not stock illustrations or invented dashboards.</p>
     </div>
-    {showcase("/our-work/vayasa/", "VayaSA", "Ride-hailing & transport platform",
-              "Ride sharing, bus tickets and taxi seats between cities, with South African payments and driver verification.",
-              ["Web App", "Mobile Experience", "Payments", "Driver Management", "Booking System"],
-              vayasa_map())}
-    {showcase("/our-work/fluxmove/", "Fluxmove", "Delivery marketplace",
-              "Customers book a move; verified drivers with bakkies, vans or trucks accept jobs. Admin reviews applications.",
-              ["Web App", "Driver App", "Verification", "Vehicle Types"],
-              fluxmove_map(), reverse=True)}
-    {showcase("/our-work/tshira-workflow-system/", "Tshira Workflow System", "Case workflow",
-              "Provincial assignment, field collection, review, requisitions, expenses and invoicing with finance locked until work is complete.",
-              ["Workflow", "Roles", "Documents", "Invoicing"],
-              tshira_map())}
+    {showcase("/our-work/tshira-workflow-system/", "Enterprise Workflow Platform", "Tshira",
+              "Case management, SLA monitoring, finance and operational reporting.",
+              ["Workflow", "Cases", "SLA", "Finance", "Audit"],
+              tshira_map(), cta="View project")}
+    {showcase("/our-work/municipality-platform/", "Municipal Digital Services Platform", "SmartCity Muni",
+              "Citizen reporting, alerts, municipal services and emergency access.",
+              ["Citizen portal", "Fault reporting", "Alerts", "Emergency"],
+              municipality_map(), reverse=True, cta="View project")}
+    {showcase("/our-work/vayasa/", "Passenger Transport Marketplace", "VayaSA",
+              "Ride sharing, bus ticketing and taxi booking.",
+              ["Ride sharing", "Bus tickets", "Taxi bookings"],
+              vayasa_map(), cta="View project")}
+    {showcase("/our-work/fluxmove/", "Logistics Marketplace", "FluxMove",
+              "Instant quotations, delivery booking and transport-provider workflows.",
+              ["Live quotes", "Vehicle types", "Booking"],
+              fluxmove_map(), reverse=True, cta="View project")}
+    <p class="hero-actions reveal" style="margin-top:2.2rem">
+      <a class="btn btn-primary" href="/our-work/">Explore Our Work</a>
+    </p>
   </div>
 </section>"""
 
@@ -503,13 +540,13 @@ def engineering_matrix() -> str:
 
 def industries_band() -> str:
     items = [
-        ("Education", "/solutions/school-management-system/"),
-        ("Legal", "/solutions/law-firm-management-software/"),
-        ("Government", "/solutions/municipality-management-software/"),
-        ("Logistics", "/solutions/logistics-delivery-software/"),
-        ("Transport", "/our-work/vayasa/"),
-        ("Retail", "/industries/"),
-        ("Professional services", "/industries/"),
+        ("Government", "/industries/#government"),
+        ("Education", "/industries/#education"),
+        ("Legal", "/industries/#legal"),
+        ("Funeral", "/industries/#funeral"),
+        ("Transport", "/industries/#transport"),
+        ("Logistics", "/industries/#logistics"),
+        ("Enterprise", "/industries/#enterprise"),
     ]
     links = "".join(f'<a href="{h}">{esc(n)}</a>' for n, h in items)
     return f"""<section class="section" id="industries">
@@ -587,6 +624,7 @@ def feature_block(
     cta: str,
     reverse: bool = False,
     extra_links: list[tuple[str, str]] | None = None,
+    extra_html: str = "",
 ) -> str:
     cls = _cls("cap-row", "reverse" if reverse else "", "reveal")
     more = "".join(
@@ -597,7 +635,8 @@ def feature_block(
     <p class="eyebrow">{esc(kicker)}</p>
     <h2>{esc(name)}</h2>
     <p>{esc(copy)}</p>
-    {tags(modules)}
+    {extra_html}
+    {tags(modules) if modules else ""}
     <p class="hero-actions" style="margin-top:1.1rem;margin-bottom:0">
       <a class="more" href="{href}">{esc(cta)}</a>
       {more}
@@ -605,6 +644,24 @@ def feature_block(
   </div>
   <div class="cap-visual">{visual}</div>
 </article>"""
+
+
+def industry_block(
+    href: str,
+    name: str,
+    kicker: str,
+    problem: str,
+    digitise: str,
+    visual: str,
+    reverse: bool = False,
+    cta: str = "Build a solution for your organisation",
+    extra_links: list[tuple[str, str]] | None = None,
+) -> str:
+    extra = f"<p>{esc(digitise)}</p>"
+    return feature_block(
+        href, name, kicker, problem, [], visual, cta,
+        reverse=reverse, extra_links=extra_links, extra_html=extra,
+    )
 
 
 def article_cover(kind: str) -> str:

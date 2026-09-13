@@ -132,6 +132,8 @@ ErrorDocument 404 /404.html
 RewriteRule ^projects\\.html$ /our-work/ [R=301,L]
 RewriteRule ^about\\.html$ /about/ [R=301,L]
 RewriteRule ^privacy\\.html$ /privacy/ [R=301,L]
+RewriteRule ^discuss-your-project/?$ /contact/ [R=301,L]
+RewriteRule ^discuss-your-project/index\\.html$ /contact/ [R=301,L]
 
 <IfModule mod_headers.c>
   Header set X-Content-Type-Options "nosniff"
@@ -165,6 +167,7 @@ def write_redirects() -> None:
     write_page("projects.html", redirect_page("/our-work/", "Projects moved"))
     write_page("about.html", redirect_page("/about/", "About moved"))
     write_page("privacy.html", redirect_page("/privacy/", "Privacy moved"))
+    write_page("discuss-your-project/index.html", redirect_page("/contact/", "Discuss your project"))
 
 
 def main() -> None:

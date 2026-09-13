@@ -9,7 +9,7 @@ from site_lib import crumbs_html, enquiry_form, faq_html, service_schema, faq_sc
 from generate_core import emit, bullets
 from graphics import (
     school_map, lawyer_map, funeral_map, tshira_map, municipality_map,
-    fluxmove_map, crm_map, ops_flow, feature_block,
+    fluxmove_map, crm_map, ops_flow, feature_block, shot, shot_stack,
 )
 
 
@@ -79,51 +79,54 @@ def build_solutions():
         "/solutions/",
         [("/", "Home"), ("/solutions/", "Solutions")],
         f"""
-<section class="page-hero"><div class="container page-hero-grid">
-  <div>
-    {crumbs_html([("/", "Home"), ("/solutions/", "Solutions")])}
-    <h1>Software Built Around Real Operations</h1>
-    <p class="lead">We design business systems around the actual work your organisation needs to manage — records, approvals, payments, documents, communication and reporting.</p>
-    <p class="hero-note">These are systems designed around a real operating model. Open a page for the problem, the modules, and the case study where one exists. Where a private system is not in this public repository, the feature list stays conservative.</p>
-    <div class="hero-actions">
-      <a class="btn btn-primary" href="/contact/">Discuss Your Project</a>
-      <a class="btn btn-secondary" href="/our-work/">View Our Work</a>
-    </div>
+<section class="page-hero"><div class="container">
+  {crumbs_html([("/", "Home"), ("/solutions/", "Solutions")])}
+  <h1>Custom digital platforms, built as real software</h1>
+  <p class="lead">Cyber Developers designs and builds custom digital platforms, business systems, mobile and web applications, and workflow solutions. The screens below are systems we have actually produced — not service cards.</p>
+  <div class="hero-actions">
+    <a class="btn btn-primary" href="/contact/">Discuss Your Project</a>
+    <a class="btn btn-secondary" href="/our-work/">Explore Our Work</a>
   </div>
-  <aside class="page-hero-visual reveal">
-    <p class="eyebrow">How the pieces connect</p>
-    {ops_flow()}
-  </aside>
 </div></section>
 <section class="section"><div class="container">
-  {feature_block("/solutions/school-management-system/", "School Management System", "Education",
-                 "Students, guardians, attendance, fees, HR, SMS/email and reporting for South African schools, colleges and TVETs.",
-                 ["Students", "Attendance", "Fees", "Guardians", "HR", "Communication", "Reporting"],
-                 school_map(), "Explore School Management System")}
-  {feature_block("/solutions/law-firm-management-software/", "Law Firm Management Software", "Legal",
-                 "Clients, cases, documents, tasks, billing, permissions and RAF workflow where it applies.",
-                 ["Clients", "Cases", "Documents", "Tasks", "Billing", "Permissions", "RAF"],
-                 lawyer_map(), "Explore Law Firm Software", reverse=True)}
-  {feature_block("/solutions/funeral-parlour-management-software/", "Funeral Parlour Management", "Operations",
-                 "Administration software scoped to how the parlour actually runs.",
-                 ["Records", "Access", "Process fit"],
-                 funeral_map(), "Explore Funeral Parlour Software")}
-  {feature_block("/solutions/workflow-management-system/", "Workflow Management System", "Case work",
-                 "Cases, field capture, review, requisitions, expenses and invoicing.",
-                 ["Cases", "Roles", "Field capture", "Review", "Invoicing"],
-                 tshira_map(), "Explore Workflow Management", reverse=True)}
-  {feature_block("/solutions/municipality-management-software/", "Municipality Management Software", "Government",
-                 "Residents, billing, fault reporting, queues, notices and administration.",
-                 ["Residents", "Billing", "Faults", "Queues", "Notices", "Admin"],
-                 municipality_map(), "Explore Municipality Software")}
-  {feature_block("/solutions/logistics-delivery-software/", "Logistics & Delivery Software", "Logistics",
-                 "Bookings, driver checks, vehicle types and job status.",
-                 ["Bookings", "Drivers", "Vehicles", "Job status"],
-                 fluxmove_map(), "Explore Logistics Software", reverse=True)}
-  {feature_block("/solutions/custom-crm-development/", "Custom CRM Development", "Sales & service",
-                 "When the object is not a lead — repairs, learners, tickets, matters.",
+  {feature_block("/solutions/workflow-management-system/", "Custom Business & Workflow Systems", "Operations software",
+                 "We build the internal systems organisations run on: workflow automation, case management, SLA tracking, requisitions, billing, expenses, team management, audit trails and management reporting.",
+                 ["Workflow", "Cases", "SLA", "Requisitions", "Billing", "Expenses", "Audit", "Reports"],
+                 shot("tshira-dashboard"), "Explore workflow systems",
+                 extra_links=[("Tshira case study", "/our-work/tshira-workflow-system/")])}
+  {feature_block("/solutions/municipality-management-software/", "Municipal & Government Platforms", "Citizen services",
+                 "Citizen service portals, municipal fault reporting, service-request tracking, emergency information, alerts and public notices, queue booking, tenders and local business directories.",
+                 ["Citizen portal", "Fault reporting", "Tracking", "Emergency", "Alerts", "Queues", "Tenders", "Directory"],
+                 shot_stack("smartcity-home", "smartcity-services"), "Explore municipality software", reverse=True,
+                 extra_links=[("SmartCity case study", "/our-work/municipality-platform/")])}
+  {feature_block("/solutions/school-management-system/", "School & College Management", "Education",
+                 "Role-based portals for admissions, student records, attendance, marks, timetables, staff management, finance and reporting — for South African schools, colleges and TVET institutions.",
+                 ["Admissions", "Student records", "Attendance", "Marks", "Timetables", "Staff", "Finance", "Reporting"],
+                 school_map(), "Explore school management",
+                 extra_links=[("SchoolHub SA case study", "/our-work/school-lms/")])}
+  {feature_block("/solutions/law-firm-management-software/", "Legal Practice Management", "LawTech SA",
+                 "Client management, matters, invoicing, fee books, trust accounting, debt recovery and document workflow for South African practices.",
+                 ["Clients", "Matters", "Invoicing", "Fee book", "Trust", "Debt recovery"],
+                 lawyer_map(), "Explore legal software", reverse=True,
+                 extra_links=[("LawTech SA case study", "/our-work/lawyer-management-system/")])}
+  {feature_block("/solutions/funeral-parlour-management-software/", "Funeral Business Management", "Legacy Care",
+                 "Member management, policy products, premium collections, arrears, claims, funeral operations, mortuary, inventory, fleet and finance reporting.",
+                 ["Members", "Policies", "Collections", "Arrears", "Claims", "Mortuary", "Fleet", "Finance"],
+                 funeral_map(), "Explore funeral software",
+                 extra_links=[("Legacy Care case study", "/our-work/funeral-parlour-system/")])}
+  {feature_block("/our-work/vayasa/", "Transport & Marketplace Platforms", "VayaSA",
+                 "Marketplace platforms covering ride sharing, bus ticketing, taxi bookings, driver and operator onboarding, booking engines and customer accounts.",
+                 ["Ride sharing", "Bus tickets", "Taxi bookings", "Onboarding", "Accounts"],
+                 shot_stack("vayasa-home", "vayasa-search"), "Explore VayaSA", reverse=True)}
+  {feature_block("/solutions/logistics-delivery-software/", "Logistics & Delivery Platforms", "FluxMove",
+                 "Live quotation engines, distance and pricing logic, vehicle selection, booking, driver and provider onboarding, delivery management and business accounts.",
+                 ["Live quotes", "Pricing", "Vehicles", "Booking", "Onboarding", "Business accounts"],
+                 shot("fluxmove-quote"), "Explore logistics software",
+                 extra_links=[("FluxMove case study", "/our-work/fluxmove/")])}
+  {feature_block("/solutions/custom-crm-development/", "Custom CRM Development", "When the object is not a lead",
+                 "We build CRMs around repairs, learners, tickets or matters when Salesforce-shaped objects do not fit. There is no product screenshot here because the data model is the brief.",
                  ["Records", "Pipeline", "History", "Permissions"],
-                 crm_map(), "Explore Custom CRM")}
+                 crm_map(), "Explore custom CRM", reverse=True)}
 </div></section>
 {cta_band("Need a system in this shape?", "Describe the process. We will show the closest system, or confirm what still needs to be built.", primary=("Discuss Your Project", "/contact/"))}
 """,
@@ -171,14 +174,15 @@ def build_solutions():
         "Law Firm Management Software South Africa",
         "Law Firm Management Software South Africa | Cyber Developers",
         "Law firm management software for South African practices: clients, cases, documents, tasks, billing, permissions and RAF workflow where it applies.",
-        "Cyber Developers builds practice software for law firms that need a shared file for clients and matters, not a collection of folders and spreadsheets. The public website repository does not contain the full legal-product source; the capabilities below are the modules this solution is built to cover.",
+        "Cyber Developers builds practice software for law firms that need a shared file for clients and matters, not a collection of folders and spreadsheets. LawTech SA is a practice system organised around the matter file.",
         [
-            "Client management.",
+            "Client management and reception workflow.",
             "Case / matter management.",
-            "Document storage against the matter.",
-            "RAF workflow where the practice handles Road Accident Fund work.",
-            "Tasks and deadlines.",
-            "Billing and reporting.",
+            "Fee book.",
+            "Invoicing against the matter.",
+            "Trust accounting.",
+            "Debt recovery.",
+            "Document and workflow management on the file.",
             "User permissions so candidate attorneys, secretaries and directors are not the same role.",
         ],
         """<p>If your practice needs a demonstration, request a demo and specify litigation, RAF, conveyancing or general practice. We will not invent extra modules on this page.</p>""",
@@ -194,17 +198,24 @@ def build_solutions():
         "Funeral Parlour Management",
         "Funeral Parlour Software South Africa",
         "Funeral Parlour Software South Africa | Cyber Developers",
-        "Custom funeral parlour management software for South African funeral businesses, scoped to the processes the parlour actually runs.",
-        "Cyber Developers develops custom management software for funeral parlours. A full feature inventory is not published here because the product source is not in this public website repository, and we will not invent modules.",
+        "Custom funeral parlour management software for South African funeral businesses: members, policies, collections, claims and operations.",
+        "Legacy Care is Cyber Developers’ funeral business platform. The management dashboard covers members, policies, premium collections, arrears, claims, funeral operations, mortuary, inventory, fleet and finance.",
         [
-            "A management system fitted to the parlour’s administration, records and reporting.",
-            "User access for the people who actually operate the business.",
-            "Customisation around the parlour’s existing paper or spreadsheet process.",
+            "Member management.",
+            "Policy products.",
+            "Premium collections and billing batches.",
+            "Arrears dashboard.",
+            "Claims processing.",
+            "Funeral operations and obituaries / memorials.",
+            "Mortuary register.",
+            "Inventory / stock.",
+            "Fleet and vehicles.",
+            "Finance and reporting.",
         ],
-        """<p>The previous marketing site listed productised names and modules that could not be verified against source. Those claims were removed. Request a demo and we will walk through the live system rather than a brochure list.</p>""",
+        """<p>Request a demo if you need to walk through the live system with your own process in mind.</p>""",
         [
-            ("Can you list every screen?", "Not from this public repository. A demonstration is the honest way to see the current build."),
-            ("Will you copy a competitor’s feature page?", "No. Features are those the system actually has or that we agree to build."),
+            ("Can this match our parlour’s file?", "The modules above are in the product. Naming and extra steps are scoped during implementation."),
+            ("Do you publish a full screen inventory?", "The screens on this site are from the live interface. A demonstration is the honest way to see the rest."),
         ],
         [("Funeral Parlour System", "/our-work/funeral-parlour-system/"), ("Business systems", "/services/business-systems/")],
     )
@@ -239,7 +250,7 @@ def build_solutions():
         "Municipality Management Software",
         "Municipality Management Software | Cyber Developers South Africa",
         "Municipality management software for South African local government: residents, billing, fault reporting, queues, notices and citizen services.",
-        "Cyber Developers built a municipality platform with a citizen application and an administration console. It is software for service delivery and records, not a municipal brochure website.",
+        "Cyber Developers built SmartCity Muni, a municipality platform with a citizen application and an administration console. It is software for service delivery and records, not a municipal brochure website.",
         [
             "Resident registration with OTP verification.",
             "Citizen dashboard, fault/issue reporting and ticket tracking.",

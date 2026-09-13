@@ -15,11 +15,11 @@
   <meta property="og:url" content="https://www.cyberdevelopers.co.za/our-work/tshira-workflow-system/">
   <meta property="og:title" content="Tshira Workflow System | Cyber Developers Work">
   <meta property="og:description" content="Tshira is a multi-province workflow system built by Cyber Developers for cases, field collection, review and invoicing.">
-  <meta property="og:image" content="https://www.cyberdevelopers.co.za/assets/img/og-default.webp">
+  <meta property="og:image" content="https://www.cyberdevelopers.co.za/assets/img/projects/tshira-workflow/dashboard.webp">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Tshira Workflow System | Cyber Developers Work">
   <meta name="twitter:description" content="Tshira is a multi-province workflow system built by Cyber Developers for cases, field collection, review and invoicing.">
-  <meta name="twitter:image" content="https://www.cyberdevelopers.co.za/assets/img/og-default.webp">
+  <meta name="twitter:image" content="https://www.cyberdevelopers.co.za/assets/img/projects/tshira-workflow/dashboard.webp">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -46,41 +46,64 @@
   </div>
 </header>
 <main id="main">
-<section class="page-hero"><div class="container">
-  <nav class="breadcrumbs" aria-label="Breadcrumb"><a href="/">Home</a><span>/</span><a href="/our-work/">Our Work</a><span>/</span><span>Tshira Workflow System</span></nav>
-  <p class="eyebrow">Workflow</p>
-  <h1>Tshira Workflow System</h1>
-  <p class="lead">Tshira is a workflow management system for coordinating cases, client work, field data collection, document review, requisitions, expenses and invoicing across provinces.</p>
+<section class="page-hero"><div class="container page-hero-grid">
+  <div>
+    <nav class="breadcrumbs" aria-label="Breadcrumb"><a href="/">Home</a><span>/</span><a href="/our-work/">Our Work</a><span>/</span><span>Tshira Workflow System</span></nav>
+    <p class="eyebrow">Enterprise / Professional Services · Business workflow platform</p>
+    <h1>Tshira Workflow System</h1>
+    <p class="lead">Tshira is a workflow management system for coordinating cases, client work, field data collection, document review, requisitions, expenses and invoicing across provinces.</p>
+    <div class="hero-actions">
+      <a class="btn btn-primary" href="/contact/">Build Something Similar</a>
+      <a class="btn btn-secondary" href="/contact/">Discuss Your Requirements</a>
+    </div>
+    
+  </div>
+  <aside class="page-hero-visual reveal"><div class="frame shot-frame">
+  <div class="frame-chrome"><i></i><i></i><i></i><span>Tshira</span></div>
+  <div class="frame-shot">
+    <img src="/assets/img/projects/tshira-workflow/dashboard.webp" srcset="/assets/img/projects/tshira-workflow/dashboard-sm.webp 900w, /assets/img/projects/tshira-workflow/dashboard.webp 1600w" sizes="(max-width: 760px) 100vw, (max-width: 1240px) 56vw, 760px"
+         alt="Cyber Developers Tshira workflow management dashboard" width="1600" height="731"
+         loading="eager" decoding="async" fetchpriority="high">
+  </div>
+</div></aside>
 </div></section>
 <section class="section"><div class="container case-layout">
   <div class="prose">
-  <h2>What we built</h2>
-  <p>A role-based Next.js application with a strict case lifecycle, separate requisition vs expense flows, and invoice generation gated on case status.</p>
-  <h2>Why it was needed</h2>
+  <h2>Challenge</h2>
   <p>When case work is split between head office, provincial coordinators and field officers, status disappears into email. Finance also needs a hard rule: do not invoice unfinished work.</p>
-  <h2>How it works</h2>
-  <p>A case is received, assigned by province, collected in the field, checked, reviewed and only then invoiced. Requisitions happen before spending; expenses are claimed afterwards, so the two are not mixed.</p>
-  <h2>Key functionality</h2>
-  <ul><li>Roles: admin, provincial coordinator, data collection officer, business consultant, reviewer, finance.</li><li>Sequential case statuses from intake to paid/closed, including return-for-correction paths.</li><li>Clients, documents, case history and notifications.</li><li>Requisitions for space/visit clearance versus expenses with receipt upload.</li><li>Billing queue, sequential invoice numbers, PDF/print/email of invoices.</li><li>Coordinator, DCO and finance reports.</li></ul>
+  <h2>Solution</h2>
+  <p>A role-based Next.js application with a strict case lifecycle, separate requisition vs expense flows, SLA-aware reporting, and invoice generation gated on case status.</p>
+  <p>A case is received, assigned by province, collected in the field, checked, reviewed and only then invoiced. Requisitions happen before spending; expenses are claimed afterwards.</p>
+  <h2>Key capabilities</h2>
+  <ul><li>Roles: admin, provincial coordinator, data collection officer, business consultant, reviewer, finance.</li><li>Sequential case statuses from intake to paid/closed, including return-for-correction paths.</li><li>Clients, documents, case history and notifications.</li><li>Requisitions for space/visit clearance versus expenses with receipt upload.</li><li>Billing queue, sequential invoice numbers, PDF/print/email of invoices.</li><li>SLA monitoring and management reports.</li><li>Team management and audit trail.</li></ul>
   <h2>Technology</h2>
   <p class="tech-inline">Next.js · TypeScript · PostgreSQL · Prisma · NextAuth</p>
-  <h2>Screenshots</h2>
-  <p class="shot-note">Interface screenshots for this page are still outstanding. Request a walkthrough if you need to see the live screens.</p>
   <h2>Current status</h2>
   <p>Described here from the application source and user manual. No client performance claims are added.</p>
   
-  <p style="margin-top:2rem"><a class="btn btn-primary" href="/contact/">Discuss a similar project</a></p>
   </div>
-  <div class="case-visual"><div class="frame">
+  <aside class="case-visual"><div class="frame shot-frame">
   <div class="frame-chrome"><i></i><i></i><i></i><span>Tshira</span></div>
-  <div class="frame-body"><div class="shell">
-  <ul class="shell-nav"><li>Intake</li><li>Province</li><li class="is-on">Field</li><li>Review</li><li>Finance</li></ul>
-  <div class="shell-work">
-    <div class="shell-panels"><div class="shell-panel"><strong>Cases</strong><span></span><span></span></div><div class="shell-panel"><strong>Documents</strong><span></span><span></span></div><div class="shell-panel"><strong>Requisitions</strong><span></span><span></span></div><div class="shell-panel"><strong>Invoices</strong><span></span><span></span></div></div>
-    <ol class="shell-flow"><li>Intake</li><li>Assign</li><li>Collect</li><li>Review</li><li>Invoice</li><li>Close</li></ol>
+  <div class="frame-shot">
+    <img src="/assets/img/projects/tshira-workflow/dashboard.webp" srcset="/assets/img/projects/tshira-workflow/dashboard-sm.webp 900w, /assets/img/projects/tshira-workflow/dashboard.webp 1600w" sizes="(max-width: 760px) 100vw, (max-width: 1240px) 56vw, 760px"
+         alt="Cyber Developers Tshira workflow management dashboard" width="1600" height="731"
+         loading="lazy" decoding="async">
   </div>
-</div></div>
-</div></div>
+</div></aside>
+</div></section>
+<section class='section section-alt'><div class='container'><h2>Interface</h2><div class="shot-gallery"><figure class="shot-item"><div class="frame shot-frame">
+  <div class="frame-chrome"><i></i><i></i><i></i><span>Tshira</span></div>
+  <div class="frame-shot">
+    <img src="/assets/img/projects/tshira-workflow/reports.webp" srcset="/assets/img/projects/tshira-workflow/reports-sm.webp 900w, /assets/img/projects/tshira-workflow/reports.webp 1600w" sizes="(max-width: 760px) 100vw, (max-width: 1240px) 56vw, 760px"
+         alt="Tshira management reports with SLA, cases and finance metrics" width="1600" height="728"
+         loading="lazy" decoding="async">
+  </div>
+</div></figure></div></div></section>
+<section class="section"><div class="container">
+  <p class="hero-actions">
+    <a class="btn btn-primary" href="/contact/">Build Something Similar</a>
+    <a class="btn btn-secondary" href="/our-work/">All work</a>
+  </p>
 </div></section>
 </main><footer class="site-footer">
   <div class="container footer-grid">

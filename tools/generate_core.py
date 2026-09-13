@@ -12,10 +12,9 @@ from site_lib import (
     enquiry_form, faq_html, service_schema, faq_schema, article_schema,
 )
 from graphics import (
-    hero_stage, tech_banner, selected_work, more_work, capabilities_editorial,
+    hero_stage, tech_banner, selected_work, capabilities_editorial,
     architecture, engineering_matrix, industries_band, process_flow,
-    school_map, lawyer_map, municipality_map, fluxmove_map, vayasa_map,
-    retail_map, professional_map, feature_block, ops_flow,
+    school_map, lawyer_map, funeral_map, industry_block, shot_stack, shot,
 )
 
 TODAY = date.today().isoformat()
@@ -92,13 +91,12 @@ def homepage() -> None:
   <aside>{hero_stage()}</aside>
 </div></section>
 {tech_banner()}
-{selected_work()}
 {capabilities_editorial()}
+{selected_work()}
 {architecture()}
 {engineering_matrix()}
 {industries_band()}
 {process_flow()}
-{more_work()}
 <section class="section"><div class="container split">
   <div>
     <h2>Before you enquire</h2>
@@ -208,93 +206,81 @@ def contact_page() -> None:
 
 def industries_page() -> None:
     body = f"""
-<section class="page-hero"><div class="container page-hero-grid">
-  <div>
-    {crumbs_html([("/", "Home"), ("/industries/", "Industries")])}
-    <h1>Software for organisations with real operational complexity</h1>
-    <p class="lead">Every industry manages different records, approvals, workflows and responsibilities. We build systems around those processes.</p>
-    <p class="hero-note">The software is different in each of these places. That is why we list them — not to fill a grid of industries.</p>
-    <div class="hero-actions">
-      <a class="btn btn-primary" href="/contact/">Discuss Your Project</a>
-      <a class="btn btn-secondary" href="/solutions/">View Solutions</a>
-    </div>
+<section class="page-hero"><div class="container">
+  {crumbs_html([("/", "Home"), ("/industries/", "Industries")])}
+  <h1>Do we understand your industry?</h1>
+  <p class="lead">Each of these sectors has its own records, approvals and public-facing work. We have already built software in these operating environments — not a generic admin theme with a new logo.</p>
+  <div class="hero-actions">
+    <a class="btn btn-primary" href="/contact/">Discuss Your Project</a>
+    <a class="btn btn-secondary" href="/our-work/">See the software</a>
   </div>
-  <aside class="page-hero-visual reveal">
-    <p class="eyebrow">From process to system</p>
-    {ops_flow(["Records", "Approvals", "Workflow", "Payments", "Reporting"])}
-  </aside>
 </div></section>
 <section class="section"><div class="container">
   <nav class="industry-band reveal" aria-label="Sectors">
+    <a href="#government">Government</a>
     <a href="#education">Education</a>
     <a href="#legal">Legal</a>
-    <a href="#government">Government</a>
-    <a href="#logistics">Logistics</a>
+    <a href="#funeral">Funeral</a>
     <a href="#transport">Transport</a>
-    <a href="#retail">Retail</a>
-    <a href="#professional">Professional services</a>
+    <a href="#logistics">Logistics</a>
+    <a href="#enterprise">Enterprise</a>
   </nav>
 </div></section>
-<section class="section section-alt" id="education"><div class="container">
-  {feature_block("/solutions/school-management-system/", "Education", "Schools, colleges and TVETs",
-                 "Schools, colleges and training institutions need one place for students, attendance, guardians, fees and staff administration. Independent schools, colleges and training centres that split academics, fees and parent communication across different tools cannot answer a simple question from one record.",
-                 ["Students", "Attendance", "Fees", "Guardians", "HR"],
-                 school_map(), "View Education Solutions")}
-</div></section>
-<section class="section" id="legal"><div class="container">
-  {feature_block("/solutions/law-firm-management-software/", "Legal", "Law firms and practices",
-                 "Law firms need structured client, matter, document and billing workflows. Practices fail operationally when files, deadlines and billing live in different places, and when every user has the same access.",
-                 ["Clients", "Matters", "Documents", "Billing", "Permissions"],
-                 lawyer_map(), "View Legal Software", reverse=True)}
-</div></section>
 <section class="section section-alt" id="government"><div class="container">
-  {feature_block("/solutions/municipality-management-software/", "Government & Municipalities", "Local government",
-                 "Citizen portals, billing, fault reporting, queues and notices require role-based systems, not a static municipal website. Residents still queue, phone or arrive in person for issues that a verified account could track.",
-                 ["Residents", "Billing", "Faults", "Queues", "Notices"],
-                 municipality_map(), "View Municipality Software")}
+  {industry_block("/solutions/municipality-management-software/", "Government & Municipalities", "SmartCity Muni",
+                 "Residents still phone, queue or arrive in person for faults, bills and appointments that a verified account could track. Staff then reconstruct the same request in a back office.",
+                 "We digitise citizen service portals, municipal fault reporting, request tracking, emergency information, alerts and notices, queue booking, tenders and local business directories — so the public channel and the operations desk share one record.",
+                 shot_stack("smartcity-home", "smartcity-report"),
+                 extra_links=[("View SmartCity", "/our-work/municipality-platform/")])}
 </div></section>
-<section class="section" id="logistics"><div class="container">
-  {feature_block("/solutions/logistics-delivery-software/", "Logistics", "Delivery operations",
-                 "Delivery operations need bookings, driver onboarding, vehicle types, status tracking and admin review. Moving goods across South Africa is a matching problem as much as a transport problem.",
-                 ["Bookings", "Drivers", "Vehicles", "Status"],
-                 fluxmove_map(), "View Logistics Software", reverse=True)}
+<section class="section" id="education"><div class="container">
+  {industry_block("/solutions/school-management-system/", "Education", "Schools, colleges and TVETs",
+                 "A school cannot answer a simple question when academics, fees, attendance and parent communication live in different tools. Staff invent spreadsheets to close the gaps.",
+                 "We digitise admissions, student records, attendance, marks, timetables, staff administration, finance and reporting behind role-based portals for administrators, teachers and learners.",
+                 school_map(), reverse=True,
+                 extra_links=[("View school platform", "/our-work/school-lms/")])}
+</div></section>
+<section class="section section-alt" id="legal"><div class="container">
+  {industry_block("/solutions/law-firm-management-software/", "Legal", "Law firms and practices",
+                 "Practice work fails operationally when clients, matters, invoices and trust money sit in different places, and when every user has the same access.",
+                 "We digitise client files, matters, fee books, invoicing, trust accounting, debt recovery and the workflow around a matter — with permissions that match how a firm actually staffs a file.",
+                 lawyer_map(),
+                 extra_links=[("View LawTech SA", "/our-work/lawyer-management-system/")])}
+</div></section>
+<section class="section" id="funeral"><div class="container">
+  {industry_block("/solutions/funeral-parlour-management-software/", "Funeral Services", "Funeral parlours and societies",
+                 "Funeral businesses combine member policies, premium collection, claims, mortuary work and vehicles. Off-the-shelf tools rarely match that file.",
+                 "We digitise member management, policy products, premium collections, arrears, claims, funeral operations, mortuary records, inventory, fleet and finance reporting.",
+                 funeral_map(), reverse=True,
+                 extra_links=[("View Legacy Care", "/our-work/funeral-parlour-system/")])}
 </div></section>
 <section class="section section-alt" id="transport"><div class="container">
-  {feature_block("/our-work/vayasa/", "Transport", "Ride-hailing and passenger movement",
-                 "Ride sharing, bus and taxi booking, driver verification and payments are software problems as much as operations problems. Intercity passenger movement mixes informal ranks, operators and private cars.",
-                 ["Passenger", "Driver", "Operators", "Payments"],
-                  vayasa_map(), "View VayaSA")}
+  {industry_block("/our-work/vayasa/", "Transport & Mobility", "Intercity passenger movement",
+                 "Intercity travel in South Africa mixes private cars, bus operators and taxi associations. Passengers cannot see seats, operators cannot see bookings, and payments are inconsistent.",
+                 "We digitise ride sharing, bus ticketing, taxi seat bookings, driver and operator onboarding, and customer accounts on one marketplace.",
+                 shot_stack("vayasa-home", "vayasa-search"),
+                 extra_links=[("View VayaSA", "/our-work/vayasa/")])}
 </div></section>
-<section class="section" id="retail"><div class="container">
-  {feature_block("/solutions/custom-crm-development/", "Retail", "Stores and inventory",
-                 "Inventory, invoicing, customer records and store processes can be modelled as a custom system when off-the-shelf tools do not fit.",
-                 ["Stock", "Sales", "Customers", "Invoices"],
-                 retail_map(), "View Custom CRM", reverse=True,
-                 extra_links=[("Business systems", "/services/business-systems/")])}
+<section class="section" id="logistics"><div class="container">
+  {industry_block("/solutions/logistics-delivery-software/", "Logistics & Delivery", "Freight and household moves",
+                 "Moving goods usually means phoning around for a vehicle. Price, distance, vehicle type and who is allowed to take the job stay in someone’s head.",
+                 "We digitise live quotation, vehicle selection, booking, driver and provider onboarding, delivery management and business accounts.",
+                 shot("fluxmove-quote"), reverse=True,
+                 extra_links=[("View FluxMove", "/our-work/fluxmove/")])}
 </div></section>
-<section class="section section-alt" id="professional"><div class="container">
-  {feature_block("/solutions/workflow-management-system/", "Professional services", "Consultancies and similar firms",
-                 "Consultancies and similar firms often need workflow, documents, billing and multi-role review rather than a generic CRM.",
-                 ["Workflow", "Documents", "Billing", "Review"],
-                 professional_map(), "View Workflow Management",
-                 extra_links=[("Custom CRM", "/solutions/custom-crm-development/")])}
+<section class="section section-alt" id="enterprise"><div class="container">
+  {industry_block("/solutions/workflow-management-system/", "Enterprise / Professional Services", "Internal operations",
+                 "Head office, branches and field staff lose case status in email. Finance invoices unfinished work because there is no hard rule in the system.",
+                 "We digitise workflow, case management, SLA tracking, requisitions, billing, expenses, team access, audit trails and management reporting — the kind of internal software an operations team actually lives in.",
+                 shot("tshira-dashboard"),
+                 extra_links=[("View Tshira", "/our-work/tshira-workflow-system/")])}
 </div></section>
-<section class="section"><div class="container split">
-  <article class="reveal">
-    <h2>SMEs</h2>
-    <p>Smaller organisations still need reliable records, invoices and staff access — usually with a narrower scope and a clearer process.</p>
-  </article>
-  <article class="reveal">
-    <h2>Enterprise</h2>
-    <p>Larger organisations typically need integration, permissions, audit trails and staged delivery onto existing systems.</p>
-  </article>
-</div></section>
-{cta_band("Talk about your organisation", "If your sector is not listed, that can still be a fit. Specialised workflows are the work we take.", primary=("Discuss Your Project", "/contact/"))}
+{cta_band("If your sector is not listed, that can still be a fit.", "Specialised workflows are the work we take. Describe the process and we will say whether we have built something close.", primary=("Discuss Your Project", "/contact/"))}
 """
     emit(
         "industries/index.html",
         "Industries | Cyber Developers Custom Software South Africa",
-        "Cyber Developers builds custom software for education, legal, municipalities, logistics, transport, retail, professional services, SMEs and enterprise organisations in South Africa.",
+        "Cyber Developers builds software for government, education, legal, funeral, transport, logistics and enterprise operations in South Africa.",
         "/industries/",
         [("/", "Home"), ("/industries/", "Industries")],
         body,

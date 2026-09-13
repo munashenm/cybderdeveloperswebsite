@@ -5,6 +5,8 @@ ErrorDocument 404 /404.html
 RewriteRule ^projects\.html$ /our-work/ [R=301,L]
 RewriteRule ^about\.html$ /about/ [R=301,L]
 RewriteRule ^privacy\.html$ /privacy/ [R=301,L]
+RewriteRule ^discuss-your-project/?$ /contact/ [R=301,L]
+RewriteRule ^discuss-your-project/index\.html$ /contact/ [R=301,L]
 
 <IfModule mod_headers.c>
   Header set X-Content-Type-Options "nosniff"
