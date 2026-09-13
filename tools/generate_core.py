@@ -7,7 +7,7 @@ from datetime import date
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from site_lib import (
-    ROOT, SITE, TECHS, ORG_DESC, EMAIL, PHONE_DISPLAY, PHONE_E164, ADDRESS_LINE, WA_URL,
+    ROOT, SITE, TECHS, ORG_DESC, EMAIL, PHONE_DISPLAY, PHONE_E164, ADDRESS_LINE,
     icon, esc, render_page, write_page, redirect_page, crumbs_html, cta_band,
     enquiry_form, faq_html, service_schema, faq_schema, article_schema,
 )
@@ -162,10 +162,8 @@ def contact_page() -> None:
     <div class="contact-details">
       <p><span>Email</span><a href="mailto:{EMAIL}" data-track="email_clicked">{EMAIL}</a></p>
       <p><span>Phone</span><a href="tel:{PHONE_E164}" data-track="phone_clicked">{PHONE_DISPLAY}</a></p>
-      <p><span>WhatsApp</span><a href="{WA_URL}" data-track="whatsapp_clicked" rel="noopener">Message Cyber Developers</a></p>
       <p><span>Address</span>{esc(ADDRESS_LINE)}</p>
     </div>
-    <p style="margin-top:1.5rem"><a class="btn btn-whatsapp" href="{WA_URL}" data-track="whatsapp_clicked">WhatsApp: discuss a software project</a></p>
   </div>
   {enquiry_form("project_enquiry", "New project enquiry | Cyber Developers", "Discuss Your Project")}
 </div></section>
@@ -185,9 +183,9 @@ def contact_page() -> None:
 <section class="page-hero"><div class="container">
   {crumbs_html([("/", "Home"), ("/contact/", "Contact"), ("/contact/thank-you/", "Thank you")])}
   <h1>Enquiry received.</h1>
-  <p class="lead">Thank you. We will review what you sent and respond by email. If the matter is urgent, call {PHONE_DISPLAY} or use WhatsApp.</p>
+  <p class="lead">Thank you. We will review what you sent and respond by email. If the matter is urgent, call {PHONE_DISPLAY}.</p>
   <p style="margin-top:1.5rem" class="hero-actions">
-    <a class="btn btn-primary" href="{WA_URL}" data-track="whatsapp_clicked">WhatsApp</a>
+    <a class="btn btn-primary" href="mailto:{EMAIL}" data-track="email_clicked">Email us</a>
     <a class="btn btn-secondary" href="/our-work/">View Our Work</a>
   </p>
 </div></section>

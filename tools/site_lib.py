@@ -18,14 +18,7 @@ ORG_DESC = (
 EMAIL = "sales@cyberdevelopers.co.za"
 PHONE_DISPLAY = "087 550 1813"
 PHONE_E164 = "+27875501813"
-WHATSAPP = "27875501813"
 ADDRESS_LINE = "357 Oak Ave, Ferndale, Randburg"
-WA_URL = (
-    "https://wa.me/"
-    + WHATSAPP
-    + "?text="
-    + "Hi%20Cyber%20Developers%2C%20I%27d%20like%20to%20discuss%20a%20software%20project."
-)
 FORM_ACTION = "https://formsubmit.co/" + EMAIL
 
 NAV = [
@@ -72,7 +65,6 @@ def icon(name: str) -> str:
         "spark": '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2v6M12 16v6M2 12h6M16 12h6M5 5l4 4M15 15l4 4M19 5l-4 4M9 15l-4 4"/></svg>',
         "plug": '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 7v4a3 3 0 0 0 6 0V7M8 7h8M12 14v7"/></svg>',
         "check": '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="4 12 9 17 20 6"/></svg>',
-        "wa": '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M20 11.5A8.5 8.5 0 0 1 7.2 19.3L3.5 20.5l1.3-3.6A8.5 8.5 0 1 1 20 11.5zm-8.1 6.3a6.3 6.3 0 0 0 3.2-.9l.2-.1 1.9.5-.5-1.8.1-.2a6.3 6.3 0 1 0-4.9 2.5zm3.6-4.7c-.2-.1-1.2-.6-1.4-.7s-.3-.1-.5.1-.5.7-.7.8-.3.1-.5 0a5.2 5.2 0 0 1-1.5-1.3 5.7 5.7 0 0 1-1-2.1c-.1-.4 0-.4.1-.6l.3-.3.2-.3c.1-.1 0-.3 0-.4l-.7-1.6c-.2-.4-.4-.4-.5-.4h-.4c-.2 0-.4.1-.6.4s-.8.8-.8 1.9.8 2.2.9 2.3a8.6 8.6 0 0 0 3.3 2.6c.5.2.8.2 1.1.1s1-.4 1.1-.8.1-.7.1-.8 0-.2-.1-.2z"/></svg>',
     }
     return icons.get(name, icons["code"])
 
@@ -300,7 +292,6 @@ def footer(prefix: str) -> str:
       <ul>
         <li><a href="mailto:{EMAIL}" data-track="email_clicked">{EMAIL}</a></li>
         <li><a href="tel:{PHONE_E164}" data-track="phone_clicked">{PHONE_DISPLAY}</a></li>
-        <li><a href="{WA_URL}" data-track="whatsapp_clicked" rel="noopener">WhatsApp</a></li>
         <li>{esc(ADDRESS_LINE)}</li>
       </ul>
     </div>
@@ -310,7 +301,6 @@ def footer(prefix: str) -> str:
     <p>Custom software &amp; business systems · South Africa</p>
   </div>
 </footer>
-<a class="whatsapp-float" href="{WA_URL}" data-track="whatsapp_clicked" data-track-location="float" aria-label="Chat on WhatsApp" rel="noopener">{icon('wa')}</a>
 <script src="{asset(prefix, 'js/config.js')}"></script>
 <script src="{asset(prefix, 'js/main.js')}" defer></script>
 </body>
@@ -407,7 +397,7 @@ def enquiry_form(
     <textarea id="project_description" name="project_description" required placeholder="What should the software do, who will use it, and what systems should it connect to?"></textarea>
   </div>
   <button class="btn btn-primary btn-lg btn-block" type="submit">{esc(cta)}</button>
-  <p class="form-note">We’ll reply to your enquiry by email. You can also use WhatsApp or call {PHONE_DISPLAY}.</p>
+  <p class="form-note">We’ll reply to your enquiry by email. You can also call {PHONE_DISPLAY}.</p>
 </form>"""
 
 

@@ -17,7 +17,6 @@
   --ok: #34d399;
   --warn: #fbbf24;
   --danger: #f87171;
-  --whatsapp: #25d366;
   --shadow: none;
   --radius: 6px;
   --radius-sm: 4px;
@@ -106,7 +105,6 @@ p { color: var(--muted); }
   border-color: var(--border-strong);
 }
 .btn-secondary:hover { border-color: var(--accent); background: var(--accent-soft); }
-.btn-whatsapp { background: var(--whatsapp); color: #04210d; }
 .btn-lg { padding: 1rem 1.7rem; font-size: 1.02rem; }
 .btn-block { width: 100%; }
 
@@ -528,22 +526,6 @@ a.card:hover { color: inherit; }
   color: var(--muted-2);
   font-size: 0.85rem;
 }
-
-.whatsapp-float {
-  position: fixed;
-  right: 1.2rem;
-  bottom: 1.2rem;
-  z-index: 50;
-  background: var(--whatsapp);
-  color: #04210d;
-  width: 56px;
-  height: 56px;
-  border-radius: 50%;
-  display: grid;
-  place-items: center;
-  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.28);
-}
-.whatsapp-float svg { width: 28px; height: 28px; }
 
 .status-banner {
   background: var(--accent-soft);
