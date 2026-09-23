@@ -126,7 +126,7 @@ p { color: var(--muted); }
 }
 .logo {
   display: flex;
-  align-items: baseline;
+  align-items: center;
   gap: 0.15rem;
   font-weight: 700;
   font-size: 1.18rem;
@@ -145,6 +145,7 @@ p { color: var(--muted); }
 }
 .logo-lockup { display: flex; flex-direction: column; line-height: 1.1; }
 .logo-img { display: block; height: 30px; width: auto; }
+.site-header .logo-img { height: 36px; }
 .site-footer .logo-img { height: 34px; }
 .nav-cta { margin-left: 0.5rem; padding: 0.58rem 1.05rem; font-size: 0.9rem; }
 

@@ -312,10 +312,7 @@ def header(prefix: str, current: str) -> str:
 <header class="site-header">
   <div class="container nav">
     <a class="logo" href="/" aria-label="Cyber Developers home">
-      <span class="logo-lockup">
-        <img class="logo-img" src="{asset(prefix, 'img/logo-light.png')}" width="313" height="120" alt="Cyber Developers">
-        <small>Custom software · South Africa</small>
-      </span>
+      <img class="logo-img" src="{asset(prefix, 'img/logo-header.png')}" width="390" height="128" alt="Cyber Developers">
     </a>
     <nav class="nav-links" aria-label="Primary">
       {''.join(items)}
