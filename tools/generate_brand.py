@@ -100,16 +100,45 @@ def scaled_to_height(img: Image.Image, height: int) -> Image.Image:
     return img.resize((nw, height), Image.LANCZOS)
 
 
+def make_light(logo: Image.Image, dot=(124, 77, 255)) -> Image.Image:
+    """Recolor for dark surfaces: white wordmark, brand-violet trailing dot.
+
+    The source wordmark is a single violet on white; on a dark header the thin
+    'Developers' strokes and the dark navy dot lose contrast. Here the violet
+    ink becomes white and the dark dot becomes a bright violet accent.
+    """
+    out = logo.convert("RGBA")
+    px = out.load()
+    w, h = out.size
+    for y in range(h):
+        for x in range(w):
+            r, g, b, a = px[x, y]
+            if a == 0:
+                continue
+            # The dark navy dot is dim (low max channel); the violet wordmark
+            # is bright (blue channel ~240). Split on value, not luminance.
+            if max(r, g, b) < 110:  # dark navy dot
+                px[x, y] = (dot[0], dot[1], dot[2], a)
+            else:  # violet wordmark
+                px[x, y] = (255, 255, 255, a)
+    return out
+
+
 def main() -> None:
     if not SRC.exists():
         raise SystemExit(f"Source logo not found: {SRC}")
     source = Image.open(SRC)
     logo = trim(keyed_rgba(source))
 
-    # 1) Header/footer wordmark (transparent). ~120px tall for retina.
+    # 1) Colored wordmark (transparent) for light contexts + schema logo.
     wordmark = scaled_to_height(logo, 120)
     wordmark.save(IMG_DIR / "logo.png", optimize=True)
     print("wrote assets/img/logo.png", wordmark.size)
+
+    # 1b) Light wordmark for dark surfaces (header/footer).
+    light = scaled_to_height(make_light(logo), 120)
+    light.save(IMG_DIR / "logo-light.png", optimize=True)
+    print("wrote assets/img/logo-light.png", light.size)
 
     # 2) Favicon mark from the leading letters of the wordmark.
     mark = isolate_mark(logo)

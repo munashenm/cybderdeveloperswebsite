@@ -313,7 +313,7 @@ def header(prefix: str, current: str) -> str:
   <div class="container nav">
     <a class="logo" href="/" aria-label="Cyber Developers home">
       <span class="logo-lockup">
-        <img class="logo-img" src="{asset(prefix, 'img/logo.png')}" width="313" height="120" alt="Cyber Developers">
+        <img class="logo-img" src="{asset(prefix, 'img/logo-light.png')}" width="313" height="120" alt="Cyber Developers">
         <small>Custom software · South Africa</small>
       </span>
     </a>
@@ -332,7 +332,7 @@ def footer(prefix: str) -> str:
     return f"""<footer class="site-footer">
   <div class="container footer-grid">
     <div>
-      <a class="logo" href="/" aria-label="Cyber Developers home"><img class="logo-img" src="{asset(prefix, 'img/logo.png')}" width="313" height="120" alt="Cyber Developers"></a>
+      <a class="logo" href="/" aria-label="Cyber Developers home"><img class="logo-img" src="{asset(prefix, 'img/logo-light.png')}" width="313" height="120" alt="Cyber Developers"></a>
       <p style="margin-top:1rem">{esc(ORG_DESC)}</p>
       <p style="margin-top:1rem">Software built around your business.</p>
       {social_links(prefix)}
