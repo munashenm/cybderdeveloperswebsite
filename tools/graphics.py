@@ -2,7 +2,7 @@
 """Custom technical graphics. Schematics of real systems — not fake screenshots."""
 from __future__ import annotations
 
-from site_lib import ROOT, esc
+from site_lib import ROOT, esc, icon
 
 BANNER_TECH = [
     "React",
@@ -496,33 +496,39 @@ def capabilities_editorial(
     section_id: str = "services",
 ) -> str:
     rows = [
-        ("custom", False, "Custom software", "/services/custom-software-development/",
-         "Applications modelled on your roles, records and exceptions — not a template forced onto the business."),
-        ("business", True, "Business systems", "/services/business-systems/",
-         "Day-to-day administration: people, money, cases and reports in one place staff can actually operate."),
-        ("web", False, "Web applications", "/services/web-application-development/",
-         "Portals for staff, customers, parents, citizens or partners, with permissions on the same data."),
-        ("mobile", True, "Mobile apps", "/services/mobile-app-development/",
-         "Field work, drivers and anyone who is not at a desk — as a client of the same business rules."),
-        ("workflow", False, "Workflow automation", "/services/workflow-automation/",
-         "Named stages, owners and finance rules instead of email chains and inbox handovers."),
-        ("ai", True, "AI & automation", "/services/ai-business-automation/",
-         "Assistants, documents and reporting inside a real application. A model is a component, not the product."),
-        ("integration", False, "Systems integration", "/services/systems-integration/",
-         "Payments, SMS, identity and existing databases, wired in so information is not retyped."),
+        ("code", "Custom software", "/services/custom-software-development/",
+         "Applications modelled on your roles, records and exceptions — not a template forced onto the business.",
+         ["Your roles and permissions", "A data model built for the work", "Reporting on real records"]),
+        ("layers", "Business systems", "/services/business-systems/",
+         "Day-to-day administration — people, money, cases and reports — in one place staff can actually operate.",
+         ["People, money and cases", "Approvals and audit trail", "One source of truth"]),
+        ("globe", "Web applications", "/services/web-application-development/",
+         "Portals for staff, customers, parents, citizens or partners, with permissions on the same data.",
+         ["Role-based portals", "Secure shared data", "Office and mobile browsers"]),
+        ("phone", "Mobile apps", "/services/mobile-app-development/",
+         "Field workers, drivers and anyone away from a desk — as a client of the same business rules.",
+         ["Field capture and status", "Offline-tolerant sync", "Same rules as the desktop"]),
+        ("flow", "Workflow automation", "/services/workflow-automation/",
+         "Named stages, owners and finance rules instead of email chains and inbox handovers.",
+         ["Defined stages and owners", "Finance and approval locks", "SLA-aware reporting"]),
+        ("spark", "AI & automation", "/services/ai-business-automation/",
+         "Assistants, document handling and reporting inside a real application — a model is a component, not the product.",
+         ["Document extraction", "In-app assistants", "Human review built in"]),
+        ("plug", "Systems integration", "/services/systems-integration/",
+         "Payments, SMS, identity and existing databases, wired in so information is never retyped.",
+         ["Payments and SMS", "SA ID and identity checks", "Existing SQL databases"]),
     ]
-    blocks = []
-    for kind, rev, title, href, copy in rows:
-        cls = _cls("cap-row", "reverse" if rev else "", "reveal")
-        blocks.append(
-            f"""<article class="{cls}">
-  <div class="cap-copy">
+    cards = []
+    for icon_name, title, href, copy, points in rows:
+        pts = "".join(f"<li>{esc(p)}</li>" for p in points)
+        cards.append(
+            f"""<article class="cap-card reveal">
+    <span class="cap-icon" aria-hidden="true">{icon(icon_name)}</span>
     <h3>{esc(title)}</h3>
     <p>{esc(copy)}</p>
+    <ul class="cap-points">{pts}</ul>
     <a class="more" href="{href}">Details</a>
-  </div>
-  <div class="cap-visual">{capability_visual(kind)}</div>
-</article>"""
+  </article>"""
         )
     intro = ""
     if heading:
@@ -533,7 +539,7 @@ def capabilities_editorial(
     """
     return f"""<section class="section section-alt" id="{esc(section_id)}">
   <div class="container">
-    {intro}{''.join(blocks)}
+    {intro}<div class="cap-grid">{''.join(cards)}</div>
   </div>
 </section>"""
 

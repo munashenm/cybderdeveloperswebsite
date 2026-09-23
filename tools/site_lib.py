@@ -320,7 +320,7 @@ def header(prefix: str, current: str) -> str:
     <nav class="nav-links" aria-label="Primary">
       {''.join(items)}
     </nav>
-    <a class="btn btn-primary nav-cta" href="/contact/?intent=demo" data-track="demo_requested" data-track-location="header">Book a Demo</a>
+    <a class="btn btn-primary nav-cta" href="/contact/" data-track="consultation_requested" data-track-location="header">Book a Consultation</a>
     <button class="menu-toggle" type="button" aria-expanded="false" aria-label="Open menu"><span></span></button>
   </div>
 </header>

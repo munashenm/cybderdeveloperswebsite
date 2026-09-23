@@ -104,8 +104,7 @@ def homepage() -> None:
     <h1>Software Built Around Your Business.</h1>
     <p class="lead">Cyber Developers is a custom software development company in South Africa. We design and build business systems, web applications and mobile apps around how organisations actually work — not around a generic product.</p>
     <div class="hero-actions">
-      <a class="btn btn-primary btn-lg" href="/contact/" data-track="consultation_requested" data-track-location="hero">Discuss Your Project</a>
-      <a class="btn btn-secondary btn-lg" href="/contact/?intent=demo" data-track="demo_requested" data-track-location="hero">Book a Demo</a>
+      <a class="btn btn-primary btn-lg" href="/contact/" data-track="consultation_requested" data-track-location="hero">Book a Consultation</a>
       <a class="btn btn-secondary btn-lg" href="/our-work/">View Our Work</a>
     </div>
     <p class="hero-note">If the work still lives in spreadsheets, paper files or three disconnected tools, that is usually the brief.</p>
