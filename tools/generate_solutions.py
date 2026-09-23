@@ -208,8 +208,8 @@ def build_solutions():
             ("Custom software development", "/services/custom-software-development/"),
             ("School software features article", "/knowledge-centre/school-management-software-features/"),
         ],
-        gallery=["school-portal"],
-        og=og_for("school-portal"),
+        gallery=["schoolhub-admin", "schoolhub-student", "schoolhub-admissions"],
+        og=og_for("schoolhub-admin"),
     )
 
     solution_page(

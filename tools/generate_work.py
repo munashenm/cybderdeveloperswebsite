@@ -260,8 +260,8 @@ def build_work():
         ],
         ["Next.js", "React", "TypeScript", "PostgreSQL", "Prisma"],
         "Each role uses a portal against the same student record. Finance sees invoices and debtors; teachers capture attendance and assessments; parents see children, fees and report cards; HR runs leave and payslips.",
-        "Active codebase. The portal image on this page is the public sign-in. Additional operational screens are shown in a demo.",
-        ["school-portal"],
+        "Active codebase. The screens below are from the running product — the admin overview, lecturer and student portals, online admissions and the backup/restore module.",
+        ["schoolhub-admin", "schoolhub-lecturer", "schoolhub-student", "schoolhub-admissions", "schoolhub-backup"],
         meta_title="School Management System | Cyber Developers",
     )
 

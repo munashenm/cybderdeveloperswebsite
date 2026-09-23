@@ -108,6 +108,31 @@ SHOTS: dict[str, dict] = {
         "alt": "Smart School and College sign-in portal for administrators, teachers and learners",
         "title": "Smart School/College",
     },
+    "schoolhub-admin": {
+        "file": "schoolhub/schoolhub-admin-dashboard.webp", "w": 1600, "h": 748,
+        "alt": "SchoolHub SA admin dashboard with licence, backups, integrations, student numbers, outstanding fees and enrolment and fee-collection charts",
+        "title": "SchoolHub SA · Admin",
+    },
+    "schoolhub-lecturer": {
+        "file": "schoolhub/schoolhub-lecturer-portal.webp", "w": 1600, "h": 748,
+        "alt": "SchoolHub SA lecturer portal showing groups, students, timetable slots and attendance actions",
+        "title": "SchoolHub SA · Lecturer",
+    },
+    "schoolhub-student": {
+        "file": "schoolhub/schoolhub-student-portal.webp", "w": 1600, "h": 737,
+        "alt": "SchoolHub SA student portal with student card barcode, attendance, average, fees and this week's classes",
+        "title": "SchoolHub SA · Student",
+    },
+    "schoolhub-admissions": {
+        "file": "schoolhub/schoolhub-online-admissions.webp", "w": 1600, "h": 1154,
+        "alt": "SchoolHub SA online admissions with an eight-step POPIA-aware application for 2026",
+        "title": "SchoolHub SA · Admissions",
+    },
+    "schoolhub-backup": {
+        "file": "schoolhub/schoolhub-backup-restore.webp", "w": 1600, "h": 789,
+        "alt": "SchoolHub SA backup and restore with cloud backups, encrypted offline packages, schedules and restore points",
+        "title": "SchoolHub SA · Backups",
+    },
 }
 
 
