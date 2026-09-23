@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import hashlib
+import json
 import sys
 from datetime import date
 from pathlib import Path
@@ -190,6 +191,26 @@ RewriteRule ^contact/thank-you - [E=NOINDEX:1]
     print("wrote .htaccess")
 
 
+def write_manifest() -> None:
+    manifest = {
+        "name": "Cyber Developers",
+        "short_name": "Cyber Devs",
+        "description": ORG_DESC,
+        "start_url": "/",
+        "display": "standalone",
+        "background_color": "#0b1220",
+        "theme_color": "#0b1220",
+        "icons": [
+            {"src": "/assets/img/icon-192.png", "sizes": "192x192", "type": "image/png"},
+            {"src": "/assets/img/icon-512.png", "sizes": "512x512", "type": "image/png"},
+        ],
+    }
+    (ROOT / "site.webmanifest").write_text(
+        json.dumps(manifest, indent=2) + "\n", encoding="utf-8"
+    )
+    print("wrote site.webmanifest")
+
+
 def write_indexnow() -> None:
     (ROOT / f"{INDEXNOW_KEY}.txt").write_text(INDEXNOW_KEY, encoding="utf-8")
     (ROOT / "indexnow-key.txt").write_text(INDEXNOW_KEY + "\n", encoding="utf-8")
@@ -221,6 +242,7 @@ def main() -> None:
     write_robots()
     write_sitemap()
     write_llms()
+    write_manifest()
     write_htaccess()
     write_indexnow()
     write_redirects()

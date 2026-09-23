@@ -144,6 +144,9 @@ p { color: var(--muted); }
   text-transform: none;
 }
 .logo-lockup { display: flex; flex-direction: column; line-height: 1.1; }
+.logo-img { display: block; height: 30px; width: auto; }
+.site-footer .logo-img { height: 34px; }
+.nav-cta { margin-left: 0.5rem; padding: 0.58rem 1.05rem; font-size: 0.9rem; }
 
 .nav-links {
   display: flex;
@@ -158,7 +161,6 @@ p { color: var(--muted); }
 }
 .nav-links a:hover,
 .nav-links a[aria-current="page"] { color: var(--text); }
-.nav-cta { margin-left: 0.4rem; }
 .menu-toggle {
   display: none;
   background: none;

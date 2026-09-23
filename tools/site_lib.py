@@ -126,8 +126,8 @@ def org_schema() -> dict:
         "name": ORG_NAME,
         "legalName": "Cyber Developers (Pty) Ltd",
         "url": SITE + "/",
-        "logo": SITE + "/favicon.png",
-        "image": SITE + "/favicon.png",
+        "logo": SITE + "/assets/img/logo.png",
+        "image": SITE + "/assets/img/og-default.webp",
         "email": EMAIL,
         "telephone": PHONE_E164,
         "description": ORG_DESC,
@@ -275,7 +275,10 @@ def head(
   <title>{esc(title)}</title>
   <meta name="description" content="{esc(description)}">
   <link rel="canonical" href="{SITE}{canonical}">
+  <link rel="icon" href="{prefix}favicon.ico" sizes="any">
   <link rel="icon" type="image/png" href="{prefix}favicon.png">
+  <link rel="apple-touch-icon" href="{asset(prefix, 'img/apple-touch-icon.png')}">
+  <link rel="manifest" href="{prefix}site.webmanifest">
   <meta name="robots" content="{esc(robots)}">
   <meta name="theme-color" content="#0b1220">
   <meta property="og:type" content="{og_type}">
@@ -308,16 +311,17 @@ def header(prefix: str, current: str) -> str:
 <a class="skip-link" href="#main">Skip to content</a>
 <header class="site-header">
   <div class="container nav">
-    <a class="logo" href="/">
+    <a class="logo" href="/" aria-label="Cyber Developers home">
       <span class="logo-lockup">
-        <span><span>Cyber</span> Developers</span>
+        <img class="logo-img" src="{asset(prefix, 'img/logo.png')}" width="313" height="120" alt="Cyber Developers">
         <small>Custom software · South Africa</small>
       </span>
     </a>
-    <button class="menu-toggle" type="button" aria-expanded="false" aria-label="Open menu"><span></span></button>
     <nav class="nav-links" aria-label="Primary">
       {''.join(items)}
     </nav>
+    <a class="btn btn-primary nav-cta" href="/contact/?intent=demo" data-track="demo_requested" data-track-location="header">Book a Demo</a>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-label="Open menu"><span></span></button>
   </div>
 </header>
 """
@@ -328,7 +332,7 @@ def footer(prefix: str) -> str:
     return f"""<footer class="site-footer">
   <div class="container footer-grid">
     <div>
-      <a class="logo" href="/"><span>Cyber</span> Developers</a>
+      <a class="logo" href="/" aria-label="Cyber Developers home"><img class="logo-img" src="{asset(prefix, 'img/logo.png')}" width="313" height="120" alt="Cyber Developers"></a>
       <p style="margin-top:1rem">{esc(ORG_DESC)}</p>
       <p style="margin-top:1rem">Software built around your business.</p>
       {social_links(prefix)}
