@@ -109,7 +109,7 @@ Primary message: Software Built Around Your Business.
 
 Site: {SITE}/
 
-Entity: Cyber Developers (Pty) Ltd, South Africa. Office: 357 Oak Ave, Ferndale, Randburg. Email: sales@cyberdevelopers.co.za. Phone: 087 550 1813.
+Entity: Cyber Developers (Pty) Ltd, South Africa. Office: 135 Rivonia Road, Sandton, Gauteng. Email: sales@cyberdevelopers.co.za. Phone: 087 550 1813.
 Not a cybersecurity company. Custom software, business systems, web applications, mobile apps, workflow automation and integrations.
 
 ## Pages

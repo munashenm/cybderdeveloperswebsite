@@ -156,7 +156,7 @@ def build_services():
   <h2>Technology</h2>
   <p>We choose tools from what we already run in production, not from a trend list. Common stacks on Cyber Developers systems include React, Next.js, TypeScript, Node.js, Python, C# / ASP.NET Core, PostgreSQL, Prisma, Azure, Firebase, Railway and Cloudflare. The school, workflow, logistics and transport products are Next.js and PostgreSQL. SmartCity Muni is a React application. FluxMove’s driver client uses Expo where that module is in play.</p>
   <h2>South African considerations</h2>
-  <p>Projects here usually involve ZAR pricing, POPIA-minded records, local payment options, South African identity numbers, and users on mixed office and mobile connections. We have already modelled those constraints on products such as VayaSA, FluxMove and SchoolHub SA. We do not create fake city pages or claim offices we do not have. The company works from 357 Oak Ave, Ferndale, Randburg, and builds for organisations across South Africa.</p>
+  <p>Projects here usually involve ZAR pricing, POPIA-minded records, local payment options, South African identity numbers, and users on mixed office and mobile connections. We have already modelled those constraints on products such as VayaSA, FluxMove and SchoolHub SA. We do not create fake city pages or claim offices we do not have. The company works from 135 Rivonia Road, Sandton, Gauteng, and builds for organisations across South Africa.</p>
 </div></section>
 <section class="section section-alt" id="work">
   <div class="container">
@@ -203,7 +203,7 @@ def build_services():
             ("How long does custom software take?", "It depends on scope. A focused workflow tool and a multi-portal school or logistics platform are different efforts. Discovery produces a realistic sequence rather than a slogan timeline."),
             ("Do you rebuild everything from scratch?", "Not always. If an existing Cyber Developers system is close, we customise it. If the process is unique, we design a new model."),
             ("Will we own the system?", "Project terms are agreed in writing. The usual intent is that you operate a system built for your organisation, with source and hosting arrangements documented for that engagement."),
-            ("Do you work only in Johannesburg?", "The office is in Ferndale, Randburg. We build for organisations across South Africa. We do not list fake regional offices."),
+            ("Do you work only in Johannesburg?", "The office is in Sandton, Gauteng. We build for organisations across South Africa. We do not list fake regional offices."),
         ],
     )
 

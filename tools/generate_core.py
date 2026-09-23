@@ -183,7 +183,7 @@ def contact_page() -> None:
     <div class="contact-details">
       <p><span>Email</span><a href="mailto:{EMAIL}" data-track="email_clicked">{EMAIL}</a></p>
       <p><span>Phone</span><a href="tel:{PHONE_E164}" data-track="phone_clicked">{PHONE_DISPLAY}</a></p>
-      <p><span>Address</span>357 Oak Ave<br>Ferndale<br>Randburg<br>South Africa</p>
+      <p><span>Address</span>135 Rivonia Road<br>Sandton<br>Gauteng<br>South Africa</p>
     </div>
   </div>
   {enquiry_form("project_enquiry", "New project enquiry | Cyber Developers", "Discuss Your Project")}
@@ -192,7 +192,7 @@ def contact_page() -> None:
     emit(
         "contact/index.html",
         "Contact Cyber Developers | Discuss Your Project",
-        "Request a consultation with Cyber Developers in Randburg, South Africa. Enquire about custom software, business systems, web apps or mobile apps.",
+        "Request a consultation with Cyber Developers in Sandton, South Africa. Enquire about custom software, business systems, web apps or mobile apps.",
         "/contact/",
         [("/", "Home"), ("/contact/", "Contact")],
         body,
