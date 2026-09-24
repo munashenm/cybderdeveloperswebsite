@@ -620,13 +620,23 @@ def ops_flow(steps: list[str] | None = None) -> str:
     return f'<ol class="ops-flow" aria-label="How a business system typically connects">{lis}</ol>'
 
 
-def crm_map() -> str:
-    return app_shell(
-        "Custom CRM",
-        ["Records", "Pipeline", "Jobs", "Billing"],
-        ["Customers", "Stages", "History", "Reports"],
-        ["Enquire", "Work", "Invoice", "Close"],
+def crm_brief() -> str:
+    """Objects a custom CRM is built around. Not a fake product screenshot."""
+    items = [
+        ("Repairs", "Job, parts, status"),
+        ("Learners", "Enrolment, fees, attendance"),
+        ("Matters", "Files, time, billing"),
+        ("Bookings", "Request, assign, complete"),
+        ("Accounts", "Customer, history, balance"),
+    ]
+    lis = "".join(
+        f"<li><strong>{esc(title)}</strong><span>{esc(detail)}</span></li>"
+        for title, detail in items
     )
+    return f"""<div class="object-board">
+  <p class="eyebrow">The record is the brief</p>
+  <ul>{lis}</ul>
+</div>"""
 
 
 def retail_map() -> str:

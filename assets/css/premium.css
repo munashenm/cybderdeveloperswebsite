@@ -615,6 +615,24 @@ html.motion .arch-join {
   align-items: center;
 }
 .page-hero-visual .eyebrow { margin-bottom: 1rem; }
+.object-board {
+  border: 1px solid var(--border);
+  background: var(--surface);
+  padding: 1.15rem 1.2rem 0.35rem;
+}
+.object-board .eyebrow { margin-bottom: 0.35rem; }
+.object-board ul { list-style: none; }
+.object-board li {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+  padding: 0.72rem 0;
+  border-top: 1px solid var(--border);
+}
+.object-board li:first-child { border-top: 0; }
+.object-board strong { color: var(--text); font-weight: 600; }
+.object-board span { color: var(--muted); font-size: 0.88rem; text-align: right; }
 .ops-flow {
   display: flex;
   flex-wrap: wrap;

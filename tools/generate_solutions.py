@@ -9,7 +9,7 @@ from site_lib import crumbs_html, enquiry_form, faq_html, service_schema, faq_sc
 from generate_core import emit, bullets
 from graphics import (
     school_map, lawyer_map, funeral_map, tshira_map, municipality_map,
-    fluxmove_map, crm_map, feature_block, shot, shot_stack, shot_gallery, SHOTS,
+    fluxmove_map, crm_brief, feature_block, shot, shot_stack, shot_gallery, SHOTS,
 )
 
 
@@ -24,7 +24,7 @@ SOL_VISUAL = {
     "workflow-management-system": tshira_map,
     "municipality-management-software": municipality_map,
     "logistics-delivery-software": fluxmove_map,
-    "custom-crm-development": crm_map,
+    "custom-crm-development": crm_brief,
 }
 
 
@@ -157,7 +157,7 @@ def build_solutions():
   {feature_block("/solutions/custom-crm-development/", "Custom CRM Development", "When the object is not a lead",
                  "We build CRMs around repairs, learners, tickets or matters when Salesforce-shaped objects do not fit. There is no product screenshot here because the data model is the brief.",
                  ["Records", "Pipeline", "History", "Permissions"],
-                 crm_map(), "Explore custom CRM", reverse=True)}
+                 crm_brief(), "Explore custom CRM", reverse=True)}
 </div></section>
 {cta_band("Need a system in this shape?", "Describe the process. We will show the closest system, or confirm what still needs to be built.", primary=("Discuss Your Project", "/contact/"))}
 """,

@@ -95,10 +95,10 @@
         form.setAttribute("data-enquiry", "demo_request");
         var subject = form.querySelector('input[name="_subject"]');
         var type = form.querySelector('input[name="form_type"]');
-        if (subject) subject.value = "Demo request | Cyber Developers";
-        if (type) type.value = "demo_request";
+        if (subject) subject.value = "Consultation request | Cyber Developers";
+        if (type) type.value = "consultation_request";
         var headingBtn = form.querySelector('button[type="submit"]');
-        if (headingBtn) headingBtn.textContent = "Request Demo";
+        if (headingBtn) headingBtn.textContent = "Request a Consultation";
       });
     }
 
